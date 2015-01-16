@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 import org.apache.jena.iri.impl.Main;
 
 /**
- *
+ *    
  * @author fadhela-pc
  */
 public class OntologyParsing {

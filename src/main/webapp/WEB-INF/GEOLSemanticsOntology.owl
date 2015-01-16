@@ -1,0 +1,5714 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY schema "http://schema.org/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY v "http://www.w3.org/2006/vcard/ns#" >
+    <!ENTITY gn "http://www.geonames.org/ontology#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY wn "http://www.w3.org/2006/03/wn/wn20/" >
+    <!ENTITY gs "http://www.geolsemantics.com/onto#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ical "http://www.w3.org/2002/12/cal/icaltzd#" >
+    <!ENTITY geo "http://www.w3.org/2003/01/geo/wgs84_pos#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.geolsemantics.com/onto#"
+     xml:base="http://www.geolsemantics.com/onto"
+     xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:wn="http://www.w3.org/2006/03/wn/wn20/"
+     xmlns:gn="http://www.geonames.org/ontology#"
+     xmlns:schema="http://schema.org/"
+     xmlns:v="http://www.w3.org/2006/vcard/ns#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:gs="http://www.geolsemantics.com/onto#"
+     xmlns:ical="http://www.w3.org/2002/12/cal/icaltzd#">
+    <owl:Ontology rdf:about="http://www.geolsemantics.com/onto#">
+        <rdfs:label>TextMining</rdfs:label>
+        <rdfs:comment>Description de la sortie RDF de l&apos;extraction de relations</rdfs:comment>
+        <owl:versionInfo>Version 1.1</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#subject -->
+
+    <owl:AnnotationProperty rdf:about="&gs;subject">
+        <rdfs:label xml:lang="en">subjects</rdfs:label>
+        <rdfs:label xml:lang="fr">Sujets</rdfs:label>
+        <rdfs:comment xml:lang="en">main subjects, skills, covered</rdfs:comment>
+        <rdfs:comment xml:lang="fr">droit, physique, maths</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Studies"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#accordingTo -->
+
+    <owl:ObjectProperty rdf:about="&gs;accordingTo">
+        <rdfs:domain rdf:resource="&gs;Emission"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#acquisition-date -->
+
+    <owl:ObjectProperty rdf:about="&gs;acquisition-date">
+        <rdfs:label xml:lang="en">date</rdfs:label>
+        <rdfs:label xml:lang="fr">date</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Acquisition"/>
+        <rdfs:range rdf:resource="&gs;Date"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#action-agent -->
+
+    <owl:ObjectProperty rdf:about="&gs;action-agent">
+        <rdfs:label xml:lang="en">agent of the action</rdfs:label>
+        <rdfs:label xml:lang="fr">agent de l&apos;action</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Action"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#action-cause -->
+
+    <owl:ObjectProperty rdf:about="&gs;action-cause">
+        <rdfs:label xml:lang="en">cause of the action</rdfs:label>
+        <rdfs:label xml:lang="fr">cause de l&apos;action</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Action"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#actionPlace -->
+
+    <owl:ObjectProperty rdf:about="&gs;actionPlace">
+        <rdfs:label xml:lang="en">takes place in</rdfs:label>
+        <rdfs:label xml:lang="fr">a lieu à</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Action"/>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;place"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#age -->
+
+    <owl:ObjectProperty rdf:about="&gs;age">
+        <rdfs:label xml:lang="en">age of the person</rdfs:label>
+        <rdfs:label xml:lang="fr">âge de la personne</rdfs:label>
+        <rdfs:comment xml:lang="en">wille be used to calculate the birth date of the person</rdfs:comment>
+        <rdfs:comment xml:lang="fr">servira à calculer la date de naissance de la personne concernée</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ageOfDeath -->
+
+    <owl:ObjectProperty rdf:about="&gs;ageOfDeath">
+        <rdfs:label xml:lang="en">age of the deceased person</rdfs:label>
+        <rdfs:label xml:lang="fr">âge de la personne décédée</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Death"/>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#agent-arrest -->
+
+    <owl:ObjectProperty rdf:about="&gs;agent-arrest">
+        <rdfs:label xml:lang="en">policeman</rdfs:label>
+        <rdfs:label xml:lang="fr">agent de police</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Arrest"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#agent-indictment -->
+
+    <owl:ObjectProperty rdf:about="&gs;agent-indictment">
+        <rdfs:label xml:lang="en">made by</rdfs:label>
+        <rdfs:label xml:lang="fr">réalisé par</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Indictment"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#agent-policeCheck -->
+
+    <owl:ObjectProperty rdf:about="&gs;agent-policeCheck">
+        <rdfs:label>agent</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;PoliceCheck"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#agent-policeCustody -->
+
+    <owl:ObjectProperty rdf:about="&gs;agent-policeCustody">
+        <rdfs:label>agent</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;PoliceCustody"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#agent-release -->
+
+    <owl:ObjectProperty rdf:about="&gs;agent-release">
+        <rdfs:label>agent</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Release"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#altitude -->
+
+    <owl:ObjectProperty rdf:about="&gs;altitude">
+        <rdfs:label xml:lang="en">altitude</rdfs:label>
+        <rdfs:label xml:lang="fr">altitude</rdfs:label>
+        <rdfs:comment xml:lang="fr">altitude d&apos;un lieu</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+        <rdfs:domain rdf:resource="&v;Location"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#amount -->
+
+    <owl:ObjectProperty rdf:about="&gs;amount">
+        <rdfs:label xml:lang="en">purchase price</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de l&apos;achat</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;BankingTransaction"/>
+        <rdfs:range rdf:resource="&gs;MonetaryMes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#appointed -->
+
+    <owl:ObjectProperty rdf:about="&gs;appointed">
+        <rdfs:label xml:lang="en">appointed</rdfs:label>
+        <rdfs:label xml:lang="fr">nommé</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Appointment"/>
+        <rdfs:range rdf:resource="&gs;Experience"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#aunt -->
+
+    <owl:ObjectProperty rdf:about="&gs;aunt">
+        <rdfs:label xml:lang="en">aunt</rdfs:label>
+        <rdfs:label xml:lang="fr">tante</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;familyRel"/>
+        <owl:propertyDisjointWith rdf:resource="&gs;uncle"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#award-date -->
+
+    <owl:ObjectProperty rdf:about="&gs;award-date">
+        <rdfs:label xml:lang="en">award date</rdfs:label>
+        <rdfs:label xml:lang="fr">délivrée le </rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Award"/>
+        <rdfs:range rdf:resource="&gs;Date"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#award-event -->
+
+    <owl:ObjectProperty rdf:about="&gs;award-event">
+        <rdfs:label xml:lang="en">event attached</rdfs:label>
+        <rdfs:label xml:lang="fr">événement associé </rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Award"/>
+        <rdfs:range rdf:resource="&gs;Event"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#awarded -->
+
+    <owl:ObjectProperty rdf:about="&gs;awarded">
+        <rdfs:label xml:lang="en">awarded</rdfs:label>
+        <rdfs:label xml:lang="fr">récompensé</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Award"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#bankruptcy-judge -->
+
+    <owl:ObjectProperty rdf:about="&gs;bankruptcy-judge">
+        <rdfs:domain rdf:resource="&gs;CompulsoryLiquidation"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#beneficiary -->
+
+    <owl:ObjectProperty rdf:about="&gs;beneficiary">
+        <rdfs:label xml:lang="en">who receives</rdfs:label>
+        <rdfs:label xml:lang="fr">celui qui reçoit</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;MoneyTransaction"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#birth-agent -->
+
+    <owl:ObjectProperty rdf:about="&gs;birth-agent">
+        <rdfs:label xml:lang="en">agent</rdfs:label>
+        <rdfs:label xml:lang="fr">agent</rdfs:label>
+        <rdfs:comment xml:lang="en">doctor, midwife...</rdfs:comment>
+        <rdfs:comment xml:lang="fr">docteur, sage-femme, ...</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Birth"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#birthAct -->
+
+    <owl:ObjectProperty rdf:about="&gs;birthAct">
+        <rdfs:comment xml:lang="en">bind the event to the person concerned</rdfs:comment>
+        <rdfs:comment xml:lang="fr">relier l&apos;événement à la personne concernée</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Birth"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#birthPlace -->
+
+    <owl:ObjectProperty rdf:about="&gs;birthPlace">
+        <rdfs:label xml:lang="en">birth place</rdfs:label>
+        <rdfs:label xml:lang="fr">lieu de naissance</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Birth"/>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;place"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#bought -->
+
+    <owl:ObjectProperty rdf:about="&gs;bought">
+        <rdfs:label xml:lang="en">Object bought</rdfs:label>
+        <rdfs:label xml:lang="fr">Objet acheté</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Entity"/>
+        <rdfs:domain rdf:resource="&gs;Purchase"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#boughtBy -->
+
+    <owl:ObjectProperty rdf:about="&gs;boughtBy">
+        <rdfs:label xml:lang="en">who buy</rdfs:label>
+        <rdfs:label xml:lang="fr">qui achète</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Acquisition"/>
+        <rdfs:range rdf:resource="&gs;Buyer"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#brandOf -->
+
+    <owl:ObjectProperty rdf:about="&gs;brandOf">
+        <rdfs:label xml:lang="en">brand of</rdfs:label>
+        <rdfs:label xml:lang="fr">marque de</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Brand"/>
+        <rdfs:range rdf:resource="&gs;Product"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#brother -->
+
+    <owl:ObjectProperty rdf:about="&gs;brother">
+        <rdfs:label xml:lang="en">brother</rdfs:label>
+        <rdfs:label xml:lang="fr">frère</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;familyRel"/>
+        <owl:propertyDisjointWith rdf:resource="&gs;sister"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#calculation-date -->
+
+    <owl:ObjectProperty rdf:about="&gs;calculation-date">
+        <rdfs:label xml:lang="en">calculation date</rdfs:label>
+        <rdfs:label xml:lang="fr">calculation date </rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;KPI"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#celebrate -->
+
+    <owl:ObjectProperty rdf:about="&gs;celebrate">
+        <rdfs:label xml:lang="en">celebrate</rdfs:label>
+        <rdfs:label xml:lang="fr">célébré</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Death"/>
+        <rdfs:range rdf:resource="&gs;Funerals"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#chairedBy -->
+
+    <owl:ObjectProperty rdf:about="&gs;chairedBy">
+        <rdfs:label xml:lang="en">chaired by</rdfs:label>
+        <rdfs:label xml:lang="fr">présidé par</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;CourtHearing"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#changePercent -->
+
+    <owl:ObjectProperty rdf:about="&gs;changePercent">
+        <rdfs:label xml:lang="en">change percentage</rdfs:label>
+        <rdfs:label xml:lang="fr">pourcentage de changement</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Percentage"/>
+        <rdfs:domain rdf:resource="&gs;PriceChange"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#child -->
+
+    <owl:ObjectProperty rdf:about="&gs;child">
+        <rdfs:label xml:lang="en">child</rdfs:label>
+        <rdfs:label xml:lang="fr">enfant</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;familyRel"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#client -->
+
+    <owl:ObjectProperty rdf:about="&gs;client">
+        <rdfs:label xml:lang="en">client</rdfs:label>
+        <rdfs:label xml:lang="fr">client</rdfs:label>
+        <rdfs:comment xml:lang="en">who orders</rdfs:comment>
+        <rdfs:comment xml:lang="fr">celui qui fait la commande</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Order"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#closed -->
+
+    <owl:ObjectProperty rdf:about="&gs;closed">
+        <rdfs:label xml:lang="en">closed</rdfs:label>
+        <rdfs:label xml:lang="fr">fermeture de l&apos;organisation</rdfs:label>
+        <rdfs:range rdf:resource="&gs;OrgClosure"/>
+        <rdfs:domain rdf:resource="&foaf;Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#compConcerned -->
+
+    <owl:ObjectProperty rdf:about="&gs;compConcerned">
+        <rdfs:label xml:lang="en">concern</rdfs:label>
+        <rdfs:label xml:lang="fr">organisation concernée</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Company"/>
+        <rdfs:domain rdf:resource="&gs;KPI"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#compIntroduced -->
+
+    <owl:ObjectProperty rdf:about="&gs;compIntroduced">
+        <rdfs:label xml:lang="en">organization concerned</rdfs:label>
+        <rdfs:label xml:lang="fr">organisation concernée</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Company"/>
+        <rdfs:domain rdf:resource="&gs;IPO"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#component -->
+
+    <owl:ObjectProperty rdf:about="&gs;component">
+        <rdfs:label xml:lang="en">component</rdfs:label>
+        <rdfs:label xml:lang="fr">composé</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Making"/>
+        <rdfs:range rdf:resource="&gs;Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#composed -->
+
+    <owl:ObjectProperty rdf:about="&gs;composed">
+        <rdfs:label xml:lang="en">made of</rdfs:label>
+        <rdfs:label xml:lang="fr">composé de</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Object"/>
+        <rdfs:range rdf:resource="&gs;Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#conversion-date -->
+
+    <owl:ObjectProperty rdf:about="&gs;conversion-date">
+        <rdfs:label>date</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Conversion"/>
+        <rdfs:range rdf:resource="&gs;Date"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#cousin -->
+
+    <owl:ObjectProperty rdf:about="&gs;cousin">
+        <rdfs:label xml:lang="en">cousin</rdfs:label>
+        <rdfs:label xml:lang="fr">cousin</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;familyRel"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#coveragePercent -->
+
+    <owl:ObjectProperty rdf:about="&gs;coveragePercent">
+        <rdfs:label xml:lang="en">coverage percentage of the market</rdfs:label>
+        <rdfs:label xml:lang="fr">pourcentage de couverture du marché</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+        <rdfs:domain rdf:resource="&gs;PercentageOfMarket"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#created -->
+
+    <owl:ObjectProperty rdf:about="&gs;created">
+        <rdfs:label xml:lang="en">created</rdfs:label>
+        <rdfs:label xml:lang="fr">créée</rdfs:label>
+        <rdfs:comment xml:lang="fr">création de l&apos;organisation</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;OrgCreation"/>
+        <rdfs:domain rdf:resource="&foaf;Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#creationDate -->
+
+    <owl:ObjectProperty rdf:about="&gs;creationDate">
+        <rdfs:label xml:lang="en">creation date</rdfs:label>
+        <rdfs:label xml:lang="fr">date de création</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;DNS"/>
+        <rdfs:range rdf:resource="&gs;Date"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#creator -->
+
+    <owl:ObjectProperty rdf:about="&gs;creator">
+        <rdfs:label xml:lang="en">creator</rdfs:label>
+        <rdfs:label xml:lang="fr">créateur</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;OrgCreation"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#date-IPO -->
+
+    <owl:ObjectProperty rdf:about="&gs;date-IPO">
+        <rdfs:label>date</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;IPO"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#dateCalcul-priceShare -->
+
+    <owl:ObjectProperty rdf:about="&gs;dateCalcul-priceShare">
+        <rdfs:label xml:lang="en">date price</rdfs:label>
+        <rdfs:label xml:lang="fr">date du calcul du prix</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Share"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#dateInterval -->
+
+    <owl:ObjectProperty rdf:about="&gs;dateInterval">
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Dates"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#datebeg -->
+
+    <owl:ObjectProperty rdf:about="&gs;datebeg">
+        <rdfs:label xml:lang="en">beginning date</rdfs:label>
+        <rdfs:label xml:lang="fr">date de début</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Dates"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;dateInterval"/>
+        <owl:propertyDisjointWith rdf:resource="&gs;dateend"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#dateend -->
+
+    <owl:ObjectProperty rdf:about="&gs;dateend">
+        <rdfs:label xml:lang="en">end date</rdfs:label>
+        <rdfs:label xml:lang="fr">date de fin </rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Dates"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;dateInterval"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#daughter -->
+
+    <owl:ObjectProperty rdf:about="&gs;daughter">
+        <rdfs:subPropertyOf rdf:resource="&gs;child"/>
+        <owl:propertyDisjointWith rdf:resource="&gs;son"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#deathAct -->
+
+    <owl:ObjectProperty rdf:about="&gs;deathAct">
+        <rdfs:label xml:lang="en">deceased</rdfs:label>
+        <rdfs:label xml:lang="fr">est mort</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Death"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#deceaded -->
+
+    <owl:ObjectProperty rdf:about="&gs;deceaded">
+        <rdfs:domain rdf:resource="&gs;Death"/>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+        <owl:inverseOf rdf:resource="&gs;deathAct"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#decidedBy -->
+
+    <owl:ObjectProperty rdf:about="&gs;decidedBy">
+        <rdfs:label xml:lang="en">has decided</rdfs:label>
+        <rdfs:label xml:lang="fr">a décidé</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;OrganizationEvent"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#decisionMaker -->
+
+    <owl:ObjectProperty rdf:about="&gs;decisionMaker">
+        <rdfs:label xml:lang="en">decision maker</rdfs:label>
+        <rdfs:label xml:lang="fr">décideur</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;ExperienceEnd"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#deliveryDate -->
+
+    <owl:ObjectProperty rdf:about="&gs;deliveryDate">
+        <rdfs:label xml:lang="en">delivery date</rdfs:label>
+        <rdfs:label xml:lang="fr">date de livraison</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Order"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#diplomeObtention-date -->
+
+    <owl:ObjectProperty rdf:about="&gs;diplomeObtention-date">
+        <rdfs:label xml:lang="en">diplome date</rdfs:label>
+        <rdfs:label xml:lang="fr">date du diplome</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Diploma"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#displaced -->
+
+    <owl:ObjectProperty rdf:about="&gs;displaced">
+        <rdfs:label xml:lang="en">Person or Object displaced</rdfs:label>
+        <rdfs:label xml:lang="fr">Personne ou objet deplacé</rdfs:label>
+        <rdfs:range rdf:resource="&gs;PhysicalEntity"/>
+        <rdfs:domain rdf:resource="&gs;Transfer"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#distMes -->
+
+    <owl:ObjectProperty rdf:about="&gs;distMes">
+        <rdfs:label xml:lang="en">distance</rdfs:label>
+        <rdfs:label xml:lang="fr">distance</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Distance"/>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#disunion-agent -->
+
+    <owl:ObjectProperty rdf:about="&gs;disunion-agent">
+        <rdfs:label xml:lang="en">agent of the disunion</rdfs:label>
+        <rdfs:label xml:lang="fr">agent de la séparation</rdfs:label>
+        <rdfs:comment xml:lang="en">mayor, deputy mayor, ...</rdfs:comment>
+        <rdfs:comment xml:lang="fr">maire, adjoint du maire...</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Disunion"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#disunion-witness -->
+
+    <owl:ObjectProperty rdf:about="&gs;disunion-witness">
+        <rdfs:label xml:lang="en">witness</rdfs:label>
+        <rdfs:label xml:lang="fr">témoins </rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Disunion"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#dnsRelatedToIP -->
+
+    <owl:ObjectProperty rdf:about="&gs;dnsRelatedToIP">
+        <rdfs:label xml:lang="en">DNS related to the IP address</rdfs:label>
+        <rdfs:label xml:lang="fr">Lien entre DNS et l&apos;adresse IP</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;DNS"/>
+        <rdfs:range rdf:resource="&gs;IP"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#duration -->
+
+    <owl:ObjectProperty rdf:about="&gs;duration">
+        <rdfs:label xml:lang="en">duration</rdfs:label>
+        <rdfs:label xml:lang="fr">durée</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Dates"/>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#education-duration -->
+
+    <owl:ObjectProperty rdf:about="&gs;education-duration">
+        <rdfs:label xml:lang="en">duration</rdfs:label>
+        <rdfs:label xml:lang="fr">durée</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Education"/>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#educationBeg -->
+
+    <owl:ObjectProperty rdf:about="&gs;educationBeg">
+        <rdfs:label xml:lang="en">education begining</rdfs:label>
+        <rdfs:label xml:lang="fr">début des études</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Education"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;dateInterval"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#educationEnd -->
+
+    <owl:ObjectProperty rdf:about="&gs;educationEnd">
+        <rdfs:label xml:lang="en">Education end</rdfs:label>
+        <rdfs:label xml:lang="fr">fin des études</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Education"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;dateInterval"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#employeeRepresentative -->
+
+    <owl:ObjectProperty rdf:about="&gs;employeeRepresentative">
+        <rdfs:label xml:lang="fr">Représentant des employés</rdfs:label>
+        <rdfs:label xml:lang="fr">employer representative</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;CompulsoryLiquidation"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#employer -->
+
+    <owl:ObjectProperty rdf:about="&gs;employer">
+        <rdfs:label xml:lang="en">employé</rdfs:label>
+        <rdfs:label xml:lang="fr">employeur d&apos;un travailleur</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Experience"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#event-cause -->
+
+    <owl:ObjectProperty rdf:about="&gs;event-cause">
+        <rdfs:label xml:lang="en">cause of the event</rdfs:label>
+        <rdfs:label xml:lang="fr">case de l&apos;événement</rdfs:label>
+        <rdfs:comment xml:lang="en">what causes the event</rdfs:comment>
+        <rdfs:comment xml:lang="fr">ce qui a causé l&apos;événement</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Event"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#event-date -->
+
+    <owl:ObjectProperty rdf:about="&gs;event-date">
+        <rdfs:label xml:lang="en">on</rdfs:label>
+        <rdfs:label xml:lang="fr">a eu lieu le</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Event"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#event-duration -->
+
+    <owl:ObjectProperty rdf:about="&gs;event-duration">
+        <rdfs:domain rdf:resource="&gs;Event"/>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#eventDeclared -->
+
+    <owl:ObjectProperty rdf:about="&gs;eventDeclared">
+        <rdfs:label xml:lang="en">declared</rdfs:label>
+        <rdfs:label xml:lang="fr">declaré</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Emission"/>
+        <rdfs:range rdf:resource="&gs;Event"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#eventPlace -->
+
+    <owl:ObjectProperty rdf:about="&gs;eventPlace">
+        <rdfs:label xml:lang="en">take place at</rdfs:label>
+        <rdfs:label xml:lang="fr">a lieu à </rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Event"/>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;place"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#expBeg -->
+
+    <owl:ObjectProperty rdf:about="&gs;expBeg">
+        <rdfs:label xml:lang="en">Experience begining</rdfs:label>
+        <rdfs:label xml:lang="fr">début de l&apos;expérience</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Appointment"/>
+        <rdfs:domain rdf:resource="&gs;Experience"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#expEnd -->
+
+    <owl:ObjectProperty rdf:about="&gs;expEnd">
+        <rdfs:label xml:lang="en">experience end</rdfs:label>
+        <rdfs:label xml:lang="fr">fin de l&apos;experience</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Experience"/>
+        <rdfs:range rdf:resource="&gs;ExperienceEnd"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#experience-duration -->
+
+    <owl:ObjectProperty rdf:about="&gs;experience-duration">
+        <rdfs:label xml:lang="en">duration</rdfs:label>
+        <rdfs:label xml:lang="fr">durée</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Experience"/>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#expirationDate -->
+
+    <owl:ObjectProperty rdf:about="&gs;expirationDate">
+        <rdfs:label xml:lang="en">expiration date</rdfs:label>
+        <rdfs:label xml:lang="fr">date d&apos;expiration</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;DNS"/>
+        <rdfs:range rdf:resource="&gs;Date"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#familyRel -->
+
+    <owl:ObjectProperty rdf:about="&gs;familyRel">
+        <rdfs:label xml:lang="en">Family relation</rdfs:label>
+        <rdfs:label xml:lang="fr">Relation familiale</rdfs:label>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#father -->
+
+    <owl:ObjectProperty rdf:about="&gs;father">
+        <owl:propertyDisjointWith rdf:resource="&gs;mother"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;parent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#faxNumber -->
+
+    <owl:ObjectProperty rdf:about="&gs;faxNumber">
+        <rdfs:label xml:lang="en">fax number</rdfs:label>
+        <rdfs:label xml:lang="fr">numéro de fax</rdfs:label>
+        <rdfs:comment xml:lang="en">fax number of a person</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Le numéro de fax d&apos;une personne</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Fax"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#foundedBy -->
+
+    <owl:ObjectProperty rdf:about="&gs;foundedBy">
+        <rdfs:label xml:lang="en">project founder</rdfs:label>
+        <rdfs:label xml:lang="fr">fondateur du projet</rdfs:label>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+        <rdfs:domain rdf:resource="&foaf;Project"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#founder -->
+
+    <owl:ObjectProperty rdf:about="&gs;founder">
+        <rdfs:label xml:lang="en">organization founder</rdfs:label>
+        <rdfs:label xml:lang="fr">fondateur de l&apos;entreprise</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Organizations"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#from -->
+
+    <owl:ObjectProperty rdf:about="&gs;from">
+        <rdfs:label xml:lang="en">from</rdfs:label>
+        <rdfs:label xml:lang="fr">de</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:domain rdf:resource="&gs;LocSituations"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#fundraising-amount -->
+
+    <owl:ObjectProperty rdf:about="&gs;fundraising-amount">
+        <rdfs:range rdf:resource="&gs;Mes"/>
+        <rdfs:domain rdf:resource="&gs;ShareSet"/>
+        <owl:equivalentProperty rdf:resource="&gs;total-estimated"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#funeralGuest -->
+
+    <owl:ObjectProperty rdf:about="&gs;funeralGuest">
+        <rdfs:label xml:lang="en">guest</rdfs:label>
+        <rdfs:label xml:lang="fr">Invité</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Funerals"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#getDiploma -->
+
+    <owl:ObjectProperty rdf:about="&gs;getDiploma">
+        <rdfs:label xml:lang="en">diploma obtained</rdfs:label>
+        <rdfs:label xml:lang="fr">diplôme obtenu</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Diploma"/>
+        <rdfs:domain rdf:resource="&gs;Education"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#grandFather -->
+
+    <owl:ObjectProperty rdf:about="&gs;grandFather">
+        <owl:propertyDisjointWith rdf:resource="&gs;grandMother"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;grandParent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#grandMother -->
+
+    <owl:ObjectProperty rdf:about="&gs;grandMother">
+        <rdfs:subPropertyOf rdf:resource="&gs;grandParent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#grandParent -->
+
+    <owl:ObjectProperty rdf:about="&gs;grandParent">
+        <rdfs:label xml:lang="en">grand-parent</rdfs:label>
+        <rdfs:label xml:lang="fr">grand-parent</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;familyRel"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasAddress -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasAddress">
+        <rdfs:label xml:lang="en">address</rdfs:label>
+        <rdfs:label xml:lang="fr">adress declarée</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;place"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasAgent -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasAgent">
+        <rdfs:domain rdf:resource="&gs;ReportedSpeech"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasCapital -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasCapital">
+        <rdfs:domain rdf:resource="&gs;Loc"/>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasChanged -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasChanged">
+        <rdfs:label xml:lang="en">price change</rdfs:label>
+        <rdfs:label xml:lang="fr">changement de prix</rdfs:label>
+        <rdfs:range rdf:resource="&gs;PriceChange"/>
+        <rdfs:domain rdf:resource="&gs;Share"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasContent -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasContent">
+        <rdfs:range rdf:resource="&gs;Action"/>
+        <rdfs:range rdf:resource="&gs;Event"/>
+        <rdfs:domain rdf:resource="&gs;ReportedSpeech"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasCountry -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasCountry">
+        <rdfs:label>country</rdfs:label>
+        <rdfs:label xml:lang="en">country</rdfs:label>
+        <rdfs:label xml:lang="fr">pays</rdfs:label>
+        <rdfs:comment>The country of a postal address</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Country"/>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasDisease -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasDisease">
+        <rdfs:label xml:lang="en">sicks</rdfs:label>
+        <rdfs:label xml:lang="fr">malade de</rdfs:label>
+        <rdfs:comment>CnilException Ontology</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Disease"/>
+        <rdfs:domain rdf:resource="&gs;Persons"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasInvestor -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasInvestor">
+        <rdfs:label xml:lang="en">a-investi</rdfs:label>
+        <rdfs:label xml:lang="en">who invest</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Fundraising"/>
+        <rdfs:range rdf:resource="&gs;Investor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasMedicalAct -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasMedicalAct">
+        <rdfs:label xml:lang="en">has intervention</rdfs:label>
+        <rdfs:label xml:lang="fr">subi une intervention</rdfs:label>
+        <rdfs:comment>CnilException Ontology</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;MedicalAct"/>
+        <rdfs:domain rdf:resource="&gs;Persons"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasMember -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasMember">
+        <rdfs:label xml:lang="en">has member</rdfs:label>
+        <rdfs:label xml:lang="fr">a comme membre</rdfs:label>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+        <rdfs:domain rdf:resource="&foaf;Group"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasPar -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasPar">
+        <rdfs:label xml:lang="en">has paragraph</rdfs:label>
+        <rdfs:label xml:lang="fr">a comme paragraphe</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Par"/>
+        <rdfs:domain rdf:resource="&gs;SubTitle"/>
+        <rdfs:domain rdf:resource="&gs;Text"/>
+        <rdfs:domain rdf:resource="&gs;Title"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasPartner -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasPartner">
+        <rdfs:label xml:lang="en">partner</rdfs:label>
+        <rdfs:label xml:lang="fr">partenaire</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;OrgRelation"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasPrice -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasPrice">
+        <rdfs:label xml:lang="en">has price</rdfs:label>
+        <rdfs:label xml:lang="fr">son prix</rdfs:label>
+        <rdfs:range rdf:resource="&gs;MonetaryMes"/>
+        <rdfs:domain rdf:resource="&gs;Share"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasSent -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasSent">
+        <rdfs:label xml:lang="en">has sentence</rdfs:label>
+        <rdfs:label xml:lang="fr">a comme phrase</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Par"/>
+        <rdfs:range rdf:resource="&gs;Sent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasShare -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasShare">
+        <rdfs:label xml:lang="en">share</rdfs:label>
+        <rdfs:label xml:lang="fr">action</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Share"/>
+        <rdfs:domain rdf:resource="&gs;ShareSet"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasShareholder -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasShareholder">
+        <rdfs:label xml:lang="en">shareholder</rdfs:label>
+        <rdfs:label xml:lang="fr">actionnaire</rdfs:label>
+        <rdfs:label>ticker</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Buyer"/>
+        <rdfs:domain rdf:resource="&gs;Company"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasStatus -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasStatus">
+        <rdfs:label xml:lang="en">has status</rdfs:label>
+        <rdfs:label xml:lang="fr">à l&apos;étape</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;IPO"/>
+        <rdfs:range rdf:resource="&gs;IPO-Step"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasSubTitle -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasSubTitle">
+        <rdfs:label xml:lang="en">has subtitle</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour sous-titre</rdfs:label>
+        <rdfs:range rdf:resource="&gs;SubTitle"/>
+        <rdfs:domain rdf:resource="&gs;Title"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasSuperior -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasSuperior">
+        <rdfs:label xml:lang="en">employer</rdfs:label>
+        <rdfs:label xml:lang="fr">employeur</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Experience"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasTicker -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasTicker">
+        <rdfs:label>ticker</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Company"/>
+        <rdfs:range rdf:resource="&gs;Ticker"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasTitle -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasTitle">
+        <rdfs:label xml:lang="en">has title</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour titre</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Text"/>
+        <rdfs:range rdf:resource="&gs;Title"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasUnderwriter -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasUnderwriter">
+        <rdfs:label>underwriter</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Company"/>
+        <rdfs:domain rdf:resource="&gs;IPO"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasVictim -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasVictim">
+        <rdfs:label xml:lang="en">victim</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour victime</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Victim"/>
+        <rdfs:domain rdf:resource="&gs;ViolentAct"/>
+        <owl:propertyDisjointWith rdf:resource="&gs;isAgent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasWitness -->
+
+    <owl:ObjectProperty rdf:about="&gs;hasWitness">
+        <rdfs:label xml:lang="en">témoin</rdfs:label>
+        <rdfs:label xml:lang="en">witness</rdfs:label>
+        <rdfs:comment xml:lang="fr">a pour témoin</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+        <rdfs:domain rdf:resource="&gs;ViolentAct"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#homepage -->
+
+    <owl:ObjectProperty rdf:about="&gs;homepage">
+        <rdfs:label xml:lang="en">homepage</rdfs:label>
+        <rdfs:label xml:lang="fr">page d&apos;accueil</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Website"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hosted -->
+
+    <owl:ObjectProperty rdf:about="&gs;hosted">
+        <rdfs:label xml:lang="en">hosted</rdfs:label>
+        <rdfs:label xml:lang="fr">hébérgé</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Server"/>
+        <rdfs:domain rdf:resource="&foaf;Image"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hoursByDay -->
+
+    <owl:ObjectProperty rdf:about="&gs;hoursByDay">
+        <rdfs:label xml:lang="en">hours by day</rdfs:label>
+        <rdfs:label xml:lang="fr">heures par jour</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+        <rdfs:domain rdf:resource="&gs;PartialUnemployment"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#instrument -->
+
+    <owl:ObjectProperty rdf:about="&gs;instrument">
+        <rdfs:label xml:lang="en">instrument</rdfs:label>
+        <rdfs:label xml:lang="fr">instrument</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Action"/>
+        <rdfs:range rdf:resource="&gs;Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#invest-amount -->
+
+    <owl:ObjectProperty rdf:about="&gs;invest-amount">
+        <rdfs:label xml:lang="en">amount</rdfs:label>
+        <rdfs:label xml:lang="fr">montant</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Investor"/>
+        <rdfs:range rdf:resource="&gs;MonetaryMes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ipRelatedToServer -->
+
+    <owl:ObjectProperty rdf:about="&gs;ipRelatedToServer">
+        <rdfs:label xml:lang="en">ip related to Server</rdfs:label>
+        <rdfs:label xml:lang="fr">seveur relié à l&apos;adresse IP</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;IP"/>
+        <rdfs:range rdf:resource="&gs;Server"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#isAgent -->
+
+    <owl:ObjectProperty rdf:about="&gs;isAgent">
+        <rdfs:label xml:lang="en">agent</rdfs:label>
+        <rdfs:label xml:lang="fr">agent</rdfs:label>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#isBuyer -->
+
+    <owl:ObjectProperty rdf:about="&gs;isBuyer">
+        <rdfs:label xml:lang="en">is</rdfs:label>
+        <rdfs:label xml:lang="fr">est</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Buyer"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#isCharged -->
+
+    <owl:ObjectProperty rdf:about="&gs;isCharged">
+        <rdfs:label xml:lang="en">Undergoer</rdfs:label>
+        <rdfs:label xml:lang="fr">cible de l&apos;action</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;LegalProceeding"/>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#isInvestor -->
+
+    <owl:ObjectProperty rdf:about="&gs;isInvestor">
+        <rdfs:label xml:lang="en">is</rdfs:label>
+        <rdfs:label xml:lang="fr">est</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Investor"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#isPartOf -->
+
+    <owl:ObjectProperty rdf:about="&gs;isPartOf">
+        <rdfs:label xml:lang="en">is a sub organization of</rdfs:label>
+        <rdfs:label xml:lang="fr">est une sous-organisation de </rdfs:label>
+        <rdfs:domain rdf:resource="&foaf;Organization"/>
+        <rdfs:range rdf:resource="&foaf;Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#isSeller -->
+
+    <owl:ObjectProperty rdf:about="&gs;isSeller">
+        <rdfs:label xml:lang="en">is</rdfs:label>
+        <rdfs:label xml:lang="fr">est</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Seller"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#judge -->
+
+    <owl:ObjectProperty rdf:about="&gs;judge">
+        <rdfs:label xml:lang="en">judge</rdfs:label>
+        <rdfs:label xml:lang="fr">juge</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Judgment"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#leader -->
+
+    <owl:ObjectProperty rdf:about="&gs;leader">
+        <rdfs:label xml:lang="en">leader</rdfs:label>
+        <rdfs:label xml:lang="fr">dirigé par </rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Organizations"/>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#leaveOn -->
+
+    <owl:ObjectProperty rdf:about="&gs;leaveOn">
+        <rdfs:label xml:lang="en">leave on</rdfs:label>
+        <rdfs:label xml:lang="fr">quite à la date</rdfs:label>
+        <rdfs:comment xml:lang="fr">date de fin de l&apos;occupation</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;LocOccupation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#liquidator -->
+
+    <owl:ObjectProperty rdf:about="&gs;liquidator">
+        <rdfs:label xml:lang="en">legal liquidator </rdfs:label>
+        <rdfs:label xml:lang="fr">liquidateur judiciaire</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;CompulsoryLiquidation"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#loc1 -->
+
+    <owl:ObjectProperty rdf:about="&gs;loc1">
+        <rdfs:label xml:lang="en">between 1st point</rdfs:label>
+        <rdfs:label xml:lang="fr">entre point1</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Distance"/>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#loc2 -->
+
+    <owl:ObjectProperty rdf:about="&gs;loc2">
+        <rdfs:label xml:lang="en">and 2dn point</rdfs:label>
+        <rdfs:label xml:lang="fr">point 2</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Distance"/>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#locatedIn -->
+
+    <owl:ObjectProperty rdf:about="&gs;locatedIn">
+        <rdfs:label xml:lang="en">located</rdfs:label>
+        <rdfs:label xml:lang="fr">localisé</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Loc"/>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#locbeg -->
+
+    <owl:ObjectProperty rdf:about="&gs;locbeg">
+        <rdfs:label xml:lang="en">departure place</rdfs:label>
+        <rdfs:label xml:lang="fr">lieu de départ</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:domain rdf:resource="&gs;Transfer"/>
+        <owl:propertyDisjointWith rdf:resource="&gs;locend"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;transferLoc"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#locend -->
+
+    <owl:ObjectProperty rdf:about="&gs;locend">
+        <rdfs:label xml:lang="en">end place</rdfs:label>
+        <rdfs:label xml:lang="fr">lieu d&apos;arrivée</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:domain rdf:resource="&gs;Transfer"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;transferLoc"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#logo -->
+
+    <owl:ObjectProperty rdf:about="&gs;logo">
+        <rdfs:label xml:lang="en">has logo</rdfs:label>
+        <rdfs:label xml:lang="fr">a comme logo</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Organizations"/>
+        <rdfs:range rdf:resource="&foaf;Image"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#marketConcerned -->
+
+    <owl:ObjectProperty rdf:about="&gs;marketConcerned">
+        <rdfs:label xml:lang="en">market concerned</rdfs:label>
+        <rdfs:label xml:lang="fr">marché concené</rdfs:label>
+        <rdfs:range rdf:resource="&gs;MarketPlace"/>
+        <rdfs:domain rdf:resource="&gs;Ticker"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#mboxPers -->
+
+    <owl:ObjectProperty rdf:about="&gs;mboxPers">
+        <rdfs:label xml:lang="en">adresse mail personnelle</rdfs:label>
+        <rdfs:label xml:lang="fr">personal email</rdfs:label>
+        <rdfs:range rdf:resource="&gs;MailAddress"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+        <rdfs:subPropertyOf rdf:resource="&foaf;mbox"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#mboxPro -->
+
+    <owl:ObjectProperty rdf:about="&gs;mboxPro">
+        <rdfs:label xml:lang="en">professional mail</rdfs:label>
+        <rdfs:label xml:lang="fr">adresse mail professionnelle</rdfs:label>
+        <rdfs:range rdf:resource="&gs;MailAddress"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+        <rdfs:subPropertyOf rdf:resource="&foaf;mbox"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#measure -->
+
+    <owl:ObjectProperty rdf:about="&gs;measure">
+        <rdfs:label xml:lang="en">measure associated with</rdfs:label>
+        <rdfs:label xml:lang="fr">mesure associée</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+        <rdfs:domain rdf:resource="&gs;Quantity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#mes1 -->
+
+    <owl:ObjectProperty rdf:about="&gs;mes1">
+        <rdfs:label>mes1</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Conversion"/>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#mes2 -->
+
+    <owl:ObjectProperty rdf:about="&gs;mes2">
+        <rdfs:label>mes2</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Conversion"/>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#mother -->
+
+    <owl:ObjectProperty rdf:about="&gs;mother">
+        <rdfs:subPropertyOf rdf:resource="&gs;parent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#moveInto -->
+
+    <owl:ObjectProperty rdf:about="&gs;moveInto">
+        <rdfs:label xml:lang="en">move into</rdfs:label>
+        <rdfs:label xml:lang="fr">emménage</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:domain rdf:resource="&gs;LocOccupation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#moveIntoOn -->
+
+    <owl:ObjectProperty rdf:about="&gs;moveIntoOn">
+        <rdfs:label xml:lang="en">begining date of housting</rdfs:label>
+        <rdfs:label xml:lang="fr">date de debut de l&apos;occupation</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;LocOccupation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#nbChildren -->
+
+    <owl:ObjectProperty rdf:about="&gs;nbChildren">
+        <rdfs:label xml:lang="en">number of children</rdfs:label>
+        <rdfs:label xml:lang="fr">nombre d&apos;enfants</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Quantity"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#nbEmployees -->
+
+    <owl:ObjectProperty rdf:about="&gs;nbEmployees">
+        <rdfs:label xml:lang="en">number of employees</rdfs:label>
+        <rdfs:label xml:lang="fr">Nombre d&apos;employés</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;KPI"/>
+        <rdfs:range rdf:resource="&gs;Quantity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#nbMembers -->
+
+    <owl:ObjectProperty rdf:about="&gs;nbMembers">
+        <rdfs:label xml:lang="en">member number</rdfs:label>
+        <rdfs:label xml:lang="en">nombre de membre </rdfs:label>
+        <rdfs:range rdf:resource="&gs;Quantity"/>
+        <rdfs:domain rdf:resource="&foaf;Group"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#nbShares -->
+
+    <owl:ObjectProperty rdf:about="&gs;nbShares">
+        <rdfs:label xml:lang="en">number of shares</rdfs:label>
+        <rdfs:label xml:lang="fr">nombre de parts</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Quantity"/>
+        <rdfs:domain rdf:resource="&gs;ShareSet"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#nbVictims -->
+
+    <owl:ObjectProperty rdf:about="&gs;nbVictims">
+        <rdfs:label xml:lang="en">victims number</rdfs:label>
+        <rdfs:label xml:lang="fr">nombre de victimes</rdfs:label>
+        <rdfs:comment>CnilException Ontology</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Disease"/>
+        <rdfs:range rdf:resource="&gs;GroupPers"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#nephew -->
+
+    <owl:ObjectProperty rdf:about="&gs;nephew">
+        <rdfs:label xml:lang="en">nephew</rdfs:label>
+        <rdfs:label xml:lang="fr">neveu</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;familyRel"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#newPrice -->
+
+    <owl:ObjectProperty rdf:about="&gs;newPrice">
+        <rdfs:label xml:lang="en">new price</rdfs:label>
+        <rdfs:label xml:lang="fr">nouveau prix</rdfs:label>
+        <rdfs:range rdf:resource="&gs;MonetaryMes"/>
+        <rdfs:domain rdf:resource="&gs;PriceChange"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#nsOwner -->
+
+    <owl:ObjectProperty rdf:about="&gs;nsOwner">
+        <rdfs:label xml:lang="en">domain name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de domaine</rdfs:label>
+        <rdfs:comment xml:lang="en">domain name owner</rdfs:comment>
+        <rdfs:comment xml:lang="fr">propriétaire d&apos;un nom de domaine</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;DNS"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#object-price -->
+
+    <owl:ObjectProperty rdf:about="&gs;object-price">
+        <rdfs:label xml:lang="en">price</rdfs:label>
+        <rdfs:label xml:lang="fr">prix</rdfs:label>
+        <rdfs:range rdf:resource="&gs;MonetaryMes"/>
+        <rdfs:domain rdf:resource="&gs;Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#object-producer -->
+
+    <owl:ObjectProperty rdf:about="&gs;object-producer">
+        <rdfs:label xml:lang="en">producer</rdfs:label>
+        <rdfs:label xml:lang="fr">produit par</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Product"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#objectOwner -->
+
+    <owl:ObjectProperty rdf:about="&gs;objectOwner">
+        <rdfs:label xml:lang="en">object owner</rdfs:label>
+        <rdfs:label xml:lang="fr">propriétaire d&apos;un objet</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Object"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#objectQuantified -->
+
+    <owl:ObjectProperty rdf:about="&gs;objectQuantified">
+        <rdfs:label xml:lang="en">quantify</rdfs:label>
+        <rdfs:label xml:lang="fr">quantifie</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Measurement"/>
+        <rdfs:range rdf:resource="&gs;Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#obtainingDiploma-date -->
+
+    <owl:ObjectProperty rdf:about="&gs;obtainingDiploma-date">
+        <rdfs:label xml:lang="en">date</rdfs:label>
+        <rdfs:label xml:lang="fr">date</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Diploma"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#occupationDuration -->
+
+    <owl:ObjectProperty rdf:about="&gs;occupationDuration">
+        <rdfs:comment xml:lang="en">duration</rdfs:comment>
+        <rdfs:comment xml:lang="fr">durée</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;LocOccupation"/>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#occupedBy -->
+
+    <owl:ObjectProperty rdf:about="&gs;occupedBy">
+        <rdfs:comment xml:lang="en">OccupedBy</rdfs:comment>
+        <rdfs:comment xml:lang="fr">occupé par</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;LocOccupation"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#offer-dateBeg -->
+
+    <owl:ObjectProperty rdf:about="&gs;offer-dateBeg">
+        <rdfs:label xml:lang="en">availability begining</rdfs:label>
+        <rdfs:label xml:lang="fr">début de validité</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Offer"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#offer-dateEnd -->
+
+    <owl:ObjectProperty rdf:about="&gs;offer-dateEnd">
+        <rdfs:label xml:lang="en">availability end</rdfs:label>
+        <rdfs:label xml:lang="fr">fin de validité</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Offer"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#offer-price -->
+
+    <owl:ObjectProperty rdf:about="&gs;offer-price">
+        <rdfs:label xml:lang="en">offer price</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de l&apos;offre</rdfs:label>
+        <rdfs:range rdf:resource="&gs;FixedOrInterval"/>
+        <rdfs:domain rdf:resource="&gs;Offer"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#oldPrice -->
+
+    <owl:ObjectProperty rdf:about="&gs;oldPrice">
+        <rdfs:label xml:lang="en">old price</rdfs:label>
+        <rdfs:label xml:lang="fr">ancien prix</rdfs:label>
+        <rdfs:range rdf:resource="&gs;MonetaryMes"/>
+        <rdfs:domain rdf:resource="&gs;PriceChange"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#onDate -->
+
+    <owl:ObjectProperty rdf:about="&gs;onDate">
+        <rdfs:label xml:lang="en">punctual date</rdfs:label>
+        <rdfs:label xml:lang="fr">date ponctuelle</rdfs:label>
+        <rdfs:comment xml:lang="en">date of a punctual action</rdfs:comment>
+        <rdfs:comment xml:lang="fr">date d&apos;une action ponctuelle</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Action"/>
+        <rdfs:range rdf:resource="&gs;Date"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#orderDate -->
+
+    <owl:ObjectProperty rdf:about="&gs;orderDate">
+        <rdfs:label xml:lang="en">order date</rdfs:label>
+        <rdfs:label xml:lang="fr">date de la commande</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Order"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#org -->
+
+    <owl:ObjectProperty rdf:about="&gs;org"/>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#orgConcerned -->
+
+    <owl:ObjectProperty rdf:about="&gs;orgConcerned">
+        <rdfs:label xml:lang="en">concern</rdfs:label>
+        <rdfs:label xml:lang="fr">concerne</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;OrganizationEvent"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;org"/>
+        <rdfs:range rdf:resource="&foaf;Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#orgEarned -->
+
+    <owl:ObjectProperty rdf:about="&gs;orgEarned">
+        <rdfs:label xml:lang="en">earned</rdfs:label>
+        <rdfs:label xml:lang="fr">acquise</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Acquisition"/>
+        <rdfs:range rdf:resource="&foaf;Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#orgOwner -->
+
+    <owl:ObjectProperty rdf:about="&gs;orgOwner">
+        <rdfs:label xml:lang="en">organization owner</rdfs:label>
+        <rdfs:label xml:lang="fr">propriétaire d&apos;une organisation</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Organizations"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#orgRelation-duration -->
+
+    <owl:ObjectProperty rdf:about="&gs;orgRelation-duration">
+        <rdfs:label xml:lang="en">duration</rdfs:label>
+        <rdfs:label xml:lang="fr">durée</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+        <rdfs:domain rdf:resource="&gs;OrgRelation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#page -->
+
+    <owl:ObjectProperty rdf:about="&gs;page">
+        <rdfs:label xml:lang="en">web page attached</rdfs:label>
+        <rdfs:label xml:lang="fr">page web associée</rdfs:label>
+        <rdfs:range rdf:resource="&gs;ElectronicDocument"/>
+        <rdfs:domain rdf:resource="&foaf;Project"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#parent -->
+
+    <owl:ObjectProperty rdf:about="&gs;parent">
+        <rdfs:label xml:lang="en">parent</rdfs:label>
+        <rdfs:label xml:lang="fr">parent</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;familyRel"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#partner1 -->
+
+    <owl:ObjectProperty rdf:about="&gs;partner1">
+        <rdfs:label xml:lang="en">first partner</rdfs:label>
+        <rdfs:label xml:lang="fr">premier partenaire</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;UnionDisunion"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#partner2 -->
+
+    <owl:ObjectProperty rdf:about="&gs;partner2">
+        <rdfs:label xml:lang="en">second partner</rdfs:label>
+        <rdfs:label xml:lang="fr">deuxième partenaire</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;UnionDisunion"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#percentageAcquired -->
+
+    <owl:ObjectProperty rdf:about="&gs;percentageAcquired">
+        <rdfs:label xml:lang="en">percentage acquired</rdfs:label>
+        <rdfs:label xml:lang="fr">pourcentage acquis</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Buyer"/>
+        <rdfs:range rdf:resource="&gs;Percentage"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#percentageFundraising -->
+
+    <owl:ObjectProperty rdf:about="&gs;percentageFundraising">
+        <rdfs:label xml:lang="en">percent acquired</rdfs:label>
+        <rdfs:label xml:lang="fr">pourcentage acquis</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Investor"/>
+        <rdfs:range rdf:resource="&gs;Percentage"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#percentageOfMarket-comp -->
+
+    <owl:ObjectProperty rdf:about="&gs;percentageOfMarket-comp">
+        <rdfs:range rdf:resource="&gs;Company"/>
+        <rdfs:domain rdf:resource="&gs;PercentageOfMarket"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#percentageOfMarket-dateCal -->
+
+    <owl:ObjectProperty rdf:about="&gs;percentageOfMarket-dateCal">
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;PercentageOfMarket"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#pers1 -->
+
+    <owl:ObjectProperty rdf:about="&gs;pers1">
+        <rdfs:domain rdf:resource="&gs;Family"/>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#pers2 -->
+
+    <owl:ObjectProperty rdf:about="&gs;pers2">
+        <rdfs:domain rdf:resource="&gs;Family"/>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#personConcerned -->
+
+    <owl:ObjectProperty rdf:about="&gs;personConcerned">
+        <rdfs:label xml:lang="en">Concern</rdfs:label>
+        <rdfs:label xml:lang="en">person concerned</rdfs:label>
+        <rdfs:label xml:lang="fr">Concerne</rdfs:label>
+        <rdfs:label xml:lang="fr">personne(s) concernée(s)</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;PersonalEvent"/>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#personsConcerned -->
+
+    <owl:ObjectProperty rdf:about="&gs;personsConcerned">
+        <rdfs:label xml:lang="en">concern</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;PartialUnemployment"/>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#place -->
+
+    <owl:ObjectProperty rdf:about="&gs;place"/>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#position1 -->
+
+    <owl:ObjectProperty rdf:about="&gs;position1">
+        <rdfs:label xml:lang="en">pos1</rdfs:label>
+        <rdfs:label xml:lang="fr">pos1</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:domain rdf:resource="&gs;LocOrientation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#position2 -->
+
+    <owl:ObjectProperty rdf:about="&gs;position2">
+        <rdfs:label xml:lang="en">pos2</rdfs:label>
+        <rdfs:label xml:lang="fr">pos2</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:domain rdf:resource="&gs;LocOrientation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#present -->
+
+    <owl:ObjectProperty rdf:about="&gs;present">
+        <rdfs:label xml:lang="en">were present</rdfs:label>
+        <rdfs:label xml:lang="fr">était présent</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;CourtHearing"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#price -->
+
+    <owl:ObjectProperty rdf:about="&gs;price">
+        <rdfs:label xml:lang="en">price</rdfs:label>
+        <rdfs:label xml:lang="fr">prix</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+        <rdfs:domain rdf:resource="&gs;Order"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#product-offer -->
+
+    <owl:ObjectProperty rdf:about="&gs;product-offer">
+        <rdfs:label xml:lang="en">product for sale</rdfs:label>
+        <rdfs:label xml:lang="fr">produit mis en vente</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Offer"/>
+        <rdfs:range rdf:resource="&gs;Product"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#product-price -->
+
+    <owl:ObjectProperty rdf:about="&gs;product-price">
+        <rdfs:label xml:lang="en">price</rdfs:label>
+        <rdfs:label xml:lang="fr">prix</rdfs:label>
+        <rdfs:range rdf:resource="&gs;FixedOrInterval"/>
+        <rdfs:domain rdf:resource="&gs;Product"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#pronounce -->
+
+    <owl:ObjectProperty rdf:about="&gs;pronounce">
+        <rdfs:domain rdf:resource="&gs;Judgment"/>
+        <rdfs:range rdf:resource="&gs;JudicialDecision"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#proposedBy -->
+
+    <owl:ObjectProperty rdf:about="&gs;proposedBy">
+        <rdfs:label xml:lang="en">proposed by</rdfs:label>
+        <rdfs:label xml:lang="fr">proposée par</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Offer"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#purchasePercent -->
+
+    <owl:ObjectProperty rdf:about="&gs;purchasePercent">
+        <rdfs:label xml:lang="en">percent acquisition</rdfs:label>
+        <rdfs:label xml:lang="fr">pourcentage de parts acquises</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Buyer"/>
+        <rdfs:range rdf:resource="&gs;Percentage"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#purchasePercentSold -->
+
+    <owl:ObjectProperty rdf:about="&gs;purchasePercentSold">
+        <rdfs:label xml:lang="en">percent solde</rdfs:label>
+        <rdfs:label xml:lang="fr">pourcentage de parts cédées</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Percentage"/>
+        <rdfs:domain rdf:resource="&gs;Seller"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#receiver -->
+
+    <owl:ObjectProperty rdf:about="&gs;receiver">
+        <rdfs:label xml:lang="en">who receives</rdfs:label>
+        <rdfs:label xml:lang="fr">celui qui reçoit</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Emission"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#receivership-admin -->
+
+    <owl:ObjectProperty rdf:about="&gs;receivership-admin">
+        <rdfs:label xml:lang="en">judicial administrator</rdfs:label>
+        <rdfs:label xml:lang="fr">administrateur judiciaire</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Receivership"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#relation-dateBeg -->
+
+    <owl:ObjectProperty rdf:about="&gs;relation-dateBeg">
+        <rdfs:label xml:lang="en">begining date</rdfs:label>
+        <rdfs:label xml:lang="fr">début</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;OrgRelation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#relation-dateEnd -->
+
+    <owl:ObjectProperty rdf:about="&gs;relation-dateEnd">
+        <rdfs:label xml:lang="en">end date</rdfs:label>
+        <rdfs:label xml:lang="fr">fin</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;OrgRelation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#resides -->
+
+    <owl:ObjectProperty rdf:about="&gs;resides">
+        <rdfs:label xml:lang="en">resides in</rdfs:label>
+        <rdfs:label xml:lang="fr">réside à</rdfs:label>
+        <rdfs:range rdf:resource="&gs;LocOccupation"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;place"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#sender -->
+
+    <owl:ObjectProperty rdf:about="&gs;sender">
+        <rdfs:label xml:lang="en">who sends</rdfs:label>
+        <rdfs:label xml:lang="fr">celui qui envoie</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Emission"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#shares-percent -->
+
+    <owl:ObjectProperty rdf:about="&gs;shares-percent">
+        <rdfs:label xml:lang="en">initial percentage</rdfs:label>
+        <rdfs:label xml:lang="fr">pourcentage intial</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Percentage"/>
+        <rdfs:domain rdf:resource="&gs;ShareSet"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#shares-price -->
+
+    <owl:ObjectProperty rdf:about="&gs;shares-price">
+        <rdfs:label xml:lang="en">shares price</rdfs:label>
+        <rdfs:label xml:lang="fr">prix des actions</rdfs:label>
+        <rdfs:range rdf:resource="&gs;MonetaryMes"/>
+        <rdfs:domain rdf:resource="&gs;ShareSet"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#sister -->
+
+    <owl:ObjectProperty rdf:about="&gs;sister">
+        <rdfs:label xml:lang="en">sister</rdfs:label>
+        <rdfs:label xml:lang="fr">soeur</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;familyRel"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#sleepingPartner -->
+
+    <owl:ObjectProperty rdf:about="&gs;sleepingPartner">
+        <rdfs:label xml:lang="en">sleeping partner</rdfs:label>
+        <rdfs:label xml:lang="fr">commanditaire</rdfs:label>
+        <rdfs:comment xml:lang="en">sleeping partner, person or organization</rdfs:comment>
+        <rdfs:comment xml:lang="fr">commanditaire, personne ou organisme</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;ViolentAct"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#soldBy -->
+
+    <owl:ObjectProperty rdf:about="&gs;soldBy">
+        <rdfs:label xml:lang="en">who sell</rdfs:label>
+        <rdfs:label xml:lang="fr">Qui vend</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Acquisition"/>
+        <rdfs:range rdf:resource="&gs;Seller"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#son -->
+
+    <owl:ObjectProperty rdf:about="&gs;son">
+        <rdfs:subPropertyOf rdf:resource="&gs;child"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+        <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#statusDate -->
+
+    <owl:ObjectProperty rdf:about="&gs;statusDate">
+        <rdfs:label>date</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;IPO-Step"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#stceBeg -->
+
+    <owl:ObjectProperty rdf:about="&gs;stceBeg">
+        <rdfs:label xml:lang="en">begining</rdfs:label>
+        <rdfs:label xml:lang="fr">début</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Stce"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;dateInterval"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#stceEnd -->
+
+    <owl:ObjectProperty rdf:about="&gs;stceEnd">
+        <rdfs:label xml:lang="en">end</rdfs:label>
+        <rdfs:label xml:lang="fr">fin</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Stce"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;dateInterval"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#stceMes -->
+
+    <owl:ObjectProperty rdf:about="&gs;stceMes">
+        <rdfs:label xml:lang="en">sentence</rdfs:label>
+        <rdfs:label xml:lang="fr">sentence</rdfs:label>
+        <rdfs:comment xml:lang="en">measure bound to a sentence : amount of the fine, length of the term of imprisonment</rdfs:comment>
+        <rdfs:comment xml:lang="fr">mesure associée à une peine : montant d&apos;une amende, durée d&apos;une peine de prison ...</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Mes"/>
+        <rdfs:domain rdf:resource="&gs;Stce"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#stcePlace -->
+
+    <owl:ObjectProperty rdf:about="&gs;stcePlace">
+        <rdfs:label xml:lang="en">place</rdfs:label>
+        <rdfs:label xml:lang="fr">lieu</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:domain rdf:resource="&gs;Stce"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;dateInterval"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#studied -->
+
+    <owl:ObjectProperty rdf:about="&gs;studied">
+        <rdfs:label xml:lang="en">studied</rdfs:label>
+        <rdfs:label xml:lang="fr">a étudié</rdfs:label>
+        <rdfs:comment xml:lang="en">school career</rdfs:comment>
+        <rdfs:comment xml:lang="fr">parcours scolaire</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Education"/>
+        <rdfs:domain rdf:resource="&gs;Persons"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#studiedAt -->
+
+    <owl:ObjectProperty rdf:about="&gs;studiedAt">
+        <rdfs:label xml:lang="en">a étudié à (Organization)</rdfs:label>
+        <rdfs:label xml:lang="fr">studied at (Organization)</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Education"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;org"/>
+        <rdfs:range rdf:resource="&foaf;Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#studiedIn -->
+
+    <owl:ObjectProperty rdf:about="&gs;studiedIn">
+        <rdfs:label xml:lang="en">studied in</rdfs:label>
+        <rdfs:label xml:lang="fr">a etudié à </rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Education"/>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;place"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#supplier -->
+
+    <owl:ObjectProperty rdf:about="&gs;supplier">
+        <rdfs:domain rdf:resource="&gs;Order"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#target -->
+
+    <owl:ObjectProperty rdf:about="&gs;target">
+        <rdfs:label xml:lang="en">undergoer</rdfs:label>
+        <rdfs:label xml:lang="fr">cible de l&apos;acte</rdfs:label>
+        <rdfs:range rdf:resource="&gs;PhysicalEntity"/>
+        <rdfs:domain rdf:resource="&gs;ViolentAct"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#to -->
+
+    <owl:ObjectProperty rdf:about="&gs;to">
+        <rdfs:label xml:lang="en">to</rdfs:label>
+        <rdfs:label xml:lang="fr">à</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:domain rdf:resource="&gs;LocSituations"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#total-estimated -->
+
+    <owl:ObjectProperty rdf:about="&gs;total-estimated">
+        <rdfs:label xml:lang="en">total estimated</rdfs:label>
+        <rdfs:label xml:lang="fr">total estimé</rdfs:label>
+        <rdfs:range rdf:resource="&gs;FixedOrInterval"/>
+        <rdfs:domain rdf:resource="&gs;ShareSet"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#total-raised -->
+
+    <owl:ObjectProperty rdf:about="&gs;total-raised">
+        <rdfs:label xml:lang="en">total raised</rdfs:label>
+        <rdfs:label xml:lang="fr">total relevé</rdfs:label>
+        <rdfs:range rdf:resource="&gs;FixedOrInterval"/>
+        <rdfs:domain rdf:resource="&gs;ShareSet"/>
+        <owl:equivalentProperty rdf:resource="&gs;valuation-amount"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#totalFundraising -->
+
+    <owl:ObjectProperty rdf:about="&gs;totalFundraising">
+        <rdfs:label>total</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Fundraising"/>
+        <rdfs:range rdf:resource="&gs;Percentage"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#tradeunion_membership -->
+
+    <owl:ObjectProperty rdf:about="&gs;tradeunion_membership">
+        <rdfs:label xml:lang="en">tradeunion membership</rdfs:label>
+        <rdfs:label xml:lang="fr">appartenance syndicale</rdfs:label>
+        <rdfs:comment>CnilException Ontology</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Persons"/>
+        <rdfs:range rdf:resource="&foaf;Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#transfer-dateBeg -->
+
+    <owl:ObjectProperty rdf:about="&gs;transfer-dateBeg">
+        <rdfs:label xml:lang="en">transfer begining</rdfs:label>
+        <rdfs:label xml:lang="fr">début du déplacement</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Transfer"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;dateInterval"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#transfer-dateEnd -->
+
+    <owl:ObjectProperty rdf:about="&gs;transfer-dateEnd">
+        <rdfs:label xml:lang="en">transfer end</rdfs:label>
+        <rdfs:label xml:lang="fr">fin du deplacement</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Transfer"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;dateInterval"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#transferLoc -->
+
+    <owl:ObjectProperty rdf:about="&gs;transferLoc">
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:domain rdf:resource="&gs;Transfer"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#transmitter -->
+
+    <owl:ObjectProperty rdf:about="&gs;transmitter">
+        <rdfs:label xml:lang="en">who gives money</rdfs:label>
+        <rdfs:label xml:lang="fr">celui qui donne</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;MoneyTransaction"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#uncle -->
+
+    <owl:ObjectProperty rdf:about="&gs;uncle">
+        <rdfs:label xml:lang="en">uncle</rdfs:label>
+        <rdfs:label xml:lang="fr">oncle</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;familyRel"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#undergoerProp -->
+
+    <owl:ObjectProperty rdf:about="&gs;undergoerProp"/>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#union-agent -->
+
+    <owl:ObjectProperty rdf:about="&gs;union-agent">
+        <rdfs:label xml:lang="en">celebrated by</rdfs:label>
+        <rdfs:label xml:lang="fr">célébré par</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Union"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#union-date -->
+
+    <owl:ObjectProperty rdf:about="&gs;union-date">
+        <rdfs:label xml:lang="en">cebrated on</rdfs:label>
+        <rdfs:label xml:lang="fr">date de célébration</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Date"/>
+        <rdfs:domain rdf:resource="&gs;Union"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#union-witness -->
+
+    <owl:ObjectProperty rdf:about="&gs;union-witness">
+        <rdfs:label xml:lang="en">witness</rdfs:label>
+        <rdfs:label xml:lang="fr">témoins </rdfs:label>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+        <rdfs:domain rdf:resource="&gs;Union"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#unionGuest -->
+
+    <owl:ObjectProperty rdf:about="&gs;unionGuest">
+        <rdfs:label xml:lang="en">Guest</rdfs:label>
+        <rdfs:label xml:lang="fr">Invité </rdfs:label>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+        <rdfs:domain rdf:resource="&gs;Union"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#updatedDate -->
+
+    <owl:ObjectProperty rdf:about="&gs;updatedDate">
+        <rdfs:label xml:lang="en">renewal date</rdfs:label>
+        <rdfs:label xml:lang="fr">date de renouvellement</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;DNS"/>
+        <rdfs:range rdf:resource="&gs;Date"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#valuation-amount -->
+
+    <owl:ObjectProperty rdf:about="&gs;valuation-amount">
+        <rdfs:range rdf:resource="&gs;FixedOrInterval"/>
+        <rdfs:domain rdf:resource="&gs;ShareSet"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#victNum -->
+
+    <owl:ObjectProperty rdf:about="&gs;victNum">
+        <rdfs:label xml:lang="en"> number of victims</rdfs:label>
+        <rdfs:label xml:lang="fr">nombre de victimes</rdfs:label>
+        <rdfs:comment xml:lang="en">victim number caused by a violent act</rdfs:comment>
+        <rdfs:comment xml:lang="fr">nombre de victimes suite à un acte de violence</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;GroupPers"/>
+        <rdfs:domain rdf:resource="&gs;ViolentAct"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#victimUndergoer -->
+
+    <owl:ObjectProperty rdf:about="&gs;victimUndergoer">
+        <rdfs:label xml:lang="en">target</rdfs:label>
+        <rdfs:label xml:lang="fr">cible de l&apos;acte de violence</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Persons"/>
+        <rdfs:domain rdf:resource="&gs;Victim"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#wasPresent -->
+
+    <owl:ObjectProperty rdf:about="&gs;wasPresent">
+        <rdfs:label xml:lang="en">was present</rdfs:label>
+        <rdfs:label xml:lang="fr">était présent</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Meeting"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#workForce-dateCal -->
+
+    <owl:ObjectProperty rdf:about="&gs;workForce-dateCal">
+        <rdfs:range rdf:resource="&gs;Date"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#workForce-org -->
+
+    <owl:ObjectProperty rdf:about="&gs;workForce-org">
+        <rdfs:range rdf:resource="&foaf;Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#works -->
+
+    <owl:ObjectProperty rdf:about="&gs;works">
+        <rdfs:label xml:lang="en">professional experience</rdfs:label>
+        <rdfs:label xml:lang="fr">expérience professionnelle</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Experience"/>
+        <rdfs:domain rdf:resource="&gs;Persons"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#worksAt -->
+
+    <owl:ObjectProperty rdf:about="&gs;worksAt">
+        <rdfs:label xml:lang="en">works at (Organization)</rdfs:label>
+        <rdfs:label xml:lang="fr">travaille à (Organisation)</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Experience"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;org"/>
+        <rdfs:range rdf:resource="&foaf;Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#worksIn -->
+
+    <owl:ObjectProperty rdf:about="&gs;worksIn">
+        <rdfs:label xml:lang="en">travaille à </rdfs:label>
+        <rdfs:label xml:lang="en">works in</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Experience"/>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;place"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#worksOn -->
+
+    <owl:ObjectProperty rdf:about="&gs;worksOn">
+        <rdfs:label xml:lang="en">works on</rdfs:label>
+        <rdfs:label xml:lang="fr">travaille sur</rdfs:label>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+        <rdfs:range rdf:resource="&foaf;Project"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/03/wn/wn20/result -->
+
+    <owl:ObjectProperty rdf:about="&wn;result">
+        <rdfs:label xml:lang="en">result</rdfs:label>
+        <rdfs:label xml:lang="fr">résultat</rdfs:label>
+        <rdfs:comment xml:lang="en">result of an action</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Résultat d&apos;une action</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Making"/>
+        <rdfs:range rdf:resource="&gs;Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#locality -->
+
+    <owl:ObjectProperty rdf:about="&v;locality">
+        <rdfs:label>locality</rdfs:label>
+        <rdfs:comment>The locality (e.g., city) of a postal address</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;Loc"/>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/account -->
+
+    <owl:ObjectProperty rdf:about="&foaf;account">
+        <rdfs:label xml:lang="en">account name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom du compte</rdfs:label>
+        <rdfs:range rdf:resource="&foaf;OnlineAccount"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/accountServiceHomepage -->
+
+    <owl:ObjectProperty rdf:about="&foaf;accountServiceHomepage">
+        <rdfs:label xml:lang="en">homepage of an online account</rdfs:label>
+        <rdfs:label xml:lang="fr">pade d&apos;accueil d&apos;un compte en ligne</rdfs:label>
+        <rdfs:range rdf:resource="&gs;Website"/>
+        <rdfs:domain rdf:resource="&foaf;OnlineAccount"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/homepage -->
+
+    <owl:ObjectProperty rdf:about="&foaf;homepage">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>homepage</rdfs:label>
+        <rdfs:comment>A homepage for some thing.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+        <rdfs:range rdf:resource="&foaf;Document"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/maker -->
+
+    <owl:ObjectProperty rdf:about="&foaf;maker">
+        <rdfs:comment xml:lang="en">document maker</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Créateur du document</rdfs:comment>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+        <rdfs:domain rdf:resource="&foaf;Document"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/mbox -->
+
+    <owl:ObjectProperty rdf:about="&foaf;mbox">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>personal mailbox</rdfs:label>
+        <rdfs:comment>A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a &apos;static inverse functional property&apos;, in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox.</rdfs:comment>
+        <rdfs:range rdf:resource="&gs;MailAddress"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/name -->
+
+    <owl:ObjectProperty rdf:about="&foaf;name">
+        <rdfs:label>name</rdfs:label>
+        <rdfs:comment>A name for some thing.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/topic_interest -->
+
+    <owl:ObjectProperty rdf:about="&foaf;topic_interest">
+        <rdfs:label xml:lang="en">speciality area</rdfs:label>
+        <rdfs:label xml:lang="fr">domaine de spécialité</rdfs:label>
+        <rdfs:range rdf:resource="&foaf;Document"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#action-cause -->
+
+    <owl:DatatypeProperty rdf:about="&gs;action-cause">
+        <rdfs:label xml:lang="en">cause of the action</rdfs:label>
+        <rdfs:label xml:lang="fr">cause de l&apos;action</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#action-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;action-name">
+        <rdfs:label xml:lang="en">name of the action</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de l&apos;action</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Action"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#address-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;address-name">
+        <rdfs:label xml:lang="en">name given to a location, like an house, an hospital, ...</rdfs:label>
+        <rdfs:label xml:lang="fr">nom donné à un lieu, comme une maison, un hôpital, ...</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#areaOfActivity -->
+
+    <owl:DatatypeProperty rdf:about="&gs;areaOfActivity">
+        <rdfs:label xml:lang="en">area of activity</rdfs:label>
+        <rdfs:label xml:lang="fr">domaine d&apos;activité
+</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;PercentageOfMarket"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#authorValidation -->
+
+    <owl:DatatypeProperty rdf:about="&gs;authorValidation">
+        <rdfs:label xml:lang="en">author validation</rdfs:label>
+        <rdfs:label xml:lang="fr">validation de l&apos;auteur</rdfs:label>
+        <rdfs:comment xml:lang="en">value given by the author about what is said</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Valeur de la validation de l&apos;auteur sur ce qui est dit</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#award-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;award-name">
+        <rdfs:label xml:lang="en">award name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de la récompense</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Award"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#benefit-value -->
+
+    <owl:DatatypeProperty rdf:about="&gs;benefit-value">
+        <rdfs:label xml:lang="en">benefit value</rdfs:label>
+        <rdfs:label xml:lang="fr">valeur du bénéfice</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;KPI"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#birthName -->
+
+    <owl:DatatypeProperty rdf:about="&gs;birthName">
+        <rdfs:label xml:lang="en">birth name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de naissance</rdfs:label>
+        <rdfs:comment xml:lang="fr">Nom de jeune fille</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&v;additional-name"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#building-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;building-name">
+        <rdfs:label xml:lang="en">building name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom du bâtiment</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Building"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#businessSector -->
+
+    <owl:DatatypeProperty rdf:about="&gs;businessSector">
+        <rdfs:label xml:lang="en">Business sector</rdfs:label>
+        <rdfs:label xml:lang="fr">Secteur d&apos;activité</rdfs:label>
+        <rdfs:comment xml:lang="en">finance, marketing, research and development, ...</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Finance, Marketing, Developpement, Recherche...</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Organizations"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#buyer-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;buyer-type">
+        <rdfs:label xml:lang="en">shareholder type</rdfs:label>
+        <rdfs:label xml:lang="fr">type d&apos;actionnaire</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Buyer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#calendar-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;calendar-type">
+        <rdfs:label xml:lang="en">calendar type</rdfs:label>
+        <rdfs:label>type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de calendrier</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Date"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#capital -->
+
+    <owl:DatatypeProperty rdf:about="&gs;capital">
+        <rdfs:label>capital</rdfs:label>
+        <rdfs:label xml:lang="en">capital</rdfs:label>
+        <rdfs:label xml:lang="fr">capitale</rdfs:label>
+        <rdfs:comment>Thecapital of the country</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Country"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#capital-value -->
+
+    <owl:DatatypeProperty rdf:about="&gs;capital-value">
+        <rdfs:label xml:lang="en">capital value</rdfs:label>
+        <rdfs:label xml:lang="fr">valeur du capital</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;KPI"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#category -->
+
+    <owl:DatatypeProperty rdf:about="&gs;category">
+        <rdfs:label xml:lang="en">category</rdfs:label>
+        <rdfs:label xml:lang="fr">categorie</rdfs:label>
+        <rdfs:comment xml:lang="en">gold, best actor,...</rdfs:comment>
+        <rdfs:comment xml:lang="fr">or, meilleur acteur...</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Award"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#cedex -->
+
+    <owl:DatatypeProperty rdf:about="&gs;cedex">
+        <rdfs:label xml:lang="en">cedex</rdfs:label>
+        <rdfs:label xml:lang="fr">cedex</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#charge -->
+
+    <owl:DatatypeProperty rdf:about="&gs;charge">
+        <rdfs:label xml:lang="en">charge</rdfs:label>
+        <rdfs:label xml:lang="fr">chef d&apos;accusation</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;LegalProceeding"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#comType -->
+
+    <owl:DatatypeProperty rdf:about="&gs;comType">
+        <rdfs:label xml:lang="en">communication type</rdfs:label>
+        <rdfs:label xml:lang="fr">Moyen de communication</rdfs:label>
+        <rdfs:comment xml:lang="en">communication type used in the event of a contact between two persons.</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Moyen de communication utilisé lors d&apos;un contact entre deux personnes</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Meeting"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#content -->
+
+    <owl:DatatypeProperty rdf:about="&gs;content">
+        <rdfs:label xml:lang="en">content</rdfs:label>
+        <rdfs:label xml:lang="fr">Contenu</rdfs:label>
+        <rdfs:comment xml:lang="en">content of an emission</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Contenu d&apos;une émission</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Emission"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#conversion-rate -->
+
+    <owl:DatatypeProperty rdf:about="&gs;conversion-rate">
+        <rdfs:label xml:lang="en">rate</rdfs:label>
+        <rdfs:label xml:lang="fr">taux</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Conversion"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#country-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;country-name">
+        <rdfs:label xml:lang="en">name of the country</rdfs:label>
+        <rdfs:label xml:lang="fr">nom du pays</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Country"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#day -->
+
+    <owl:DatatypeProperty rdf:about="&gs;day">
+        <rdfs:label xml:lang="en">day of the week</rdfs:label>
+        <rdfs:label xml:lang="fr">jour de la semaine</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Date"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#disunion-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;disunion-type">
+        <rdfs:label xml:lang="en">disunion type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de désunion</rdfs:label>
+        <rdfs:comment xml:lang="en">divorce, break, ...</rdfs:comment>
+        <rdfs:comment xml:lang="fr">divorce, rupture</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Disunion"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#disunionType -->
+
+    <owl:DatatypeProperty rdf:about="&gs;disunionType">
+        <rdfs:label xml:lang="en">disunion type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de la séparation</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Disunion"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#dns-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;dns-name">
+        <rdfs:label xml:lang="en">domain name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de domaine</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;DNS"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#dns-status -->
+
+    <owl:DatatypeProperty rdf:about="&gs;dns-status">
+        <rdfs:label xml:lang="en">status</rdfs:label>
+        <rdfs:label xml:lang="fr">statut</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;DNS"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#document-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;document-name">
+        <rdfs:label xml:lang="en">name of the document</rdfs:label>
+        <rdfs:label xml:lang="fr">titre du document</rdfs:label>
+        <rdfs:domain rdf:resource="&foaf;Document"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#document-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;document-type">
+        <rdfs:label xml:lang="en">document type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de document</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+        <rdfs:domain rdf:resource="&foaf;Document"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#domain -->
+
+    <owl:DatatypeProperty rdf:about="&gs;domain">
+        <rdfs:label xml:lang="en">domain</rdfs:label>
+        <rdfs:label xml:lang="fr">domaine de compétition</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Award"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ebit-value -->
+
+    <owl:DatatypeProperty rdf:about="&gs;ebit-value">
+        <rdfs:label xml:lang="en">ebit</rdfs:label>
+        <rdfs:label xml:lang="fr">ebit</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;KPI"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#emission-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;emission-type">
+        <rdfs:label xml:lang="en">emission type</rdfs:label>
+        <rdfs:label xml:lang="fr">type d&apos;envoi </rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Emission"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ethnicity -->
+
+    <owl:DatatypeProperty rdf:about="&gs;ethnicity">
+        <rdfs:label xml:lang="en">ethnicity</rdfs:label>
+        <rdfs:label xml:lang="fr">ethnie</rdfs:label>
+        <rdfs:comment>CnilException Ontology</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Persons"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#event-cause -->
+
+    <owl:DatatypeProperty rdf:about="&gs;event-cause">
+        <rdfs:label xml:lang="en">cause of the event</rdfs:label>
+        <rdfs:label xml:lang="fr">case de l&apos;événement</rdfs:label>
+        <rdfs:comment xml:lang="en">what causes the event</rdfs:comment>
+        <rdfs:comment xml:lang="fr">ce qui a causé l&apos;événement</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#event-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;event-type">
+        <rdfs:label>type</rdfs:label>
+        <rdfs:comment>Inauguration, election, resmise de prix...</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Event"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#familyRelType -->
+
+    <owl:DatatypeProperty rdf:about="&gs;familyRelType">
+        <rdfs:label xml:lang="en">Family relation type</rdfs:label>
+        <rdfs:label xml:lang="fr">Type de la relation familiale</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Family"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#geographicScope -->
+
+    <owl:DatatypeProperty rdf:about="&gs;geographicScope">
+        <rdfs:label xml:lang="en">georaphical area coverd</rdfs:label>
+        <rdfs:label xml:lang="fr">zone geographique couverte</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;PercentageOfMarket"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#group-indication -->
+
+    <owl:DatatypeProperty rdf:about="&gs;group-indication">
+        <rdfs:comment>at most, at least, around...</rdfs:comment>
+        <rdfs:domain rdf:resource="&foaf;Group"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#group-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;group-name">
+        <rdfs:label xml:lang="en">name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom</rdfs:label>
+        <rdfs:domain rdf:resource="&foaf;Group"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#group-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;group-type">
+        <rdfs:label xml:lang="en">group type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de groupe</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&foaf;Group"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#hasEvidence -->
+
+    <owl:DatatypeProperty rdf:about="&gs;hasEvidence">
+        <rdfs:label xml:lang="en">evidence</rdfs:label>
+        <rdfs:label xml:lang="fr">preuve</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;ViolentAct"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#homeTel -->
+
+    <owl:DatatypeProperty rdf:about="&gs;homeTel">
+        <rdfs:label xml:lang="en">personal home phone</rdfs:label>
+        <rdfs:label xml:lang="en">phone</rdfs:label>
+        <rdfs:label xml:lang="fr">numéro de téléhpone personnel</rdfs:label>
+        <rdfs:label xml:lang="fr">téléphone</rdfs:label>
+        <rdfs:comment xml:lang="fr">numéro de téléphone</rdfs:comment>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+        <rdfs:subPropertyOf rdf:resource="&foaf;phone"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#image-link -->
+
+    <owl:DatatypeProperty rdf:about="&gs;image-link">
+        <rdfs:label xml:lang="en">link</rdfs:label>
+        <rdfs:label xml:lang="fr">lien</rdfs:label>
+        <rdfs:domain rdf:resource="&foaf;Image"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#interval-max -->
+
+    <owl:DatatypeProperty rdf:about="&gs;interval-max">
+        <rdfs:label xml:lang="en">interval-max</rdfs:label>
+        <rdfs:label xml:lang="fr">borne supérieure</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Interval"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#interval-min -->
+
+    <owl:DatatypeProperty rdf:about="&gs;interval-min">
+        <rdfs:label xml:lang="en">interval-min</rdfs:label>
+        <rdfs:label xml:lang="fr">iborne inférieure</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Interval"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#interval-unit -->
+
+    <owl:DatatypeProperty rdf:about="&gs;interval-unit">
+        <rdfs:label xml:lang="en">Unit measurement interval</rdfs:label>
+        <rdfs:label xml:lang="fr">unité de l&apos;intervalle de mesure</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Interval"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ipAdress -->
+
+    <owl:DatatypeProperty rdf:about="&gs;ipAdress">
+        <rdfs:label xml:lang="en">adress</rdfs:label>
+        <rdfs:label xml:lang="fr">adresse</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;IP"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ipo-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;ipo-type">
+        <rdfs:label>type</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;IPO"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#label -->
+
+    <owl:DatatypeProperty rdf:about="&gs;label">
+        <rdfs:label xml:lang="en">label</rdfs:label>
+        <rdfs:label xml:lang="fr">étiquette</rdfs:label>
+        <rdfs:comment xml:lang="en">label is used only to help the user to see which entity is concerned. It is not developed to use the information inside.</rdfs:comment>
+        <rdfs:comment xml:lang="fr">l&apos;étiquette n&apos;est utilisée que dans le but d&apos;aider l&apos;utilisateur a visualiser à quoi correspond l&apos;entité. Elle n&apos;est pas destinée à être utilisée pour l&apos;information qu&apos;elle contient. </rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Entity"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#level -->
+
+    <owl:DatatypeProperty rdf:about="&gs;level">
+        <rdfs:label xml:lang="en">level</rdfs:label>
+        <rdfs:label xml:lang="fr">Niveau</rdfs:label>
+        <rdfs:comment xml:lang="en">level in a national or international classification</rdfs:comment>
+        <rdfs:comment xml:lang="fr">niveau dans une classification nationale ou internationale</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Diploma"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#lieudit -->
+
+    <owl:DatatypeProperty rdf:about="&gs;lieudit">
+        <rdfs:label xml:lang="en">vineyard name</rdfs:label>
+        <rdfs:label xml:lang="fr">lieu-dit</rdfs:label>
+        <rdfs:comment xml:lang="en">small geographical area bearing a traditional name</rdfs:comment>
+        <rdfs:comment xml:lang="fr">lieu-dit</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#linkAdress -->
+
+    <owl:DatatypeProperty rdf:about="&gs;linkAdress">
+        <rdfs:label xml:lang="en">adress</rdfs:label>
+        <rdfs:label xml:lang="fr">lien</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;ElectronicDocument"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#loc-detail -->
+
+    <owl:DatatypeProperty rdf:about="&gs;loc-detail">
+        <rdfs:label xml:lang="en">precision</rdfs:label>
+        <rdfs:label xml:lang="fr">précision</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Loc"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#location-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;location-name">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">location name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de lieu</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&v;Location"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#location-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;location-type">
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+        <rdfs:domain rdf:resource="&v;Location"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#loss-value -->
+
+    <owl:DatatypeProperty rdf:about="&gs;loss-value">
+        <rdfs:label xml:lang="en">loss value</rdfs:label>
+        <rdfs:label xml:lang="fr">valeur de la perte</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;KPI"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#mOfT -->
+
+    <owl:DatatypeProperty rdf:about="&gs;mOfT">
+        <rdfs:label xml:lang="en">mean of transport</rdfs:label>
+        <rdfs:label xml:lang="fr">Moyen de transport</rdfs:label>
+        <rdfs:comment xml:lang="en">mean of transport used during a person transfer</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Moyen de transport utilisé lors d&apos;un transfert de personne</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Transfer"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#mailAddress -->
+
+    <owl:DatatypeProperty rdf:about="&gs;mailAddress">
+        <rdfs:label xml:lang="en">mail address</rdfs:label>
+        <rdfs:label xml:lang="fr">adresse électronique</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;MailAddress"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#makingType -->
+
+    <owl:DatatypeProperty rdf:about="&gs;makingType">
+        <rdfs:label xml:lang="en">making type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de fabrication</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Making"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#mes-indication -->
+
+    <owl:DatatypeProperty rdf:about="&gs;mes-indication">
+        <rdfs:domain rdf:resource="&gs;Measurement"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#messageTitle -->
+
+    <owl:DatatypeProperty rdf:about="&gs;messageTitle">
+        <rdfs:label xml:lang="en">title</rdfs:label>
+        <rdfs:label xml:lang="fr">Titre</rdfs:label>
+        <rdfs:comment xml:lang="en">a content title</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Titre d&apos;un contenu</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Emission"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#model -->
+
+    <owl:DatatypeProperty rdf:about="&gs;model">
+        <rdfs:label xml:lang="en">Model</rdfs:label>
+        <rdfs:label xml:lang="fr">Modèle</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Product"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#nat -->
+
+    <owl:DatatypeProperty rdf:about="&gs;nat">
+        <rdfs:label xml:lang="en">nationality</rdfs:label>
+        <rdfs:label xml:lang="fr">nationalité</rdfs:label>
+        <rdfs:comment xml:lang="en">person nationality</rdfs:comment>
+        <rdfs:comment xml:lang="fr">nationalité de la personne</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ne-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;ne-name">
+        <rdfs:label xml:lang="en">named entity name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de l&apos;entité nommée</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Entity"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#newName -->
+
+    <owl:DatatypeProperty rdf:about="&gs;newName">
+        <rdfs:label xml:lang="en">new name</rdfs:label>
+        <rdfs:label xml:lang="fr">nouveau nom</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;NameChange"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#newTicker -->
+
+    <owl:DatatypeProperty rdf:about="&gs;newTicker">
+        <rdfs:label xml:lang="en">new ticker</rdfs:label>
+        <rdfs:label xml:lang="fr">nouveau ticker</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;NameChange"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#num -->
+
+    <owl:DatatypeProperty rdf:about="&gs;num">
+        <rdfs:label xml:lang="en">house number</rdfs:label>
+        <rdfs:label xml:lang="fr">numéro de rue</rdfs:label>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#object-color -->
+
+    <owl:DatatypeProperty rdf:about="&gs;object-color">
+        <rdfs:label xml:lang="en">object color</rdfs:label>
+        <rdfs:label xml:lang="fr">couleur de l&apos;objet</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Object"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#object-id -->
+
+    <owl:DatatypeProperty rdf:about="&gs;object-id">
+        <rdfs:label>ID</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Object"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#object-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;object-name">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">object name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de l&apos;objet</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Object"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#object-origin -->
+
+    <owl:DatatypeProperty rdf:about="&gs;object-origin">
+        <rdfs:label xml:lang="en">object origin</rdfs:label>
+        <rdfs:label xml:lang="fr">origine de l&apos;objet</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Object"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#object-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;object-type">
+        <rdfs:label xml:lang="en">object type</rdfs:label>
+        <rdfs:label xml:lang="fr">type d&apos;objet</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Object"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#occupation-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;occupation-type">
+        <rdfs:label xml:lang="en">type</rdfs:label>
+        <rdfs:label xml:lang="fr">type</rdfs:label>
+        <rdfs:comment xml:lang="fr">maison, appartement...</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;LocOccupation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#offer-terms -->
+
+    <owl:DatatypeProperty rdf:about="&gs;offer-terms">
+        <rdfs:label xml:lang="en">offer terms</rdfs:label>
+        <rdfs:label xml:lang="fr">conditions de vente</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Offer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#oldName -->
+
+    <owl:DatatypeProperty rdf:about="&gs;oldName">
+        <rdfs:label xml:lang="en">old name</rdfs:label>
+        <rdfs:label xml:lang="fr">ancien nom</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;NameChange"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#oldTicker -->
+
+    <owl:DatatypeProperty rdf:about="&gs;oldTicker">
+        <rdfs:label xml:lang="en">old ticker</rdfs:label>
+        <rdfs:label xml:lang="fr">ancien ticker</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;NameChange"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#orderNum -->
+
+    <owl:DatatypeProperty rdf:about="&gs;orderNum">
+        <rdfs:label xml:lang="en">order number</rdfs:label>
+        <rdfs:label xml:lang="fr">numéro de commande</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Order"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#organization-aim -->
+
+    <owl:DatatypeProperty rdf:about="&gs;organization-aim">
+        <rdfs:label xml:lang="en">Organization aim</rdfs:label>
+        <rdfs:label xml:lang="fr">Objectif de l&apos;organisation</rdfs:label>
+        <rdfs:comment xml:lang="en">lucrative, charitable, ...</rdfs:comment>
+        <rdfs:comment xml:lang="fr">lucratif, caritatif ...</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Organizations"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#organization-origin -->
+
+    <owl:DatatypeProperty rdf:about="&gs;organization-origin">
+        <rdfs:label xml:lang="en">origin</rdfs:label>
+        <rdfs:label xml:lang="fr">origine</rdfs:label>
+        <rdfs:comment xml:lang="fr">Origine de l&apos;organisation</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Organizations"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#organization-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;organization-type">
+        <rdfs:label xml:lang="en">general type</rdfs:label>
+        <rdfs:label xml:lang="fr">Type général</rdfs:label>
+        <rdfs:comment xml:lang="en">general type of an organization : private, public, non-profit, ...</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Type général d&apos;une organisation : privé, public, à but non lucratif, ...</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Organizations"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#orientation-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;orientation-type">
+        <rdfs:label xml:lang="en">type</rdfs:label>
+        <rdfs:label xml:lang="fr">type</rdfs:label>
+        <rdfs:comment xml:lang="en">Type of direction : north, south...</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Type de direction : nord, sud...</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;LocOrientation"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#origin -->
+
+    <owl:DatatypeProperty rdf:about="&gs;origin">
+        <rdfs:label xml:lang="en">origine géographique de la personne</rdfs:label>
+        <rdfs:label xml:lang="fr">geographical origin</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Persons"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#payementType -->
+
+    <owl:DatatypeProperty rdf:about="&gs;payementType">
+        <rdfs:label xml:lang="en">payement type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de paiement</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Purchase"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#physicalState -->
+
+    <owl:DatatypeProperty rdf:about="&gs;physicalState">
+        <rdfs:label xml:lang="en">physical state</rdfs:label>
+        <rdfs:label xml:lang="fr">Etat physique</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Victim"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#political_affiliation -->
+
+    <owl:DatatypeProperty rdf:about="&gs;political_affiliation">
+        <rdfs:label xml:lang="en">political affiliation</rdfs:label>
+        <rdfs:label xml:lang="fr">affiliation poilitique</rdfs:label>
+        <rdfs:comment xml:lang="fr">affiliation politique de l&apos;organisation</rdfs:comment>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#posBeg -->
+
+    <owl:DatatypeProperty rdf:about="&gs;posBeg">
+        <rdfs:label xml:lang="en">start position</rdfs:label>
+        <rdfs:label xml:lang="fr">Position de début</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;int"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#posEnd -->
+
+    <owl:DatatypeProperty rdf:about="&gs;posEnd">
+        <rdfs:label xml:lang="en">end position</rdfs:label>
+        <rdfs:label xml:lang="fr">Position de fin</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;int"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#product -->
+
+    <owl:DatatypeProperty rdf:about="&gs;product">
+        <rdfs:domain rdf:resource="&gs;Order"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#project-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;project-name">
+        <rdfs:label xml:lang="en">project name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom du projet</rdfs:label>
+        <rdfs:domain rdf:resource="&foaf;Project"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#rcNumber -->
+
+    <owl:DatatypeProperty rdf:about="&gs;rcNumber">
+        <rdfs:domain rdf:resource="&gs;Company"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#relation-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;relation-type">
+        <rdfs:label xml:lang="en">type</rdfs:label>
+        <rdfs:label xml:lang="fr">type</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;OrgRelation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#releaseType -->
+
+    <owl:DatatypeProperty rdf:about="&gs;releaseType">
+        <rdfs:label xml:lang="en">released type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de la libération</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Release"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#religious_affiliation -->
+
+    <owl:DatatypeProperty rdf:about="&gs;religious_affiliation">
+        <rdfs:label xml:lang="en">religious affiliation</rdfs:label>
+        <rdfs:label xml:lang="fr">affiliation religieuse</rdfs:label>
+        <rdfs:comment xml:lang="fr">affiliation religieuse de l&apos;organisation</rdfs:comment>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#role -->
+
+    <owl:DatatypeProperty rdf:about="&gs;role">
+        <rdfs:label xml:lang="en">position held</rdfs:label>
+        <rdfs:label xml:lang="fr">poste occupé</rdfs:label>
+        <rdfs:comment xml:lang="en">name of the position held</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Nom du poste occupé</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Experience"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#round -->
+
+    <owl:DatatypeProperty rdf:about="&gs;round">
+        <rdfs:label xml:lang="en">round</rdfs:label>
+        <rdfs:label xml:lang="fr">tour de table</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Fundraising"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#sexual_orientation -->
+
+    <owl:DatatypeProperty rdf:about="&gs;sexual_orientation">
+        <rdfs:label xml:lang="en">sexual orientation</rdfs:label>
+        <rdfs:label xml:lang="fr">orientation sexuelle</rdfs:label>
+        <rdfs:comment>CnilException Ontology</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Persons"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#siren -->
+
+    <owl:DatatypeProperty rdf:about="&gs;siren">
+        <rdfs:label>SIREN</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;NPO"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#socialStatus -->
+
+    <owl:DatatypeProperty rdf:about="&gs;socialStatus">
+        <rdfs:label xml:lang="en">social status</rdfs:label>
+        <rdfs:label xml:lang="fr">statut social d&apos;une entreprise</rdfs:label>
+        <rdfs:comment xml:lang="en">private, public</rdfs:comment>
+        <rdfs:comment xml:lang="fr">privée, public</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Organizations"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#statusIPO -->
+
+    <owl:DatatypeProperty rdf:about="&gs;statusIPO">
+        <rdfs:label>status</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;IPO-Step"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#stceType -->
+
+    <owl:DatatypeProperty rdf:about="&gs;stceType">
+        <rdfs:label xml:lang="en">sentence type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de la sentence</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Stce"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#strName -->
+
+    <owl:DatatypeProperty rdf:about="&gs;strName">
+        <rdfs:label xml:lang="en">street name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de rue</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#strType -->
+
+    <owl:DatatypeProperty rdf:about="&gs;strType">
+        <rdfs:label xml:lang="en">street type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de rue</rdfs:label>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#subject -->
+
+    <owl:DatatypeProperty rdf:about="&gs;subject">
+        <rdfs:label xml:lang="en">subjects</rdfs:label>
+        <rdfs:label xml:lang="fr">Sujets</rdfs:label>
+        <rdfs:comment xml:lang="en">main subjects, skills, covered</rdfs:comment>
+        <rdfs:comment xml:lang="fr">droit, physique, maths</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#theme -->
+
+    <owl:DatatypeProperty rdf:about="&gs;theme">
+        <rdfs:label xml:lang="en">theme</rdfs:label>
+        <rdfs:label xml:lang="fr">thème</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&foaf;Project"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ticker-name -->
+
+    <owl:DatatypeProperty rdf:about="&gs;ticker-name">
+        <rdfs:label>ticker</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Ticker"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#title -->
+
+    <owl:DatatypeProperty rdf:about="&gs;title">
+        <rdfs:label xml:lang="en">title</rdfs:label>
+        <rdfs:label xml:lang="fr">Titre</rdfs:label>
+        <rdfs:comment xml:lang="en">title of the qualification obtained</rdfs:comment>
+        <rdfs:comment xml:lang="fr">titre de la qualification obtenue</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Diploma"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#transferType -->
+
+    <owl:DatatypeProperty rdf:about="&gs;transferType">
+        <rdfs:label xml:lang="en">transfer type</rdfs:label>
+        <rdfs:label xml:lang="fr">type du transfert</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Transfer"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#turnover-value -->
+
+    <owl:DatatypeProperty rdf:about="&gs;turnover-value">
+        <rdfs:label xml:lang="en">turnover value</rdfs:label>
+        <rdfs:label xml:lang="fr">valeur du chiffre d&apos;affaire</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;KPI"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;type"/>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#type-change -->
+
+    <owl:DatatypeProperty rdf:about="&gs;type-change">
+        <rdfs:label>type</rdfs:label>
+        <rdfs:comment>dimininution, augmentation...</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;PriceChange"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#union-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;union-type">
+        <rdfs:label xml:lang="en">union type</rdfs:label>
+        <rdfs:label xml:lang="en">wedding, pacs</rdfs:label>
+        <rdfs:label xml:lang="fr">type d&apos;union </rdfs:label>
+        <rdfs:comment xml:lang="fr">mariage, pacs </rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Union"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#unit -->
+
+    <owl:DatatypeProperty rdf:about="&gs;unit">
+        <rdfs:label xml:lang="en">unit of measure</rdfs:label>
+        <rdfs:label xml:lang="fr">unité de mesure</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Mes"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#value -->
+
+    <owl:DatatypeProperty rdf:about="&gs;value">
+        <rdfs:label xml:lang="en">value</rdfs:label>
+        <rdfs:label xml:lang="fr">valeur</rdfs:label>
+        <rdfs:comment xml:lang="en">measure value</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Valeur d&apos;une mesure</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;long"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#violentActType -->
+
+    <owl:DatatypeProperty rdf:about="&gs;violentActType">
+        <rdfs:label xml:lang="en">violent act type</rdfs:label>
+        <rdfs:label xml:lang="fr">type de l&apos;acte de violence</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;ViolentAct"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#websiteAddress -->
+
+    <owl:DatatypeProperty rdf:about="&gs;websiteAddress">
+        <rdfs:label xml:lang="en">web site address</rdfs:label>
+        <rdfs:label xml:lang="fr">adresse d&apos;un site web</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Website"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2002/12/cal/icaltzd#dtend -->
+
+    <owl:DatatypeProperty rdf:about="&ical;dtend">
+        <rdfs:label xml:lang="en">upper date bound</rdfs:label>
+        <rdfs:label xml:lang="fr">borne supérieure</rdfs:label>
+        <rdfs:comment xml:lang="en">end date of an uncertain time interval</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Date de fin d&apos;un intervalle temporel d&apos;incertitude</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Date"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2002/12/cal/icaltzd#dtstart -->
+
+    <owl:DatatypeProperty rdf:about="&ical;dtstart">
+        <rdfs:label xml:lang="en">lower date bound</rdfs:label>
+        <rdfs:label xml:lang="fr">borne inférieure</rdfs:label>
+        <rdfs:comment xml:lang="en">begin date of an uncertain time interval</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Date de début d&apos;un intervalle temporel d&apos;incertitude</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Date"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2003/01/geo/wgs84_pos#lat -->
+
+    <owl:DatatypeProperty rdf:about="&geo;lat">
+        <rdfs:label xml:lang="en">latitude</rdfs:label>
+        <rdfs:label xml:lang="fr">latitude</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Loc"/>
+        <rdfs:range rdf:resource="&xsd;long"/>
+        <owl:propertyDisjointWith rdf:resource="&geo;long"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2003/01/geo/wgs84_pos#long -->
+
+    <owl:DatatypeProperty rdf:about="&geo;long">
+        <rdfs:label xml:lang="en">longitude</rdfs:label>
+        <rdfs:label xml:lang="fr">longitude</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Loc"/>
+        <rdfs:range rdf:resource="&xsd;long"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#additional-name -->
+
+    <owl:DatatypeProperty rdf:about="&v;additional-name">
+        <rdfs:label xml:lang="en">additional name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom supplémentaire</rdfs:label>
+        <rdfs:comment xml:lang="en">additional name like : birth name, surname, middle name, ...</rdfs:comment>
+        <rdfs:comment xml:lang="fr">nom supplémentaire : nom de jeune fille, patronyme, deuxième prénom, ...</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#extended-address -->
+
+    <owl:DatatypeProperty rdf:about="&v;extended-address">
+        <rdfs:label xml:lang="en">appartment</rdfs:label>
+        <rdfs:label xml:lang="fr">appartement</rdfs:label>
+        <rdfs:comment xml:lang="en">appartment : number, floor,..</rdfs:comment>
+        <rdfs:comment xml:lang="fr">appartement : numéro, étage</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#honorific-prefix -->
+
+    <owl:DatatypeProperty rdf:about="&v;honorific-prefix">
+        <rdfs:label xml:lang="en">title (prefix)</rdfs:label>
+        <rdfs:label xml:lang="fr">titre (prefix)</rdfs:label>
+        <rdfs:comment xml:lang="en">title located before the name</rdfs:comment>
+        <rdfs:comment xml:lang="fr">titre situé avant le nom</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#honorific-suffix -->
+
+    <owl:DatatypeProperty rdf:about="&v;honorific-suffix">
+        <rdfs:label xml:lang="en">title (suffix)</rdfs:label>
+        <rdfs:label xml:lang="fr">titre</rdfs:label>
+        <rdfs:comment xml:lang="en">title located after the name</rdfs:comment>
+        <rdfs:comment xml:lang="fr">titre situé après le nom</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#organization-name -->
+
+    <owl:DatatypeProperty rdf:about="&v;organization-name">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">organization name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de l&apos;organisme</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&foaf;Organization"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#post-office-box -->
+
+    <owl:DatatypeProperty rdf:about="&v;post-office-box">
+        <rdfs:label xml:lang="en">post office box</rdfs:label>
+        <rdfs:label xml:lang="fr">boite postale</rdfs:label>
+        <rdfs:comment xml:lang="en">post office box number</rdfs:comment>
+        <rdfs:comment xml:lang="fr">numéro de boite postale</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#postal-code -->
+
+    <owl:DatatypeProperty rdf:about="&v;postal-code">
+        <rdfs:label xml:lang="en">postal code</rdfs:label>
+        <rdfs:label xml:lang="fr">code postal</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;int"/>
+        <rdfs:domain rdf:resource="&v;Address"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#workTel -->
+
+    <owl:DatatypeProperty rdf:about="&v;workTel">
+        <rdfs:label xml:lang="en">organization phone number</rdfs:label>
+        <rdfs:label xml:lang="fr">téléphone de l&apos;organisme</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+        <rdfs:subPropertyOf rdf:resource="&foaf;phone"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/accountName -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;accountName">
+        <rdfs:label xml:lang="en">account name</rdfs:label>
+        <rdfs:label xml:lang="fr">nom de compte</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&foaf;OnlineAccount"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/familyName -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;familyName">
+        <rdfs:label>familyName</rdfs:label>
+        <rdfs:comment>The family name of some person.</rdfs:comment>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/gender -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;gender">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">gender</rdfs:label>
+        <rdfs:label xml:lang="fr">genre</rdfs:label>
+        <rdfs:comment xml:lang="en">person gender</rdfs:comment>
+        <rdfs:comment xml:lang="fr">genre de la personne</rdfs:comment>
+        <rdfs:domain rdf:resource="&foaf;Person"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="&rdf;List"/>
+                        <rdf:first rdf:datatype="&xsd;string">female</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="&rdf;List"/>
+                                <rdf:first rdf:datatype="&xsd;string">male</rdf:first>
+                                <rdf:rest rdf:resource="&rdf;nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/givenName -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;givenName">
+        <rdfs:label>Given name</rdfs:label>
+        <rdfs:label xml:lang="fr">prénom</rdfs:label>
+        <rdfs:comment>The given name of some person.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/name -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;name">
+        <rdfs:label>name</rdfs:label>
+        <rdfs:comment>A name for some thing.</rdfs:comment>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/nick -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;nick">
+        <rdfs:label xml:lang="en">nick name</rdfs:label>
+        <rdfs:label xml:lang="fr">surnom</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/phone -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;phone">
+        <rdfs:label>phone</rdfs:label>
+        <rdfs:comment>A phone,  specified using fully qualified tel: URI scheme (refs: http://www.w3.org/Addressing/schemes.html#tel).</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+        <rdfs:domain rdf:resource="&foaf;Agent"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://schema.org/ImageObject -->
+
+    <owl:Class rdf:about="&schema;ImageObject">
+        <owl:equivalentClass rdf:resource="&foaf;Image"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Acquisition -->
+
+    <owl:Class rdf:about="&gs;Acquisition">
+        <rdfs:label xml:lang="en">Acquisition of an organization</rdfs:label>
+        <rdfs:label xml:lang="fr">Achat d&apos;une entreprise</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;BankingTransaction"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Action -->
+
+    <owl:Class rdf:about="&gs;Action">
+        <rdfs:label xml:lang="en">Action</rdfs:label>
+        <rdfs:label xml:lang="fr">Action</rdfs:label>
+        <rdfs:comment xml:lang="en">Abstract class</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstraite</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#AlignementUncertainty -->
+
+    <owl:Class rdf:about="&gs;AlignementUncertainty">
+        <rdfs:subClassOf rdf:resource="&gs;Uncertainty"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Appointment -->
+
+    <owl:Class rdf:about="&gs;Appointment">
+        <rdfs:label xml:lang="en">Appointment</rdfs:label>
+        <rdfs:label xml:lang="fr">Nomination</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;PersonalEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Arrest -->
+
+    <owl:Class rdf:about="&gs;Arrest">
+        <rdfs:label xml:lang="en">Arrest</rdfs:label>
+        <rdfs:label xml:lang="fr">Arrestation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;LegalProceeding"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#AuthorUncertainty -->
+
+    <owl:Class rdf:about="&gs;AuthorUncertainty">
+        <rdfs:subClassOf rdf:resource="&gs;Uncertainty"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Award -->
+
+    <owl:Class rdf:about="&gs;Award">
+        <rdfs:label xml:lang="en">Award</rdfs:label>
+        <rdfs:label xml:lang="fr">Récompense</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#BankingTransaction -->
+
+    <owl:Class rdf:about="&gs;BankingTransaction">
+        <rdfs:label xml:lang="en">Banking transaction</rdfs:label>
+        <rdfs:label xml:lang="fr">transaction bancaire</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Action"/>
+        <rdfs:comment xml:lang="en">abstract class bringing together the banking transactions</rdfs:comment>
+        <rdfs:comment xml:lang="fr">classe abstraite regroupant les transactions bancaires</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Birth -->
+
+    <owl:Class rdf:about="&gs;Birth">
+        <rdfs:label xml:lang="en">Birth</rdfs:label>
+        <rdfs:label xml:lang="fr">Naissance</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;PersonalEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Brand -->
+
+    <owl:Class rdf:about="&gs;Brand">
+        <rdfs:label xml:lang="en">Brand</rdfs:label>
+        <rdfs:label xml:lang="fr">Marque</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Product"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Building -->
+
+    <owl:Class rdf:about="&gs;Building">
+        <rdfs:label xml:lang="en">Building</rdfs:label>
+        <rdfs:label xml:lang="fr">Bâtiment</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Loc"/>
+        <rdfs:comment xml:lang="en">ex: Office, university...</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Exemple: Mairie, bureau de police, université...</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Buyer -->
+
+    <owl:Class rdf:about="&gs;Buyer">
+        <rdfs:label xml:lang="en">Buyer</rdfs:label>
+        <rdfs:label xml:lang="fr">Acheteur</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;ParticularAgents"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#City -->
+
+    <owl:Class rdf:about="&gs;City">
+        <rdfs:label xml:lang="en">City</rdfs:label>
+        <rdfs:label xml:lang="fr">Ville</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;GeographicDivision"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Company -->
+
+    <owl:Class rdf:about="&gs;Company">
+        <rdfs:label xml:lang="en">Company</rdfs:label>
+        <rdfs:label xml:lang="fr">Entreprise</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&foaf;Organization"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#CompulsoryLiquidation -->
+
+    <owl:Class rdf:about="&gs;CompulsoryLiquidation">
+        <rdfs:label xml:lang="en">Compulsory liquidation</rdfs:label>
+        <rdfs:label xml:lang="fr">Liquidation judiciaire</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;LegalProceeding"/>
+        <rdfs:subClassOf rdf:resource="&gs;OrganizationEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Continent -->
+
+    <owl:Class rdf:about="&gs;Continent">
+        <rdfs:label xml:lang="en">Continent</rdfs:label>
+        <rdfs:label xml:lang="fr">Continent</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;GeographicDivision"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Conversion -->
+
+    <owl:Class rdf:about="&gs;Conversion">
+        <rdfs:label xml:lang="en">Measure comparer</rdfs:label>
+        <rdfs:label xml:lang="fr">Comparaison de mesures</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Country -->
+
+    <owl:Class rdf:about="&gs;Country">
+        <rdfs:label xml:lang="en">Country</rdfs:label>
+        <rdfs:label xml:lang="fr">Pays</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;GeographicDivision"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#CourtHearing -->
+
+    <owl:Class rdf:about="&gs;CourtHearing">
+        <rdfs:label xml:lang="en">Court hearing</rdfs:label>
+        <rdfs:label xml:lang="fr">Audience au tribunal de justice</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#DNS -->
+
+    <owl:Class rdf:about="&gs;DNS">
+        <rdfs:label xml:lang="en">Domain Name System</rdfs:label>
+        <rdfs:label xml:lang="fr">Système de noms de domaine</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Web"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Date -->
+
+    <owl:Class rdf:about="&gs;Date">
+        <rdfs:label xml:lang="en">Date</rdfs:label>
+        <rdfs:label xml:lang="fr">Date</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Dates -->
+
+    <owl:Class rdf:about="&gs;Dates">
+        <rdfs:comment xml:lang="en">Abstract class bringing together concepts containing a date interval</rdfs:comment>
+        <rdfs:comment xml:lang="en">abstract class that group concept with date interval</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstraite</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstraite qui regroupe tous les concepts ayant un datebeg et un dateend (un intervalle)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Death -->
+
+    <owl:Class rdf:about="&gs;Death">
+        <rdfs:label xml:lang="en">Death</rdfs:label>
+        <rdfs:label xml:lang="fr">Mort</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;PersonalEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Diploma -->
+
+    <owl:Class rdf:about="&gs;Diploma">
+        <rdfs:label xml:lang="en">Diploma</rdfs:label>
+        <rdfs:label xml:lang="fr">Diplôme</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;PersonalLife"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Disease -->
+
+    <owl:Class rdf:about="&gs;Disease">
+        <rdfs:label xml:lang="en">Disease</rdfs:label>
+        <rdfs:label xml:lang="fr">Maladie</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Dates"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:comment>CnilException Ontology</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Distance -->
+
+    <owl:Class rdf:about="&gs;Distance">
+        <rdfs:label xml:lang="en">Distance</rdfs:label>
+        <rdfs:label xml:lang="fr">Distance entre deux lieux</rdfs:label>
+        <rdfs:comment>Distance entre deux points exemple: X est à 10 km de Y </rdfs:comment>
+        <rdfs:comment xml:lang="en">Distance between two points or two locations</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Disunion -->
+
+    <owl:Class rdf:about="&gs;Disunion">
+        <rdfs:label xml:lang="en">Disunion</rdfs:label>
+        <rdfs:label xml:lang="fr">Séparation / Divorce</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+        <rdfs:subClassOf rdf:resource="&gs;UnionDisunion"/>
+        <rdfs:comment xml:lang="en">end of an union, official or not, between two persons</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Désunion, officielle ou non, entre deux personnes</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Economics -->
+
+    <owl:Class rdf:about="&gs;Economics"/>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Education -->
+
+    <owl:Class rdf:about="&gs;Education">
+        <rdfs:label xml:lang="en">Education</rdfs:label>
+        <rdfs:label xml:lang="fr">Etudes suivies</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;PersonalLife"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ElectronicDocument -->
+
+    <owl:Class rdf:about="&gs;ElectronicDocument">
+        <rdfs:label xml:lang="en">Electronic document</rdfs:label>
+        <rdfs:label xml:lang="fr">Document électronique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&foaf;Document"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Emission -->
+
+    <owl:Class rdf:about="&gs;Emission">
+        <rdfs:label xml:lang="en">Emission</rdfs:label>
+        <rdfs:label xml:lang="fr">Transmission de messages</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Action"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Entity -->
+
+    <owl:Class rdf:about="&gs;Entity">
+        <rdfs:label xml:lang="en">Named entity</rdfs:label>
+        <rdfs:label xml:lang="fr">Entité nommée</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:comment xml:lang="en">Abstract class</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstraite</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Event -->
+
+    <owl:Class rdf:about="&gs;Event">
+        <rdfs:label xml:lang="en">Event</rdfs:label>
+        <rdfs:label xml:lang="fr">Evénement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Dates"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:comment xml:lang="en">Absract class</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstraite</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Experience -->
+
+    <owl:Class rdf:about="&gs;Experience">
+        <rdfs:label xml:lang="en">Professional experience</rdfs:label>
+        <rdfs:label xml:lang="fr">Expérience professionnelle</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Dates"/>
+        <rdfs:subClassOf rdf:resource="&gs;PersonalLife"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ExperienceEnd -->
+
+    <owl:Class rdf:about="&gs;ExperienceEnd">
+        <rdfs:label xml:lang="en">Experience End</rdfs:label>
+        <rdfs:label xml:lang="fr">Fin de l&apos;occupation d&apos;un poste</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;PersonalEvent"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Family -->
+
+    <owl:Class rdf:about="&gs;Family">
+        <rdfs:subClassOf rdf:resource="&gs;Dates"/>
+        <rdfs:subClassOf rdf:resource="&gs;PersonalLife"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Fax -->
+
+    <owl:Class rdf:about="&gs;Fax">
+        <rdfs:label>Numéro de fax</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Number"/>
+        <rdfs:comment>Fax number</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#FixedOrInterval -->
+
+    <owl:Class rdf:about="&gs;FixedOrInterval">
+        <rdfs:subClassOf rdf:resource="&gs;Measurement"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Fundraising -->
+
+    <owl:Class rdf:about="&gs;Fundraising">
+        <rdfs:label xml:lang="en">Fundraising</rdfs:label>
+        <rdfs:label xml:lang="fr">Levée de fond</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;BankingTransaction"/>
+        <rdfs:subClassOf rdf:resource="&gs;OrganizationEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Funerals -->
+
+    <owl:Class rdf:about="&gs;Funerals">
+        <rdfs:label xml:lang="en">Funerals</rdfs:label>
+        <rdfs:label xml:lang="fr">Funérailles</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Event"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#GeneralEvent -->
+
+    <owl:Class rdf:about="&gs;GeneralEvent">
+        <rdfs:subClassOf rdf:resource="&gs;Event"/>
+        <rdfs:comment xml:lang="en">Event as election, competition, demonstration</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Evénement : ex : élection, concours, manifestation</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#GeographicDivision -->
+
+    <owl:Class rdf:about="&gs;GeographicDivision">
+        <rdfs:label xml:lang="en">Geographic dvision</rdfs:label>
+        <rdfs:label xml:lang="fr">Division géographique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&v;Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#GroupOrg -->
+
+    <owl:Class rdf:about="&gs;GroupOrg">
+        <rdfs:label xml:lang="en">Group of oganizations</rdfs:label>
+        <rdfs:label xml:lang="fr">Groupe d&apos;organisations</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Organizations"/>
+        <rdfs:subClassOf rdf:resource="&foaf;Group"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#GroupPers -->
+
+    <owl:Class rdf:about="&gs;GroupPers">
+        <rdfs:label xml:lang="en">Group of persons</rdfs:label>
+        <rdfs:label xml:lang="fr">Groupe de personnes</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Persons"/>
+        <rdfs:subClassOf rdf:resource="&foaf;Group"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ID -->
+
+    <owl:Class rdf:about="&gs;ID">
+        <rdfs:label xml:lang="en">ID</rdfs:label>
+        <rdfs:label xml:lang="fr">Identifiant</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Number"/>
+        <rdfs:comment>Identifiant : 
+Ex: Matricule ou Pseudo</rdfs:comment>
+        <rdfs:comment xml:lang="eng">all  alphanumerical codes like flight number or ISBNs</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#IP -->
+
+    <owl:Class rdf:about="&gs;IP">
+        <rdfs:label xml:lang="en">IP Address</rdfs:label>
+        <rdfs:label xml:lang="fr">Adresse IP</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Web"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#IPO -->
+
+    <owl:Class rdf:about="&gs;IPO">
+        <rdfs:label xml:lang="en">IPO</rdfs:label>
+        <rdfs:label xml:lang="fr">Entrée en bourse</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;StockExchange"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#IPO-Step -->
+
+    <owl:Class rdf:about="&gs;IPO-Step">
+        <rdfs:label>Status</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;StockExchange"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Indictment -->
+
+    <owl:Class rdf:about="&gs;Indictment">
+        <rdfs:label xml:lang="en">Indictment</rdfs:label>
+        <rdfs:label xml:lang="fr">Mise en examen</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;LegalProceeding"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Interval -->
+
+    <owl:Class rdf:about="&gs;Interval">
+        <rdfs:label xml:lang="en">Interval</rdfs:label>
+        <rdfs:label xml:lang="fr">Intervalle</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;FixedOrInterval"/>
+        <rdfs:comment xml:lang="en">Interval with the same unity</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Intervalle de mesure à unité identique</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Investor -->
+
+    <owl:Class rdf:about="&gs;Investor">
+        <rdfs:label xml:lang="en">Investor</rdfs:label>
+        <rdfs:label xml:lang="fr">Investisseur</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;ParticularAgents"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Judgment -->
+
+    <owl:Class rdf:about="&gs;Judgment">
+        <rdfs:label xml:lang="en">Judgment</rdfs:label>
+        <rdfs:label xml:lang="fr">Jugement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;LegalProceeding"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#JudicialDecision -->
+
+    <owl:Class rdf:about="&gs;JudicialDecision">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#KPI -->
+
+    <owl:Class rdf:about="&gs;KPI">
+        <rdfs:label xml:lang="en">Key Performance Indicators</rdfs:label>
+        <rdfs:label xml:lang="fr"> indicateurs clefs de performance</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Economics"/>
+        <rdfs:comment>Abstract class for attributes with properties</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#LegalProceeding -->
+
+    <owl:Class rdf:about="&gs;LegalProceeding">
+        <rdfs:label xml:lang="en">Justice</rdfs:label>
+        <rdfs:label xml:lang="fr">Justice</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Loc -->
+
+    <owl:Class rdf:about="&gs;Loc">
+        <rdfs:subClassOf rdf:resource="&gs;Entity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#LocOccupation -->
+
+    <owl:Class rdf:about="&gs;LocOccupation">
+        <rdfs:label xml:lang="en">Housting</rdfs:label>
+        <rdfs:label xml:lang="fr">Occupation du lieu</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#LocOrientation -->
+
+    <owl:Class rdf:about="&gs;LocOrientation">
+        <rdfs:label xml:lang="en">Orientation</rdfs:label>
+        <rdfs:label xml:lang="fr">Orientation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#LocSituations -->
+
+    <owl:Class rdf:about="&gs;LocSituations">
+        <rdfs:label xml:lang="en">Direction/Situation</rdfs:label>
+        <rdfs:label xml:lang="fr">Direction/Situation</rdfs:label>
+        <rdfs:comment xml:lang="en">Situation of a point regard to an other</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Situation d&apos;un point par rapport à un autre</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#MailAddress -->
+
+    <owl:Class rdf:about="&gs;MailAddress">
+        <rdfs:label xml:lang="en">Email address</rdfs:label>
+        <rdfs:label xml:lang="fr">Adresse mail</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&foaf;OnlineAccount"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Making -->
+
+    <owl:Class rdf:about="&gs;Making">
+        <rdfs:label xml:lang="en">Making</rdfs:label>
+        <rdfs:label xml:lang="fr">Fabrication d&apos;un objet</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Action"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#MarketPlace -->
+
+    <owl:Class rdf:about="&gs;MarketPlace">
+        <rdfs:label xml:lang="en">Market</rdfs:label>
+        <rdfs:label xml:lang="fr">Place de marché</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&foaf;Organization"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Measurement -->
+
+    <owl:Class rdf:about="&gs;Measurement">
+        <rdfs:comment xml:lang="en">Absract class</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstraite </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#MedicalAct -->
+
+    <owl:Class rdf:about="&gs;MedicalAct">
+        <rdfs:label xml:lang="en">Medical action</rdfs:label>
+        <rdfs:label xml:lang="fr">Action médicale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Action"/>
+        <rdfs:comment>CnilException Ontology</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Meeting -->
+
+    <owl:Class rdf:about="&gs;Meeting">
+        <rdfs:label xml:lang="en">Meeting/Contact</rdfs:label>
+        <rdfs:label xml:lang="fr">Rencontre / contact</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Event"/>
+        <rdfs:comment xml:lang="fr">Echange entre deux personnes</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Mes -->
+
+    <owl:Class rdf:about="&gs;Mes">
+        <rdfs:label xml:lang="en">Measure</rdfs:label>
+        <rdfs:label xml:lang="fr">Mesure </rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;FixedOrInterval"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#MonetaryMes -->
+
+    <owl:Class rdf:about="&gs;MonetaryMes">
+        <rdfs:label xml:lang="en">Monetary measure</rdfs:label>
+        <rdfs:label xml:lang="fr">Mesure monétaire</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Mes"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#MoneyTransaction -->
+
+    <owl:Class rdf:about="&gs;MoneyTransaction">
+        <rdfs:label xml:lang="en">Money trading</rdfs:label>
+        <rdfs:label xml:lang="fr">Echange d&apos;argent </rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;BankingTransaction"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#NPO -->
+
+    <owl:Class rdf:about="&gs;NPO">
+        <rdfs:label xml:lang="en">Non profit organization</rdfs:label>
+        <rdfs:label xml:lang="fr">Organisme à but non lucratif</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&foaf;Organization"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#NameChange -->
+
+    <owl:Class rdf:about="&gs;NameChange">
+        <rdfs:label xml:lang="en">Name change</rdfs:label>
+        <rdfs:label xml:lang="fr">Changement de nom</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;OrganizationEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Number -->
+
+    <owl:Class rdf:about="&gs;Number">
+        <rdfs:comment xml:lang="en">Absract class</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstraite</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Object -->
+
+    <owl:Class rdf:about="&gs;Object">
+        <rdfs:label xml:lang="en">Object</rdfs:label>
+        <rdfs:label xml:lang="fr">Objet</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Objects"/>
+        <rdfs:comment xml:lang="eng">Physical object</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Objet physique</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Objects -->
+
+    <owl:Class rdf:about="&gs;Objects">
+        <rdfs:subClassOf rdf:resource="&gs;PhysicalEntity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Offer -->
+
+    <owl:Class rdf:about="&gs;Offer">
+        <rdfs:label xml:lang="en">Offer</rdfs:label>
+        <rdfs:label xml:lang="fr">Offre de vente</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Economics"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Order -->
+
+    <owl:Class rdf:about="&gs;Order">
+        <rdfs:label xml:lang="en">Order </rdfs:label>
+        <rdfs:label xml:lang="fr">Commande</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Economics"/>
+        <rdfs:comment xml:lang="en">Client to provider</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Client vers fournisseur</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#OrgClosure -->
+
+    <owl:Class rdf:about="&gs;OrgClosure">
+        <rdfs:label xml:lang="en">Closure</rdfs:label>
+        <rdfs:label xml:lang="fr">Fermeture</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;OrganizationEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#OrgCreation -->
+
+    <owl:Class rdf:about="&gs;OrgCreation">
+        <rdfs:label xml:lang="en">Creation of an organization</rdfs:label>
+        <rdfs:label xml:lang="fr">Création d&apos;une entreprise</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;OrganizationEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#OrgRelation -->
+
+    <owl:Class rdf:about="&gs;OrgRelation">
+        <rdfs:label xml:lang="en">Relation</rdfs:label>
+        <rdfs:label xml:lang="fr">Relation</rdfs:label>
+        <rdfs:comment>Ex: partenariat</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#OrganizationEvent -->
+
+    <owl:Class rdf:about="&gs;OrganizationEvent">
+        <rdfs:subClassOf rdf:resource="&gs;Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Organizations -->
+
+    <owl:Class rdf:about="&gs;Organizations">
+        <rdfs:subClassOf rdf:resource="&foaf;Agent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Par -->
+
+    <owl:Class rdf:about="&gs;Par">
+        <rdfs:subClassOf rdf:resource="&gs;TextualStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#PartialUnemployment -->
+
+    <owl:Class rdf:about="&gs;PartialUnemployment">
+        <rdfs:label xml:lang="en">Partial unemployment</rdfs:label>
+        <rdfs:label xml:lang="fr">Chomage partiel</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;OrganizationEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ParticularAgents -->
+
+    <owl:Class rdf:about="&gs;ParticularAgents">
+        <rdfs:comment xml:lang="en">Abstract class</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstraite</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Percentage -->
+
+    <owl:Class rdf:about="&gs;Percentage">
+        <rdfs:label xml:lang="en">Percentage</rdfs:label>
+        <rdfs:label xml:lang="fr">Pourcentage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Mes"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#PercentageOfMarket -->
+
+    <owl:Class rdf:about="&gs;PercentageOfMarket">
+        <rdfs:label xml:lang="en">Percentage of the market</rdfs:label>
+        <rdfs:label xml:lang="fr">Pourcentage du marché</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;StockExchange"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#PersonalEvent -->
+
+    <owl:Class rdf:about="&gs;PersonalEvent">
+        <rdfs:label xml:lang="en">Personal event</rdfs:label>
+        <rdfs:label xml:lang="fr">Evénement lié à la vie personne</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#PersonalLife -->
+
+    <owl:Class rdf:about="&gs;PersonalLife">
+        <rdfs:comment xml:lang="en">Abstract class</rdfs:comment>
+        <rdfs:comment xml:lang="en">Classe abstraite</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Persons -->
+
+    <owl:Class rdf:about="&gs;Persons">
+        <rdfs:label xml:lang="en">Abstract class</rdfs:label>
+        <rdfs:label xml:lang="fr">Classe abstraite</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&foaf;Agent"/>
+        <rdfs:comment xml:lang="en">Abstract class which regroups groups and individual person</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstraite désignant un groupe de personnes ou une personne individuelle</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#PhysicalEntity -->
+
+    <owl:Class rdf:about="&gs;PhysicalEntity">
+        <rdfs:subClassOf rdf:resource="&gs;Entity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#PoliceCheck -->
+
+    <owl:Class rdf:about="&gs;PoliceCheck">
+        <rdfs:label xml:lang="en">Police check</rdfs:label>
+        <rdfs:label xml:lang="fr">Contrôle de police</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;LegalProceeding"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#PoliceCustody -->
+
+    <owl:Class rdf:about="&gs;PoliceCustody">
+        <rdfs:label xml:lang="en">Police custody</rdfs:label>
+        <rdfs:label xml:lang="fr">Garde à vue</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;LegalProceeding"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#PoliticalEvent -->
+
+    <owl:Class rdf:about="&gs;PoliticalEvent">
+        <rdfs:subClassOf rdf:resource="&gs;GeneralEvent"/>
+        <rdfs:comment xml:lang="en">Political event</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Evénement politique</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#PriceChange -->
+
+    <owl:Class rdf:about="&gs;PriceChange">
+        <rdfs:label xml:lang="en">Price change</rdfs:label>
+        <rdfs:label xml:lang="fr">Réévaluation du prix</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;StockExchange"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Product -->
+
+    <owl:Class rdf:about="&gs;Product">
+        <rdfs:label xml:lang="en">Product</rdfs:label>
+        <rdfs:label xml:lang="fr">Produit</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#PunctDates -->
+
+    <owl:Class rdf:about="&gs;PunctDates">
+        <rdfs:label xml:lang="en">Abstract class</rdfs:label>
+        <rdfs:label xml:lang="fr">Classe abstraite</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:comment xml:lang="en">Abstract class that groups concepts with ponctual date</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstraite qui regroupe des concepts avec des dates ponctuelles</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Purchase -->
+
+    <owl:Class rdf:about="&gs;Purchase">
+        <rdfs:label xml:lang="en">Purchase</rdfs:label>
+        <rdfs:label xml:lang="fr">Achat d&apos;un bien</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;BankingTransaction"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Quantity -->
+
+    <owl:Class rdf:about="&gs;Quantity">
+        <rdfs:label xml:lang="en">objects quantity</rdfs:label>
+        <rdfs:label xml:lang="fr">Quantité d&apos;objets</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Measurement"/>
+        <rdfs:subClassOf rdf:resource="&gs;Objects"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Receivership -->
+
+    <owl:Class rdf:about="&gs;Receivership">
+        <rdfs:label xml:lang="en">Receivership</rdfs:label>
+        <rdfs:label xml:lang="fr">Redressement judiciaire</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;LegalProceeding"/>
+        <rdfs:subClassOf rdf:resource="&gs;OrganizationEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Region -->
+
+    <owl:Class rdf:about="&gs;Region">
+        <rdfs:label xml:lang="en">Region</rdfs:label>
+        <rdfs:label xml:lang="fr">Région</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;GeographicDivision"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Release -->
+
+    <owl:Class rdf:about="&gs;Release">
+        <rdfs:label xml:lang="en">Release</rdfs:label>
+        <rdfs:label xml:lang="fr">Libération</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;JudicialDecision"/>
+        <rdfs:subClassOf rdf:resource="&gs;LegalProceeding"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ReportedSpeech -->
+
+    <owl:Class rdf:about="&gs;ReportedSpeech">
+        <rdfs:subClassOf rdf:resource="&gs;Emission"/>
+        <rdfs:subClassOf rdf:resource="&gs;Uncertainty"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Seller -->
+
+    <owl:Class rdf:about="&gs;Seller">
+        <rdfs:label xml:lang="en">Seller</rdfs:label>
+        <rdfs:label xml:lang="fr">Vendeur</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;ParticularAgents"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Sent -->
+
+    <owl:Class rdf:about="&gs;Sent">
+        <rdfs:subClassOf rdf:resource="&gs;TextualStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Server -->
+
+    <owl:Class rdf:about="&gs;Server">
+        <rdfs:label xml:lang="en">Server</rdfs:label>
+        <rdfs:label xml:lang="fr">Serveur</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Web"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Share -->
+
+    <owl:Class rdf:about="&gs;Share">
+        <rdfs:label xml:lang="en">Share</rdfs:label>
+        <rdfs:label xml:lang="fr">Action</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;StockExchange"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ShareSet -->
+
+    <owl:Class rdf:about="&gs;ShareSet">
+        <rdfs:label xml:lang="en">Share set</rdfs:label>
+        <rdfs:label xml:lang="fr">Ensemble de parts</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;StockExchange"/>
+        <rdfs:comment xml:lang="en">Capital </rdfs:comment>
+        <rdfs:comment xml:lang="fr">Le capital mis sur le marché</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#SocialEvent -->
+
+    <owl:Class rdf:about="&gs;SocialEvent">
+        <rdfs:subClassOf rdf:resource="&gs;GeneralEvent"/>
+        <rdfs:comment xml:lang="en">Social event</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Evénement social</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#SportEvent -->
+
+    <owl:Class rdf:about="&gs;SportEvent">
+        <rdfs:subClassOf rdf:resource="&gs;GeneralEvent"/>
+        <rdfs:comment xml:lang="en">Sports event</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Evénement sportif</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Stce -->
+
+    <owl:Class rdf:about="&gs;Stce">
+        <rdfs:label xml:lang="en">Sentence </rdfs:label>
+        <rdfs:label xml:lang="fr">Peine </rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;JudicialDecision"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#StockExchange -->
+
+    <owl:Class rdf:about="&gs;StockExchange">
+        <rdfs:label xml:lang="en">Stock exchange</rdfs:label>
+        <rdfs:label xml:lang="fr">Bourse</rdfs:label>
+        <rdfs:comment>Abstract class / classe abstraite</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#SubTitle -->
+
+    <owl:Class rdf:about="&gs;SubTitle">
+        <rdfs:label xml:lang="en">SubTitle</rdfs:label>
+        <rdfs:label xml:lang="fr">Sous-titre</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;TextualStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Text -->
+
+    <owl:Class rdf:about="&gs;Text">
+        <rdfs:subClassOf rdf:resource="&gs;TextualStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#TextualStructure -->
+
+    <owl:Class rdf:about="&gs;TextualStructure"/>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Ticker -->
+
+    <owl:Class rdf:about="&gs;Ticker">
+        <rdfs:label>Ticker</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;StockExchange"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Title -->
+
+    <owl:Class rdf:about="&gs;Title">
+        <rdfs:label xml:lang="en">Title</rdfs:label>
+        <rdfs:label xml:lang="fr">Titre</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;TextualStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Transfer -->
+
+    <owl:Class rdf:about="&gs;Transfer">
+        <rdfs:label xml:lang="en">Displacement</rdfs:label>
+        <rdfs:label xml:lang="fr">Déplacement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Action"/>
+        <rdfs:subClassOf rdf:resource="&gs;Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Uncertainty -->
+
+    <owl:Class rdf:about="&gs;Uncertainty"/>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Union -->
+
+    <owl:Class rdf:about="&gs;Union">
+        <rdfs:label xml:lang="en">Union</rdfs:label>
+        <rdfs:label xml:lang="fr">Union / Mariage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;UnionDisunion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#UnionDisunion -->
+
+    <owl:Class rdf:about="&gs;UnionDisunion">
+        <rdfs:subClassOf rdf:resource="&gs;PersonalEvent"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Vehicle -->
+
+    <owl:Class rdf:about="&gs;Vehicle">
+        <rdfs:subClassOf rdf:resource="&gs;Product"/>
+        <rdfs:comment xml:lang="eng">Vehicle</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Véhicule</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Victim -->
+
+    <owl:Class rdf:about="&gs;Victim">
+        <rdfs:label xml:lang="en">Victim</rdfs:label>
+        <rdfs:label xml:lang="fr">Victime</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;ParticularAgents"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Village -->
+
+    <owl:Class rdf:about="&gs;Village">
+        <rdfs:label xml:lang="en">Village</rdfs:label>
+        <rdfs:label xml:lang="fr">Village</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;GeographicDivision"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#ViolentAct -->
+
+    <owl:Class rdf:about="&gs;ViolentAct">
+        <rdfs:label xml:lang="en">Violent act</rdfs:label>
+        <rdfs:label xml:lang="fr">Acte de violence</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Action"/>
+        <rdfs:subClassOf rdf:resource="&gs;PunctDates"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#VoluntaryLiquidation -->
+
+    <owl:Class rdf:about="&gs;VoluntaryLiquidation">
+        <rdfs:label xml:lang="en">Voluntary liquidation</rdfs:label>
+        <rdfs:label xml:lang="fr">Dépôt de bilan</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;LegalProceeding"/>
+        <rdfs:subClassOf rdf:resource="&gs;OrganizationEvent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Web -->
+
+    <owl:Class rdf:about="&gs;Web">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:comment xml:lang="en">Absract class</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Classe abstaite</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#Website -->
+
+    <owl:Class rdf:about="&gs;Website">
+        <rdfs:label xml:lang="en">Website URL</rdfs:label>
+        <rdfs:label xml:lang="fr">URL du site web</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Web"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#Address -->
+
+    <owl:Class rdf:about="&v;Address">
+        <rdfs:label xml:lang="en">Address</rdfs:label>
+        <rdfs:label xml:lang="fr">Adresse</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Loc"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2006/vcard/ns#Location -->
+
+    <owl:Class rdf:about="&v;Location">
+        <rdfs:label xml:lang="en">Location</rdfs:label>
+        <rdfs:label xml:lang="fr">Lieu</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Loc"/>
+    </owl:Class>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Agent -->
+
+    <owl:Class rdf:about="&foaf;Agent">
+        <rdfs:label xml:lang="en">Agent</rdfs:label>
+        <rdfs:label xml:lang="fr">Agent</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;PhysicalEntity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Document -->
+
+    <owl:Class rdf:about="&foaf;Document">
+        <rdfs:label xml:lang="en">Document</rdfs:label>
+        <rdfs:label xml:lang="fr">Document</rdfs:label>
+        <owl:disjointWith rdf:resource="&foaf;Organization"/>
+    </owl:Class>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Group -->
+
+    <owl:Class rdf:about="&foaf;Group">
+        <rdfs:label xml:lang="eng">Group</rdfs:label>
+        <rdfs:label xml:lang="fr">Groupe</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&foaf;Agent"/>
+        <rdfs:comment xml:lang="eng"> Group of persons or companies or both of them</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Groupe de personnes ou d&apos;organisations ou mêlant les deux</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Image -->
+
+    <owl:Class rdf:about="&foaf;Image">
+        <rdfs:label>Image</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&foaf;Document"/>
+        <rdfs:comment>An image.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/OnlineAccount -->
+
+    <owl:Class rdf:about="&foaf;OnlineAccount">
+        <rdfs:label xml:lang="en">Online account</rdfs:label>
+        <rdfs:label xml:lang="fr">Compte en ligne</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Dates"/>
+        <rdfs:subClassOf rdf:resource="&gs;Web"/>
+    </owl:Class>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Organization -->
+
+    <owl:Class rdf:about="&foaf;Organization">
+        <rdfs:label xml:lang="en">Organization</rdfs:label>
+        <rdfs:label xml:lang="fr">Organisme</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Organizations"/>
+        <owl:disjointWith rdf:resource="&foaf;Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Person -->
+
+    <owl:Class rdf:about="&foaf;Person">
+        <rdfs:label xml:lang="en">Person</rdfs:label>
+        <rdfs:label xml:lang="fr">Personne</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Persons"/>
+    </owl:Class>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Project -->
+
+    <owl:Class rdf:about="&foaf;Project">
+        <rdfs:label xml:lang="eng">Project</rdfs:label>
+        <rdfs:label xml:lang="fr">Projet</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&gs;Dates"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+

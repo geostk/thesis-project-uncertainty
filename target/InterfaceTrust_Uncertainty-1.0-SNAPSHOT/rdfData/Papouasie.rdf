@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:gs="http://www.geolsemantics.com/onto#"
+  xmlns:ical="http://www.w3.org/2002/12/cal/icaltzd#"
+  xmlns:wn="http://www.w3.org/2006/03/wn/wn20/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:rdfg ="http://www.w3.org/2004/03/trix/rdfg-1"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:v="http://www.w3.org/2006/vcard/ns#"
+  xmlns:doac="http://ramonantonio.net/doac/0.1/"
+  xmlns:prov="http://www.w3.org/ns/prov#" >
+<!-- FIN DE L'ENTETE -->
+<!-- Début du document -->
+<rdfg:Graph rdf:nodeID="idGraph1">
+	<gs:hasText>
+		<gs:Text>
+		        <gs:hasTriple>
+				<gs:Arrest rdf:nodeID="idArrest1">		
+					<gs:isArrested>
+						<foaf:Agent rdf:nodeID="idFrançais1">
+							<foaf:name>français></foaf:name>
+						</foaf:Agent>
+					</gs:isArrested>
+					<gs:atPlace>
+						<v:Location rdf:nodeID="idJayapura1">
+							<v:location-name>Jayapura</v:location-name>
+							<v:locatedIn>
+								<v:Location rdf:nodeID="idPapouasie1">
+									<v:location-name>Papouasie</v:location-name>
+								</v:Location>
+							</v:locatedIn>
+						</v:Location>
+					</gs:atPlace>
+				</gs:Arrest>		
+		        </gs:hasTriple>
+
+		        <gs:hasTriple>		
+				<gs:AuthorUncertainty rdf:nodeID="idUncertainty1">
+					<gs:isUncertain>
+						<gs:Conviction rdf:nodeID="idConviction1">
+							<gs:isAccused rdf:nodeID="idFrançais1"/>
+							<gs:isAgent rdf:nodeID="idTribunal1"/>
+							<gs:cause>Tricher sur le visa</gs:cause>
+							<gs:hasUncertainProp>
+								<gs:AlignementUncertainty rdf:nodeID="idUncertainty2">
+									<gs:hasPlace rdf:nodeID="idPapouasie1"/>
+									<gs:weight>0.4</gs:weight>
+								</gs:AlignementUncertainty>
+							</gs:hasUncertainProp>
+						</gs:Conviction>
+					</gs:isUncertain>
+					<gs:weight>0.6</gs:weight>
+				</gs:AuthorUncertainty>
+		        </gs:hasTriple>
+
+		        <gs:hasTriple>		
+				<gs:Declaration rdf:nodeID="idDeclaration1">
+					<gs:by>
+						<foaf:Agent rdf:nodeID="idPangaribuan1">
+							<foaf:name>Aristo Pangaribuan</foaf:name>
+						</foaf:Agent>
+					</gs:by>
+					<gs:object rdf:nodeID="idConviction1"/>
+				</gs:Declaration>
+		        </gs:hasTriple>		
+		</gs:Text>
+	</gs:hasText>
+	<prov:startAtTime>2014-09-02T16:43:00Z</prov:startAtTime>
+	<prov:endAtTime>2014-09-02T16:43:59Z</prov:endAtTime>
+	<prov:wasAttributedTo>
+		<prov:Agent rdf:about="http://www.example.com/JeanneFremin">
+			<prov:OnBehalfOf rdf:resource="http://www.example.com/LeFigaro"/>
+		</prov:Agent>
+	</prov:wasAttributedTo>
+	<gs:hasTrust>0.8</gs:hasTrust>
+	
+</rdfg:Graph>
+</rdf:RDF>
+

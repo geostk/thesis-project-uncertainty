@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:gs="http://www.geolsemantics.com/onto#"
+  xmlns:ical="http://www.w3.org/2002/12/cal/icaltzd#"
+  xmlns:wn="http://www.w3.org/2006/03/wn/wn20/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:rdfg ="http://www.w3.org/2004/03/trix/rdfg-1"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:v="http://www.w3.org/2006/vcard/ns#"
+  xmlns:doac="http://ramonantonio.net/doac/0.1/"
+  xmlns:prov="http://www.w3.org/ns/prov#" >
+<!-- FIN DE L'ENTETE -->
+<!-- Début du document -->
+<rdfg:Graph rdf:nodeID="idGraph1">
+	<gs:hasText>
+		<gs:Text>
+		        <gs:hasTriple>
+				<gs:Declaration rdf:nodeID="idDeclaration11">		
+					<gs:hasAgent>
+						<foaf:Person rdf:about="www.example.com/Margaret_Parietti">
+							<foaf:name>Margaret Parietti</foaf:name>
+							<gs:works>
+								<gs:Experience>
+									<gs:role>vice-procureure</gs:role>
+								</gs:Experience>
+							</gs:works>
+						</foaf:Person>
+					</gs:hasAgent>						
+					<gs:toAgent>
+						<foaf:Organization rdf:about="www.example.com/AFP">
+							<foaf:name>Agence Française de Presse</foaf:name>
+							<foaf:nick-name>AFP</foaf:nick-name>
+						</foaf:Organization>
+					</gs:toAgent>
+					<gs:hasContent>
+						<gs:ReportedSpeech rdf:nodeID="Uncertainty2">
+							<gs:content rdf:nodeID="idViolentAct2"/>						
+							<gs:weight>0.9</gs:weight>
+						</gs:ReportedSpeech>
+					</gs:hasContent>
+				</gs:Declaration>		
+		        </gs:hasTriple>
+
+		        <gs:hasTriple>	
+				<gs:ViolentAct rdf:nodeID="idViolentAct1">
+					<gs:type>murder</gs:type>
+					<gs:onDate>
+						<gs:Date rdf:nodeID="idhier1">
+							<v:dtstart>2014-09-27</v:dtstart>
+							<v:dtend>2014-09-27</v:dtend>
+						</gs:Date>
+					</gs:onDate>
+					<gs:atPlace>
+						<v:Location rdf:about="www.example.com/Besancon">
+							<v:location-name>Besancon</v:location-name>
+						</v:Location>
+					</gs:atPlace>
+					<gs:instrument>arme blanche</gs:instrument>
+					<gs:hasVictim>
+						<foaf:Person rdf:nodeID="id1Person">
+							<foaf:age>35ans</foaf:age>
+							<gs:gender>male</gs:gender>
+							<gs:deathDate>
+								<gs:Date rdf:nodeID="idhier1">
+									<v:dtstart>2014-09-27</v:dtstart>
+									<v:dtend>2014-09-27</v:dtend>
+								</gs:Date>
+							</gs:deathDate>
+							<gs:deathPlace>
+								<v:Location rdf:about="www.example.com/Besancon">
+									<v:location-name>Besancon</v:location-name>
+								</v:Location>
+							</gs:deathPlace>
+						</foaf:Person>		
+					</gs:hasVictim>
+					<gs:hasUncertainProp>
+						<gs:AuthorUncertainty>
+							<gs:cause>
+								<gs:ViolentAct rdf:nodeID="idViolentAct2">
+									<gs:type>coup de couteau</gs:type>
+								</gs:ViolentAct>
+							</gs:cause>
+							<gs:weight>0.7</gs:weight>
+						</gs:AuthorUncertainty>
+					</gs:hasUncertainProp>
+				</gs:ViolentAct>
+		        </gs:hasTriple>
+		</gs:Text>
+	</gs:hasText>
+	<prov:startAtTime>2014-09-28T16:43:00Z</prov:startAtTime>
+	<prov:endAtTime>2014-09-28T16:43:59Z</prov:endAtTime>
+	<prov:wasAttributedTo>
+		<prov:Agent rdf:about="http://www.example.com/ELIAS_BIRYABAREMA">
+			<prov:OnBehalfOf rdf:resource="http://www.example.com/LeFigaro"/>
+		</prov:Agent>
+	</prov:wasAttributedTo>
+	<gs:hasTrust>0.8</gs:hasTrust>
+	
+</rdfg:Graph>
+</rdf:RDF>
+

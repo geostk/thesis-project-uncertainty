@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:gs="http://www.geolsemantics.com/onto#"
+  xmlns:ical="http://www.w3.org/2002/12/cal/icaltzd#"
+  xmlns:wn="http://www.w3.org/2006/03/wn/wn20/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:rdfg ="http://www.w3.org/2004/03/trix/rdfg-1"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:v="http://www.w3.org/2006/vcard/ns#"
+  xmlns:doac="http://ramonantonio.net/doac/0.1/"
+  xmlns:prov="http://www.w3.org/ns/prov#" >
+<!-- FIN DE L'ENTETE -->
+<!-- Début du document -->
+<rdfg:Graph rdf:nodeID="idGraph1">
+	<gs:hasText>
+		<gs:Text>
+		        <gs:hasTriple>
+				<gs:ViolentAct rdf:nodeID="idViolentAct1">		
+					<gs:hasUncertainProp>
+						<gs:AuthorUncertainty rdf:nodeID="Uncertainty1">
+							<gs:hasSleepinPertner>
+								<foaf:Person rdf:about="www.example.com/MexicanMayor">
+									<gs:works>
+										<gs:Experience>
+											<gs:role>Mayor</gs:role>
+										</gs:Experience>
+									</gs:works>
+									<gs:nat>Mexico</gs:nat>
+									<gs:hasWife rdf:nodeID="id2Person"/>
+								</foaf:Person>
+							</gs:hasSleepinPertner>
+							<gs:hasSleepinPertner rdf:nodeID="id2Person"/>
+							<gs:weight>0.7</gs:weight>
+						</gs:AuthorUncertainty>
+					</gs:hasUncertainProp>						
+					<gs:hasVictim>
+						<foaf:Group rdf:nodeID="id1Group">
+							<gs:type>student-teacher</gs:type>
+							<gs:nbMembers>35</gs:nbMembers>
+						</foaf:Group>
+					</gs:hasVictim>
+					<gs:onDate>
+						<gs:Date rdf:nodeID="idlastMonth1">
+							<v:dtstart>2014-09-01</v:dtstart>
+							<v:dtend>2014-09-30</v:dtend>
+						</gs:Date>
+					</gs:onDate>
+					<gs:atPlace>
+						<v:Location rdf:nodeID="idLocation1">
+							<gs:country>Mexico</gs:country>
+							<gs:loc-indication>southwest</gs:loc-indication>
+						</v:Location>
+					</gs:atPlace>
+				</gs:ViolentAct>		
+		        </gs:hasTriple>
+			
+		        <gs:hasTriple>
+				<gs:Declaration rdf:nodeID="idDeclaration1">		
+					<gs:hasContent>
+						<gs:ReportedSpeech rdf:nodeID="Uncertainty2">
+							<gs:content rdf:nodeID="idViolentAct1"/>						
+							<gs:weight>0.9</gs:weight>
+						</gs:ReportedSpeech>
+					</gs:hasContent>
+					<gs:hasAgent>
+						<foaf:Person rdf:nodeID="idPerson1">
+							<gs:works>
+								<gs:Experience>
+									<gs:role>attorney general</gs:role>
+								</gs:Experience>
+							</gs:works>
+							<gs:place rdf:resource="http://www.exemple.com/Mexico"/>
+						</foaf:Person>
+					</gs:hasAgent>	
+					<gs:onDate>
+						<gs:Date rdf:nodeID="idWendnesday1">
+							<v:dtstart>2014-10-28</v:dtstart>
+							<v:dtend>2014-10-28</v:dtend>
+						</gs:Date>
+					</gs:onDate>
+				</gs:Declaration>	
+		        </gs:hasTriple>	
+			
+		</gs:Text>
+	</gs:hasText>
+	<prov:startAtTime>2014-09-28T16:43:00Z</prov:startAtTime>
+	<prov:endAtTime>2014-09-28T16:43:59Z</prov:endAtTime>
+	<prov:wasAttributedTo>
+		<prov:Agent rdf:about="http://www.example.com/GABRIEL_STARGARDTER">
+			<prov:OnBehalfOf rdf:resource="http://www.example.com/Reuters"/>
+		</prov:Agent>
+	</prov:wasAttributedTo>
+	<gs:hasTrust>0.8</gs:hasTrust>
+	
+</rdfg:Graph>
+</rdf:RDF>
+

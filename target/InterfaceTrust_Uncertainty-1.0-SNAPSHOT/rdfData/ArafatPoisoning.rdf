@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:gs="http://www.geolsemantics.com/onto#"
+  xmlns:ical="http://www.w3.org/2002/12/cal/icaltzd#"
+  xmlns:wn="http://www.w3.org/2006/03/wn/wn20/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:rdfg ="http://www.w3.org/2004/03/trix/rdfg-1"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:v="http://www.w3.org/2006/vcard/ns#"
+  xmlns:doac="http://ramonantonio.net/doac/0.1/"
+  xmlns:prov="http://www.w3.org/ns/prov#" >
+<!-- FIN DE L'ENTETE -->
+<!-- Début du document -->
+<rdfg:Graph rdf:nodeID="idGraph2">
+	<gs:hasText>
+		<gs:Text rdf:nodeID="id1text">		
+		        <gs:hasTriple>
+				<gs:AuthorUncertainty rdf:nodeID="idUncertainty1">
+					<gs:isUncertain>	
+						<gs:ViolentAct rdf:nodeID="id1Posoning">
+							<gs:type>poisoning</gs:type>
+							<gs:instrument>polonium</gs:instrument>
+							<gs:victim>
+								<foaf:Person rdf:about="www.example.com/id1Arafat">
+									<foaf:name>Yasser Arafat</foaf:name>
+								</foaf:Person>
+							</gs:victim>
+							<gs:hasEvidence>tests</gs:hasEvidence>
+						</gs:ViolentAct>
+					</gs:isUncertain>	
+					<gs:weight>0,5</gs:weight>
+				</gs:AuthorUncertainty>
+		        </gs:hasTriple>		
+		        <gs:hasTriple>		
+				<gs:Death rdf:nodeID="idDeath1">
+					<gs:victim>
+						<foaf:Person rdf:nodeID="id1Person">
+							<gs:works>
+								<gs:Experience rdf:nodeID="id1Experience">
+									<gs:role>Leader</gs:role>
+									<gs:relatedTo>
+										<foaf:Organization>
+	<foaf:name>Palestine</foaf:name>
+</foaf:Organization>
+									</gs:relatedTo>
+								</gs:Experience>
+							</gs:works>
+							<gs:hasUncertainProp>
+								<gs:AlignementUncertainty rdf:nodeID="idUncertainty2">
+									<gs:sameAs rdf:resource="www.example.com/id1Arafat"/>
+									<gs:weight>0.4</gs:weight>
+								</gs:AlignementUncertainty>
+</gs:hasUncertainProp>							
+							<gs:sameAs rdf:resource="www.example.com/id1Arafat"/>
+						</foaf:Person>
+					</gs:victim>
+				</gs:Death>
+		        </gs:hasTriple>		
+		</gs:Text>
+	</gs:hasText>
+	<prov:startAtTime>2013-11-06T16:43:00Z</prov:startAtTime>
+	<prov:endAtTime>2013-11-06T16:43:59Z</prov:endAtTime>
+	<prov:wasAttributedTo>
+		<prov:Agent rdf:nodeID="idSource1">
+			<prov:OnBehalfOf rdf:resource="http://www.example.com/theguargdian"/>
+		</prov:Agent>
+	</prov:wasAttributedTo>
+	<gs:hasTrust>0.8</gs:hasTrust>	
+</rdfg:Graph>
+</rdf:RDF>
+

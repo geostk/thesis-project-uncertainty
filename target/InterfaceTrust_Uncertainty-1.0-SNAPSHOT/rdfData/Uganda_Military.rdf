@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:gs="http://www.geolsemantics.com/onto#"
+  xmlns:ical="http://www.w3.org/2002/12/cal/icaltzd#"
+  xmlns:wn="http://www.w3.org/2006/03/wn/wn20/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:rdfg ="http://www.w3.org/2004/03/trix/rdfg-1"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:v="http://www.w3.org/2006/vcard/ns#"
+  xmlns:doac="http://ramonantonio.net/doac/0.1/"
+  xmlns:prov="http://www.w3.org/ns/prov#" >
+<!-- FIN DE L'ENTETE -->
+<!-- Début du document -->
+<rdfg:Graph rdf:nodeID="idGraph1">
+	<gs:hasText>
+		<gs:Text>
+		        <gs:hasTriple>
+				<gs:Declaration rdf:nodeID="idDeclaration11">		
+					<gs:hasAgent>
+						<foaf:Agent rdf:nodeID="idMilitary1">
+							<gs:type>military</gs:type>
+							<gs:place>
+								<v:Location rdf:about="www.example.com/Uganda">
+									<v:location-name>Uganda</v:location-name>
+								</v:Location>
+							</gs:place>
+						</foaf:Agent>
+					</gs:hasAgent>
+					<gs:onDate>
+						<gs:Date rdf:nodeID="idMonday1">
+							<v:dtstart>17-12-2014</v:dtstart>
+							<v:dtend>17-12-2014</v:dtend>
+						</gs:Date>
+					</gs:onDate>
+					<gs:hasContent>
+						<gs:ViolentAct rdf:nodeID="idViolentAct1">
+							<gs:onDate>
+								<gs:Date rdf:about="idLastYear1">
+									<v:dtstart>01-01-2013</v:dtstart>
+									<v:dtend>31-12-2013</v:dtend>
+								</gs:Date>
+							</gs:onDate>
+							<gs:place>
+								<v:Location rdf:about="www.example.com/CentralAfric">
+									<v:location-name>Central Afric</v:location-name>
+								</v:Location>
+							</gs:place>
+							<gs:isVictim>
+								<foaf:Person rdf:about="www.exampls.com/Commander1">
+									<foaf:honorific-prefix>Commander</foaf:honorific-prefix>
+									<gs:hasUncertainProp>
+										<gs:AuthorUncertainty rdf:nodeID="idUncertainty2">
+											<gs:deputy_to>
+												<foaf:Person rdf:about="www.example.com/Kony">
+													<foaf:name>Joseph Kony</foaf:name>
+													<gs:works>
+														<gs:Experience rdf:nodeID="idExperience1">
+														<gs:role>Leader</gs:role>
+														<gs:relatedTo>
+															<foaf:Organization rdf:about="www.example.com/LRA">
+																<foaf:name>Lord Resistance Army</foaf:name>
+																<foaf:nick-name>LRA</foaf:nick-name>
+												<!--<gs:hasLeader rdf:resource="www.example.com/Kony"/>-->
+															</foaf:Organization>
+														</gs:relatedTo>
+														</gs:Experience>
+													</gs:works>
+												</foaf:Person>
+											</gs:deputy_to>
+											<gs:weight>0.7</gs:weight>
+										</gs:AuthorUncertainty>
+									</gs:hasUncertainProp>
+								</foaf:Person>
+							</gs:isVictim>
+						</gs:ViolentAct>
+					</gs:hasContent>
+				</gs:Declaration>		
+		        </gs:hasTriple>
+
+		        <gs:hasTriple>		
+				<gs:AuthorUncertainty rdf:nodeID="idUncertainty1">
+					<gs:isUncertain rdf:nodeID="idViolentAct1"/>
+					<gs:weight>0.6</gs:weight>
+				</gs:AuthorUncertainty>
+		        </gs:hasTriple>
+		</gs:Text>
+	</gs:hasText>
+	<prov:startAtTime>2014-02-17T16:43:00Z</prov:startAtTime>
+	<prov:endAtTime>2014-02-17T16:43:59Z</prov:endAtTime>
+	<prov:wasAttributedTo>
+		<prov:Agent rdf:about="http://www.example.com/ELIAS_BIRYABAREMA">
+			<prov:OnBehalfOf rdf:resource="http://www.example.com/Reuters"/>
+		</prov:Agent>
+	</prov:wasAttributedTo>
+	<gs:hasTrust>0.8</gs:hasTrust>
+	
+</rdfg:Graph>
+</rdf:RDF>
+

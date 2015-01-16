@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:gs="http://www.geolsemantics.com/onto#"
+  xmlns:ical="http://www.w3.org/2002/12/cal/icaltzd#"
+  xmlns:wn="http://www.w3.org/2006/03/wn/wn20/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:v="http://www.w3.org/2006/vcard/ns#"
+  xmlns:rdfg ="http://www.w3.org/2004/03/trix/rdfg-1"
+  xmlns:doac="http://ramonantonio.net/doac/0.1/">
+<!-- FIN DE L'ENTETE -->
+<!-- Début du document -->
+<rdfg:Graph rdf:about="http://www.example.com/Graph1">
+	<gs:hasText>
+<gs:Text rdf:about="http://www.example.com/idtext1">
+        <gs:hasSent>
+		<gs:Sentense rdf:about="http://www.example.com/idsent1"> 
+	        
+		<gs:hasTriple>
+			<gs:Uncertainty rdf:about="http://www.exemple.com/idU1">				
+				<gs:businessSector>social media network</gs:businessSector>
+				<gs:weight>0,7</gs:weight>							 
+			</gs:Uncertainty>
+		</gs:hasTriple>				
+		<gs:hasTriple>
+			<gs:Company rdf:about="http://www.twitter.com">
+				<gs:name>Twitter</gs:name>
+				<gs:orgType>Incorporated</gs:orgType>
+				<gs:hasUncertainProp rdf:resource="http://www.exemple.com/idU1"/>
+			</gs:Company>
+        	</gs:hasTriple>	
+		<gs:hasTriple>
+			<gs:Date rdf:about="http://www.exemple.com/idThisWeek">
+				<v:dtstart>2013-09-30T00:00:00Z</v:dtstart>
+				<v:dtend>2013-09-30T23:59:59Z</v:dtend>
+			</gs:Date>
+		</gs:hasTriple>		
+		<gs:hasTriple>
+			<gs:Uncertainty rdf:about="http://www.exemple.com/idU3">				
+				<gs:isUncertain rdf:resource="http://www.exemple.com/idThisWeek"/>
+				<gs:weight>0,8</gs:weight>	
+	 		</gs:Uncertainty>
+		</gs:hasTriple>	
+		<gs:hasTriple>
+			<gs:IPO rdf:about="http://www.exemple.com/IPO1">
+				<gs:isAgent rdf:resource="http://www.twitter.com"/>
+				<gs:date_IPO rdf:resource="http://www.exemple.com/idThisWeek"/>
+			</gs:IPO>			
+		</gs:hasTriple>						
+		<gs:hasTriple>
+			<gs:Uncertainty rdf:about="http://www.exemple.com/idU2">				
+				<gs:isUncertain rdf:resource="http://www.exemple.com/IPO1"/>
+				<gs:weight>0,3</gs:weight>							 		
+			</gs:Uncertainty>
+		</gs:hasTriple>				
+	</gs:Sentense>
+    </gs:hasSent>
+</gs:Text>
+		</gs:hasText>
+	<gs:hasDateRef>
+		<gs:Date rdf:nodeID="idDate2">
+			<v:dtstart>2013-10-03T00:00:00Z</v:dtstart>
+			<v:dtend>2013-10-30T00:00:00Z</v:dtend>
+		</gs:Date>
+	</gs:hasDateRef>
+	<gs:hasSource>
+		<gs:Source rdf:nodeID="idSource1">
+			<gs:isSource rdf:resource="http://www.reuters.com"/>
+			<gs:hasTrust>0,8</gs:hasTrust>
+		</gs:Source>
+	</gs:hasSource>
+
+</rdfg:Graph>
+</rdf:RDF>
+

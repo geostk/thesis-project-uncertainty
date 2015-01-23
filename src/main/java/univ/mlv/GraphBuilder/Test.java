@@ -39,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import univ.mlv.SevletPages.TextProcessing;
 
 /**
@@ -126,7 +127,13 @@ public class Test {
         public static void testOS(){
             String OS = System.getProperty("os.name").toLowerCase();
             if((OS.contains("win"))) {
-                DOT= pathProject.substring(0, pathProject.indexOf("build/web")).replaceAll("\\\\", "/")+"lib/release/bin/dot";
+                if(pathProject.contains("build/web")){
+                    DOT= pathProject.substring(0, pathProject.indexOf("build/web")).replaceAll("\\\\", "/")+"lib/release/bin/dot";
+                }
+                if(pathProject.contains("target")){
+                    DOT= pathProject.substring(0, pathProject.indexOf("target")).replaceAll("\\\\", "/")+"lib/release/bin/dot";
+                }
+                
             }
             if((OS.contains("mac"))) System.err.println("Veuillez installez DOT pour éxecuter Graphviz");
             if((OS.contains("nix") || OS.contains("nux") || OS.indexOf("aix") > 0 )){
@@ -308,7 +315,9 @@ public class Test {
 			// patch by Mike Chenault
 			// representation type with -K argument by Olivier Duplouy
 			String[] args = {DOT, "-T"+type, "-K"+representationType, "-Gdpi="+dpiSizes[this.currentDpiPos], dot.getAbsolutePath(), "-o", img.getAbsolutePath()};
-			Process p = rt.exec(args);
+			String d = Arrays.toString(args);
+                        Process p = rt.exec(args);
+                        p.exitValue();
 			p.waitFor();
 
 			FileInputStream in = new FileInputStream(img.getAbsolutePath());
@@ -348,6 +357,7 @@ public class Test {
                     
                         FileWriter fout = new FileWriter(temp);
                         fout.write(str);
+                        fout.close();
                     
 		}
 		catch (IOException e) {

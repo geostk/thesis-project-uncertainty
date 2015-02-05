@@ -18,10 +18,10 @@ public class LoginCheckDB {
     // JDBC driver name and database URL
 
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/TrustSource";
+    static final String DB_URL = "jdbc:mysql://localhost/trustsource";
     //  Database credentials
     static final String USER = "root";
-    static final String PASS = "fadhela";
+    static final String PASS = "";
     public static List<String> users = new ArrayList<String>();
     public static List<String> sources = new ArrayList<String>();
     public static Map<String, String> trusts = new TreeMap<String, String>();
@@ -43,7 +43,7 @@ public class LoginCheckDB {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql_user;
-            sql_user = "SELECT user_name FROM "+table+""
+            sql_user = "SELECT user_name FROM "+table.toLowerCase()+""
                     + "WHERE user_name='"+key+ "';";
             ResultSet rs = stmt.executeQuery(sql_user);
             if(rs!=null){
@@ -100,17 +100,18 @@ public class LoginCheckDB {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql_user;
-            sql_user = "SELECT trust_value FROM Trustworthiness "
+            
+            sql_user = "SELECT trust_value FROM trustworthiness "
                     + "WHERE user_name='"+user+ "' AND source_name='"+source+"';";
             ResultSet rs = stmt.executeQuery(sql_user);
             if(rs!=null){
                //excute update
-                sql_user = "UPDATE Trustworthiness set trust_value= "+value
+                sql_user = "UPDATE trustworthiness set trust_value= "+value
                     + " WHERE user_name='"+user+ "' AND source_name='"+source+ "';";
             }
             else {
                 //execute insert
-                sql_user= "INSERT INTO Trustworthiness VALUES ('"+user+"_"+source+"', '"+user+"', '"+source+"', '"+value+"');";
+                sql_user= "INSERT INTO trustworthiness VALUES ('"+user+"_"+source+"', '"+user+"', '"+source+"', '"+value+"');";
             }
             i=stmt.executeUpdate(sql_user);
             stmt.close();
@@ -158,7 +159,7 @@ public class LoginCheckDB {
             stmt = conn.createStatement();
             String sql_user;
             sql_user = "SELECT * "
-                    + "FROM Queries "
+                    + "FROM queries "
                     + "WHERE  text_id=\"" + inputID + "\" ;";
             ResultSet rs = stmt.executeQuery(sql_user);
             int i=0;
@@ -228,7 +229,7 @@ public class LoginCheckDB {
             stmt = conn.createStatement();
             String sql_user;
             sql_user = "SELECT user_name, first_name, last_name, organization, home_page, password "
-                    + "FROM User "
+                    + "FROM user "
                     + "WHERE  user_name=\"" + login + "\" "
                     + "AND password=\"" + pw + "\";";
             ResultSet rs = stmt.executeQuery(sql_user);
@@ -310,7 +311,7 @@ public class LoginCheckDB {
             String pw= user.get("password");
             //vérifier si ce user-name exist dans la bd
             
-            sql_user = "INSERT into User (user_name , first_name, last_name, organization, home_page, password) "
+            sql_user = "INSERT into user (user_name , first_name, last_name, organization, home_page, password) "
                     + "values ( '" + user.get("user_name") + "' , '" + user.get("first_name") + "' , "
                     + "'" + user.get("last_name") + "'" + " , " + "'" + user.get("organization") + "'" + " , "
                     + "'" + user.get("home_page") + "' , "
@@ -361,7 +362,7 @@ public class LoginCheckDB {
             stmt = conn.createStatement();
             String sql_user;
             for (String key : trust.keySet()) {
-                sql_user = "INSERT into Trustworthiness (user_source , user_name, source_name, trust_value) "
+                sql_user = "INSERT into trustworthiness (user_source , user_name, source_name, trust_value) "
                         + "values ( '" + key + "' , '" + key.split(" ")[0] + "' , '"
                         + key.split(" ")[1] + "'" + " , " + "'" + trust.get(key) + "'"
                         + ");";
@@ -414,7 +415,7 @@ public class LoginCheckDB {
             stmt = conn.createStatement();
             String sql_user;
             sql_user = "SELECT user_name "
-                    + "FROM User "
+                    + "FROM user "
                     + ";";
             ResultSet rs = stmt.executeQuery(sql_user);
 
@@ -598,7 +599,7 @@ public class LoginCheckDB {
             stmt = conn.createStatement();
             String sql_user;
             sql_user = "SELECT * "
-                    + "FROM Text "
+                    + "FROM text "
                     + ";";
             ResultSet rs = stmt.executeQuery(sql_user);
 

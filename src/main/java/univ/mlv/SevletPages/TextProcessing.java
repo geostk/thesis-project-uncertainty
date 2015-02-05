@@ -41,7 +41,17 @@ import univ.mlv.Structures.QueryTriples;
 public class TextProcessing extends HttpServlet {
 
     private static OntModel ontologie;
-
+    String prefixes = "PREFIX owl: <http://www.w3.org/2002/07/owl#>"
+                            + "\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+                            + "\nPREFIX gs: <http://www.geolsemantics.com/onto#>"
+                            + "\nPREFIX ical: <http://www.w3.org/2002/12/cal/icaltzd#>"
+                            + "\nPREFIX wn: <http://www.w3.org/2006/03/wn/wn20/>"
+                            + "\nPREFIX foaf: <http://xmlns.com/foaf/0.1/>"
+                            + "\nPREFIX rdfg: <http://www.w3.org/2004/03/trix/rdfg-1>"
+                            + "\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
+                            + "\nPREFIX v: <http://www.w3.org/2006/vcard/ns#>"
+                            + "\nPREFIX doac: <http://ramonantonio.net/doac/0.1/>"
+                            + "\nPREFIX prov: <http://www.w3.org/ns/prov#>\n";
     public static String getAppDirectory() {
         String appDirectory = TextProcessing.class.getResource("TextProcessing.class").getPath().replaceAll("%20", " ");
         appDirectory = appDirectory.substring(0, appDirectory.indexOf("WEB-INF/"));
@@ -49,11 +59,10 @@ public class TextProcessing extends HttpServlet {
         appDirectory = f.getAbsolutePath() + File.separator;
         return appDirectory;
     }
-
+    
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -77,7 +86,10 @@ public class TextProcessing extends HttpServlet {
         ontologie = ModelFactory.createOntologyModel();
         InputStream stream = new ByteArrayInputStream(rdf.getBytes(StandardCharsets.UTF_8));
         ontologie.read(stream, null, null);
-        ontologie.write(System.out);
+//        ontologie.write(System.out);
+        if(query!=null && !query.isEmpty()){
+            query=prefixes+query;
+        }
         if (query == null && select == null) {
             PrintWriter out = response.getWriter();
             try {
@@ -120,19 +132,19 @@ public class TextProcessing extends HttpServlet {
                 out.println("&nbsp;&nbsp;<h2>The source :</h2>&nbsp " + t.source);
                 out.println("&nbsp;&nbsp;<h2>The author :</h2>&nbsp" + t.author);
                 out.println("&nbsp;&nbsp;<b>The trust granted :</b> <input type=\"text\" name=\"trust\" value=\"" + trust + "\">");
-                out.println("<form action=\"OntoViz\"> Do you want to visualize the ontlogy? : <input type=\"submit\" name=\"ontoViz\" value=\"Display\">"
+                out.println("<form action=\"OntoViz\"> Do you want to visualize the ontlogy? : <input type=\"submit\" name=\"ontoViz\" value=\"Display ontology \">"
                         + "</form> </div>");
-                out.println("<h1>Graph in process...</h1>");
-                if (null != rdf && !rdf.isEmpty()) {
-                    GraphConstructor g = new GraphConstructor(rdf);
-                    if (null != g.getSvg()) {
-                        out.println(g.getSvg());
-                    } else {
-                        out.println("Sorry, the graph can not be created ");
-                    }
-                    out.println("<br>");
-                }
-
+                out.println("<form action=\"GraphDisplay?inputID=" + inputid + "\"> Do you want to visualize the graph? : <input type=\"submit\" name=\"graphViz\" value=\"Display graph\">"
+                        + "</form> </div>");
+//                if (null != rdf && !rdf.isEmpty()) {
+//                    GraphConstructor g = new GraphConstructor(rdf);
+//                    if (null != g.getSvg()) {
+//                        out.println(g.getSvg());
+//                    } else {
+//                        out.println("Sorry, the graph can not be created ");
+//                    }
+//                    out.println("<br>");
+//                }
 
                 if (ontologie == null) {
                     out.println("Can not create the model");
@@ -145,24 +157,26 @@ public class TextProcessing extends HttpServlet {
 //                    
 //                }
                     out.println("<h2>Write your query</h2>");
-                    out.println("<form method=\"post\" action=\"TextProcessing?inputID=" + inputid + "\">"
-                            + "<textarea rows=\"13\" cols=\"60\" name=\"query\"\">"
-                            + "PREFIX owl: <http://www.w3.org/2002/07/owl#>"
-                            + "\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
-                            + "\nPREFIX gs: <http://www.geolsemantics.com/onto#>"
-                            + "\nPREFIX ical: <http://www.w3.org/2002/12/cal/icaltzd#>"
-                            + "\nPREFIX wn: <http://www.w3.org/2006/03/wn/wn20/>"
-                            + "\nPREFIX foaf: <http://xmlns.com/foaf/0.1/>"
-                            + "\nPREFIX rdfg: <http://www.w3.org/2004/03/trix/rdfg-1>"
-                            + "\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
-                            + "\nPREFIX v: <http://www.w3.org/2006/vcard/ns#>"
-                            + "\nPREFIX doac: <http://ramonantonio.net/doac/0.1/>"
-                            + "\nPREFIX prov: <http://www.w3.org/ns/prov#>"
+                    out.println("<form method=\"post\" action=\"TextProcessing?inputID=" + inputid + "\">");
+                            
+                    out.println( "PREFIX owl: http://www.w3.org/2002/07/owl#"
+                            + "<br>PREFIX rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                            + "<br>PREFIX gs: http://www.geolsemantics.com/onto#"
+                            + "<br>PREFIX ical: http://www.w3.org/2002/12/cal/icaltzd#"
+                            + "<br>PREFIX wn: http://www.w3.org/2006/03/wn/wn20/"
+                            + "<br>PREFIX foaf: http://xmlns.com/foaf/0.1/"
+                            + "<br>PREFIX rdfg: http://www.w3.org/2004/03/trix/rdfg-1"
+                            + "<br>PREFIX rdfs: http://www.w3.org/2000/01/rdf-schema#"
+                            + "<br>PREFIX v: http://www.w3.org/2006/vcard/ns#"
+                            + "<br>PREFIX doac: http://ramonantonio.net/doac/0.1/"
+                            + "<br>PREFIX prov: http://www.w3.org/ns/prov#"
+                            + "<br>");
+                    out.println("<textarea rows=\"13\" cols=\"60\" name=\"query\"\">"
                             + "</textarea>"
                             + "<br>"
                             + "<input type=\"checkbox\" name=\"trust2\" value=\"" + trust + "\">Apply confidence degree<br>"
                             + "<input type=\"submit\" value=\"Submit\">" //                        + "</form>"
-                            );
+                    );
                     out.println("<br>"
                             + "<h2> Or, select a query </h2>"
                             + "<br>");
@@ -184,49 +198,27 @@ public class TextProcessing extends HttpServlet {
             } finally {
                 out.close();
             }
-        } else {
-            if (query != null) {
+        }else if (select != null && (query!=null &&query.isEmpty()) ){
                 PrintWriter out = response.getWriter();
                 try {
                     /* TODO output your page here. You may use following sample code. */
                     out.println("<html>");
                     out.println("<head>");
-                    out.println("<title>Servlet TextProcessing</title>");
+                    out.println("<title>Servlet TextProcessing</title>"
+                            + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />");   
                     out.println("</head>");
                     out.println("<body>"
-                            + "<a href =\"index.jsp\">Home</a> - <a href =\"Text_Views\">Text</a>"
-                            + "<br>");
-                    out.println("&nbsp;&nbsp;<h2>The text :</h2><br><div class=\"input\"> " + t.content + "</div>");
-                    out.println("&nbsp;&nbsp;<h2>The source :</h2> " + t.source);
-                    out.println("&nbsp;&nbsp;<h2>The author :</h2> " + t.author);
-                    out.println("<b>The trust granted :<b> <input type=\"text\" name=\"trust\" value=\"" + trust + "\">");
-                    if (ontologie == null) {
-                        out.println("Can not create the model, there is a problem with the RDF");
-                    } else {
-//                        query = "";
-                        if (!query.isEmpty()) {
-                            String rewriteQuery = new QueryTriples(query).rewriteQuery();
-                            out.println("<h2>The original query is:</h2><br> " + query);
-                            out.println("<h2>The rewriting of the query is : </h2><br>" + rewriteQuery);
-                            out.println("<h2>Result of the original query:</h2><br>" + executeQuery(query, trust2).replaceAll("<", "").replaceAll(">", ""));
-                            out.println("<h2>Result of the rewrited query:</h2><br>" + executeQuery(rewriteQuery, trust2).replaceAll("<", "").replaceAll(">", ""));
-                        }
-                    }
-                    out.println("</body>");
-                    out.println("</html>");
-                } finally {
-                    out.close();
-                }
-            } else if (select != null) {
-                PrintWriter out = response.getWriter();
-                try {
-                    /* TODO output your page here. You may use following sample code. */
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet TextProcessing</title>");
-                    out.println("</head>");
-                    out.println("<body>"
-                            + "<a href =\"index.jsp\">Home</a> - <a href =\"Text_Views\">Text</a>"
+                           + "<div id=\"navigation\">"
+                        + "<ul>"
+                        + "<li><a href=\"index.jsp\">HOME</a></li>"
+                        + "<li><a href=\"LoginCheck\">User information</a></li>"
+                        + "<li><a href=\"ShowText\">Texts</a></li>"
+                        + "<li><a href=\"OntoViz\">Ontology</a></li>"
+                        + "<li><a href=\"About\">ABOUT</a></li>"
+                        + "<li><a href=\"#\">CONTACT</a></li>"
+                        + "</ul>"
+                        + "<div class=\"cl\">&nbsp;</div>"
+                        + "</div>"
                             + "<br>");
                     if (ontologie == null) {
                         out.println("Can not create the model");
@@ -244,14 +236,28 @@ public class TextProcessing extends HttpServlet {
                                         + "?x ?p ?s."
                                         + "}";
 
-                            }
-                            if (selectedItem.equals("1")) {
+                            } else if (selectedItem.equals("00")) {
                                 //qui est la source, quelle degré de confiance je lui accorde
+                                
+                                query = "PREFIX prov: <http://www.w3.org/ns/prov#>"
+                                        + "Select ?author ?journal Where {"
+                                        + "?x prov:wasAttributedTo ?author."
+                                        + "?author prov:OnBehalfOf ?journal."
+                                        + "}";
+                            } else {
+                                for (String key : queries.keySet()) {
+                                    Map<String, String> get = queries.get(key);
+                                    if(get.get("query_id").equals(selectedItem)){
+                                        query=prefixes+get.get("query_sparql");
+                                        break;
+                                    }
+                                }
                             }
                             if (!query.isEmpty()) {
-                                String executeQuery = executeQuery(query, trust2).replaceAll("<", "");
-                                executeQuery = executeQuery.replaceAll(">", "");
-                                out.println("Query: "+query+"<br>Result : \n" +executeQuery );
+                                String executeQuery = executeQuery(query, trust2);
+//                                        .replaceAll("<", "");
+//                                executeQuery = executeQuery.replaceAll(">", "");
+                                out.println("<div>Query: " + query.replaceAll(">", "").replaceAll("<", "").replaceAll("\n" , "<br>") + "</div><div>Result : \n" + executeQuery+"</div>");
                             }
                         }
                     }
@@ -260,11 +266,64 @@ public class TextProcessing extends HttpServlet {
                 } finally {
                     out.close();
                 }
-            }
+            } else 
+        //Si la requete n'est pas vide alors l'executer
+        {
+            if (query != null && !query.isEmpty()) {
+                PrintWriter out = response.getWriter();
+                try {
+                    /* TODO output your page here. You may use following sample code. */
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Servlet TextProcessing</title>"
+                            + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />");   
+                    out.println("</head>");
+                    out.println("<body>"
+                           + "<div id=\"navigation\">"
+                        + "<ul>"
+                        + "<li><a href=\"index.jsp\">HOME</a></li>"
+                        + "<li><a href=\"LoginCheck\">User information</a></li>"
+                        + "<li><a href=\"ShowText\">Texts</a></li>"
+                        + "<li><a href=\"OntoViz\">Ontology</a></li>"
+                        + "<li><a href=\"About\">ABOUT</a></li>"
+                        + "<li><a href=\"#\">CONTACT</a></li>"
+                        + "</ul>"
+                        + "<div class=\"cl\">&nbsp;</div>"
+                        + "</div>"
+                            + "<br>");
+                    out.println("&nbsp;&nbsp;<h2>The text :</h2><br><div class=\"input\"> " + t.content + "</div>");
+                    out.println("&nbsp;&nbsp;<h2>The source :</h2> " + t.source);
+                    out.println("&nbsp;&nbsp;<h2>The author :</h2> " + t.author);
+                    out.println("<b>The trust granted :<b> <input type=\"text\" name=\"trust\" value=\"" + trust + "\">");
+                    if (ontologie == null) {
+                        out.println("Can not create the model, there is a problem with the RDF");
+                    } else {
+//                        query = "";
+                        if (!query.isEmpty()) {
+                            String rewriteQuery = new QueryTriples(query).rewriteQuery();
+                            out.println("<h2>The original query is:</h2><br> " + query.replaceAll("<", "").replaceAll(">", "").replaceAll("\n", "<br>"));
+                            out.println("<h2>Result of the original query:</h2><br>" + sublimResult(executeQuery(query, trust2)));
+                            out.println("<h2>The rewriting of the query is : </h2><br>" + rewriteQuery.replaceAll("<", "").replaceAll(">", "").replaceAll("\n", "<br>"));
+                            out.println("<h2>Result of the rewrited query:</h2><br>" + sublimResult(executeQuery(rewriteQuery, trust2)));
+                        }
+                    }
+                    out.println("</body>");
+                    out.println("</html>");
+                } finally {
+                    out.close();
+                }
+            } 
         }
 
     }
 
+    public String sublimResult(String res){
+        
+        res= res.replaceAll(": <http", ": http");
+        res= res.replaceAll(">\n", "<br>");
+        return res;
+    }
+    
     public String executeQuery(String query, String t) {
         String res = "";
         Query query1 = QueryFactory.create(query);
@@ -272,18 +331,20 @@ public class TextProcessing extends HttpServlet {
         Pattern p = Pattern.compile("([0-9]+\\.[0-9])");
 
         try {
-            if (query.contains("ASK")) {
+            if (query.toLowerCase().contains("ask")) {
                 boolean resultsASK = qexec.execAsk();
                 if (resultsASK) {
                     return "true";
                 } else {
                     return "false";
                 }
-            } else if (query.contains("Select")) {
+            } else if (query.toLowerCase().contains("select")) {
                 ResultSet results = qexec.execSelect();
+                res="<table border=\"1\"><tr><th>Variable</th><th>Value</th></tr>";
                 while (results.hasNext()) {
                     QuerySolution next = results.next();
                     Iterator<String> varNames = next.varNames();
+                    
                     while (varNames.hasNext()) {
                         String next1 = varNames.next(); // nomde la variable dans le select
                         System.out.println("next1= " + next1);
@@ -297,20 +358,22 @@ public class TextProcessing extends HttpServlet {
                                 float parseInt1 = Float.parseFloat(t);
                                 e = Float.toString(parseInt * parseInt1);
                             }
-                            res = res + "<br> &nbsp;" + "&nbsp; <b>" + next1 + ": </b> &nbsp;" + "&nbsp;" + e;
+//                            res = res + "<tr> <td><b>" + next1 + ": </b></td><td>" + e+"</td></tr>";
 //                            }
-                        } else {
-                            res = "&nbsp;" + "&nbsp;" + next1 + "&nbsp;" + "&nbsp;" + e;
+                        }// else 
+                        {
+                            res = res=res+" <tr> <td><b>" + next1 + ": </b></td><td>" + e+"</td></tr>";
                         }
 
-                        res = res + "<br>";
                     }
                 }
+                
+                        res = res + "</table>";
                 ResultSetFormatter.out(System.out, results, query1);
             } else {//Cas du describe
                 Model describeModel = qexec.execDescribe();
 
-                res=describeModel.toString();
+                res = describeModel.toString();
             }
         } finally {
             qexec.close();
@@ -321,8 +384,7 @@ public class TextProcessing extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -336,8 +398,7 @@ public class TextProcessing extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

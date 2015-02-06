@@ -74,6 +74,7 @@ public class TextProcessing extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String inputid = request.getParameter("inputID");
         String query = request.getParameter("query");
+        String queryText="";
         String select = request.getParameter("target1");
         String trust2 = request.getParameter("trust2");
         Map<String, Map<String, String>> queries = LoginCheckDB.getQueries(inputid);
@@ -131,7 +132,7 @@ public class TextProcessing extends HttpServlet {
                         + "&nbsp;&nbsp;<h2>The text :</h2><br><div class=\"inptu\"> " + t.content + "</div>");
                 out.println("&nbsp;&nbsp;<h2>The source :</h2>&nbsp " + t.source);
                 out.println("&nbsp;&nbsp;<h2>The author :</h2>&nbsp" + t.author);
-                out.println("&nbsp;&nbsp;<b>The trust granted :</b> <input type=\"text\" name=\"trust\" value=\"" + trust + "\">");
+                out.println("<br>&nbsp;&nbsp;The trust granted : <input type=\"text\" name=\"trust\" value=\"" + trust + "\">");
                 out.println("<form action=\"OntoViz\"> Do you want to visualize the ontlogy? : <input type=\"submit\" name=\"ontoViz\" value=\"Display ontology \">"
                         + "</form> </div>");
                 out.println("<form action=\"GraphDisplay?inputID=" + inputid + "\"> Do you want to visualize the graph? : <input type=\"submit\" name=\"graphViz\" value=\"Display graph\">"
@@ -199,30 +200,31 @@ public class TextProcessing extends HttpServlet {
                 out.close();
             }
         }else if (select != null && (query!=null &&query.isEmpty()) ){
-                PrintWriter out = response.getWriter();
-                try {
-                    /* TODO output your page here. You may use following sample code. */
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet TextProcessing</title>"
-                            + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />");   
-                    out.println("</head>");
-                    out.println("<body>"
-                           + "<div id=\"navigation\">"
-                        + "<ul>"
-                        + "<li><a href=\"index.jsp\">HOME</a></li>"
-                        + "<li><a href=\"LoginCheck\">User information</a></li>"
-                        + "<li><a href=\"ShowText\">Texts</a></li>"
-                        + "<li><a href=\"OntoViz\">Ontology</a></li>"
-                        + "<li><a href=\"About\">ABOUT</a></li>"
-                        + "<li><a href=\"#\">CONTACT</a></li>"
-                        + "</ul>"
-                        + "<div class=\"cl\">&nbsp;</div>"
-                        + "</div>"
-                            + "<br>");
-                    if (ontologie == null) {
-                        out.println("Can not create the model");
-                    } else {
+//                PrintWriter out = response.getWriter();
+//                try {
+//                    /* TODO output your page here. You may use following sample code. */
+//                    out.println("<html>");
+//                    out.println("<head>");
+//                    out.println("<title>Servlet TextProcessing</title>"
+//                            + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />");   
+//                    out.println("</head>");
+//                    out.println("<body>"
+//                           + "<div id=\"navigation\">"
+//                        + "<ul>"
+//                        + "<li><a href=\"index.jsp\">HOME</a></li>"
+//                        + "<li><a href=\"LoginCheck\">User information</a></li>"
+//                        + "<li><a href=\"ShowText\">Texts</a></li>"
+//                        + "<li><a href=\"OntoViz\">Ontology</a></li>"
+//                        + "<li><a href=\"About\">ABOUT</a></li>"
+//                        + "<li><a href=\"#\">CONTACT</a></li>"
+//                        + "</ul>"
+//                        + "<div class=\"cl\">&nbsp;</div>"
+//                        + "</div>"
+//                            + "<br>");
+//                    if (ontologie == null) {
+//                        out.println("Can not create the model");
+//                    } else 
+            {
                         String selectedItem = select;
                         query = "";
                         if (null != selectedItem) {
@@ -231,9 +233,10 @@ public class TextProcessing extends HttpServlet {
                                 query = "PREFIX gs: <http://www.geolsemantics.com/onto#>"
                                         + "PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
                                         + "PREFIX  v: <http://www.w3.org/2006/vcard/ns#>"
-                                        + "Describe ?s Where {"
+                                        + "Select ?predicatePred ?subject ?pred2 ?object Where {"
                                         + "?x rdf:type gs:AuthorUncertainty."
-                                        + "?x ?p ?s."
+                                        + "?x ?predicatePred ?subject."
+                                        + "?subject ?pred2 ?object."
                                         + "}";
 
                             } else if (selectedItem.equals("00")) {
@@ -249,24 +252,26 @@ public class TextProcessing extends HttpServlet {
                                     Map<String, String> get = queries.get(key);
                                     if(get.get("query_id").equals(selectedItem)){
                                         query=prefixes+get.get("query_sparql");
+                                        queryText=get.get("query_text");
                                         break;
                                     }
                                 }
                             }
-                            if (!query.isEmpty()) {
-                                String executeQuery = executeQuery(query, trust2);
-//                                        .replaceAll("<", "");
-//                                executeQuery = executeQuery.replaceAll(">", "");
-                                out.println("<div>Query: " + query.replaceAll(">", "").replaceAll("<", "").replaceAll("\n" , "<br>") + "</div><div>Result : \n" + executeQuery+"</div>");
-                            }
+//                            if (!query.isEmpty()) {
+//                                String executeQuery = executeQuery(query, trust2);
+////                                        .replaceAll("<", "");
+////                                executeQuery = executeQuery.replaceAll(">", "");
+//                                out.println("<div>Query: " + query.replaceAll(">", "").replaceAll("<", "").replaceAll("\n" , "<br>") + "</div><div>Result : \n" + executeQuery+"</div>");
+//                            }
                         }
                     }
-                    out.println("</body>");
-                    out.println("</html>");
-                } finally {
-                    out.close();
-                }
-            } else 
+//                    out.println("</body>");
+//                    out.println("</html>");
+//                } finally {
+//                    out.close();
+//                }
+            }
+            //else 
         //Si la requete n'est pas vide alors l'executer
         {
             if (query != null && !query.isEmpty()) {
@@ -294,11 +299,15 @@ public class TextProcessing extends HttpServlet {
                     out.println("&nbsp;&nbsp;<h2>The text :</h2><br><div class=\"input\"> " + t.content + "</div>");
                     out.println("&nbsp;&nbsp;<h2>The source :</h2> " + t.source);
                     out.println("&nbsp;&nbsp;<h2>The author :</h2> " + t.author);
-                    out.println("<b>The trust granted :<b> <input type=\"text\" name=\"trust\" value=\"" + trust + "\">");
+                    out.println("<br><b>The trust granted :</b> <input type=\"text\" name=\"trust\" value=\"" + trust + "\">");
                     if (ontologie == null) {
                         out.println("Can not create the model, there is a problem with the RDF");
                     } else {
 //                        query = "";
+                        if(!queryText.isEmpty()){
+                            out.println("<h2>The query text is:</h2><br><font color=\"blue\"> " + queryText+"</font>");
+                            
+                        }
                         if (!query.isEmpty()) {
                             String rewriteQuery = new QueryTriples(query).rewriteQuery();
                             out.println("<h2>The original query is:</h2><br> " + query.replaceAll("<", "").replaceAll(">", "").replaceAll("\n", "<br>"));
@@ -307,9 +316,15 @@ public class TextProcessing extends HttpServlet {
                             out.println("<h2>Result of the rewrited query:</h2><br>" + sublimResult(executeQuery(rewriteQuery, trust2)));
                         }
                     }
+                } 
+                catch(Exception ex){
+                    out.println("<h2>Problem encourted : </h2>"
+                            + "<b><font color=\"red\">Sorry a problem accored during the execution of the query :</font></b> <br>"+sublimResult(query));
+                    out.println("<h2>The exception: </h2>"+ex);
+                }
+                finally {
                     out.println("</body>");
                     out.println("</html>");
-                } finally {
                     out.close();
                 }
             } 
@@ -325,7 +340,7 @@ public class TextProcessing extends HttpServlet {
     }
     
     public String executeQuery(String query, String t) {
-        String res = "";
+        String res = ""; 
         Query query1 = QueryFactory.create(query);
         QueryExecution qexec = QueryExecutionFactory.create(query1, ontologie);
         Pattern p = Pattern.compile("([0-9]+\\.[0-9])");

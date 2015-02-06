@@ -4010,7 +4010,15 @@
         <rdfs:domain rdf:resource="&gs;PriceChange"/>
     </owl:DatatypeProperty>
     
+    <!-- http://www.geolsemantics.com/onto#violentAct-type -->
 
+    <owl:DatatypeProperty rdf:about="&gs;violentAct-type">
+        <rdfs:label xml:lang="en">type</rdfs:label>
+        <rdfs:label xml:lang="en">shooting, murder</rdfs:label>
+        <rdfs:label xml:lang="fr">type </rdfs:label>
+        <rdfs:domain rdf:resource="&gs;ViolentAct"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+    </owl:DatatypeProperty>
 
     <!-- http://www.geolsemantics.com/onto#union-type -->
 

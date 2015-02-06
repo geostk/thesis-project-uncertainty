@@ -99,7 +99,7 @@
         <rdfs:label xml:lang="en">agent of the action</rdfs:label>
         <rdfs:label xml:lang="fr">agent de l&apos;action</rdfs:label>
         <rdfs:domain rdf:resource="&gs;Action"/>
-        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;hasAgent"/>
         <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     
@@ -157,7 +157,7 @@
         <rdfs:label xml:lang="en">policeman</rdfs:label>
         <rdfs:label xml:lang="fr">agent de police</rdfs:label>
         <rdfs:domain rdf:resource="&gs;Arrest"/>
-        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;hasAgent"/>
     </owl:ObjectProperty>
     
 
@@ -168,7 +168,7 @@
         <rdfs:label xml:lang="en">made by</rdfs:label>
         <rdfs:label xml:lang="fr">réalisé par</rdfs:label>
         <rdfs:domain rdf:resource="&gs;Indictment"/>
-        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;hasAgent"/>
     </owl:ObjectProperty>
     
 
@@ -309,7 +309,7 @@
         <rdfs:comment xml:lang="en">doctor, midwife...</rdfs:comment>
         <rdfs:comment xml:lang="fr">docteur, sage-femme, ...</rdfs:comment>
         <rdfs:domain rdf:resource="&gs;Birth"/>
-        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;hasAgent"/>
         <rdfs:range rdf:resource="&foaf;Person"/>
     </owl:ObjectProperty>
     
@@ -673,7 +673,7 @@
         <rdfs:label xml:lang="en">decision maker</rdfs:label>
         <rdfs:label xml:lang="fr">décideur</rdfs:label>
         <rdfs:domain rdf:resource="&gs;ExperienceEnd"/>
-        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;hasAgent"/>
         <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     
@@ -732,7 +732,7 @@
         <rdfs:comment xml:lang="en">mayor, deputy mayor, ...</rdfs:comment>
         <rdfs:comment xml:lang="fr">maire, adjoint du maire...</rdfs:comment>
         <rdfs:domain rdf:resource="&gs;Disunion"/>
-        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;hasAgent"/>
         <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     
@@ -1304,7 +1304,7 @@
         <rdfs:label xml:lang="fr">a pour victime</rdfs:label>
         <rdfs:range rdf:resource="&gs;Victim"/>
         <rdfs:domain rdf:resource="&gs;ViolentAct"/>
-        <owl:propertyDisjointWith rdf:resource="&gs;isAgent"/>
+        <owl:propertyDisjointWith rdf:resource="&gs;hasAgent"/>
     </owl:ObjectProperty>
     
 
@@ -1387,9 +1387,9 @@
     
 
 
-    <!-- http://www.geolsemantics.com/onto#isAgent -->
+    <!-- http://www.geolsemantics.com/onto#hasAgent -->
 
-    <owl:ObjectProperty rdf:about="&gs;isAgent">
+    <owl:ObjectProperty rdf:about="&gs;hasAgent">
         <rdfs:label xml:lang="en">agent</rdfs:label>
         <rdfs:label xml:lang="fr">agent</rdfs:label>
         <rdfs:range rdf:resource="&foaf;Agent"/>
@@ -1459,7 +1459,7 @@
         <rdfs:label xml:lang="en">judge</rdfs:label>
         <rdfs:label xml:lang="fr">juge</rdfs:label>
         <rdfs:domain rdf:resource="&gs;Judgment"/>
-        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;hasAgent"/>
         <rdfs:range rdf:resource="&foaf;Person"/>
     </owl:ObjectProperty>
     
@@ -2560,7 +2560,7 @@
         <rdfs:label xml:lang="en">celebrated by</rdfs:label>
         <rdfs:label xml:lang="fr">célébré par</rdfs:label>
         <rdfs:domain rdf:resource="&gs;Union"/>
-        <rdfs:subPropertyOf rdf:resource="&gs;isAgent"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;hasAgent"/>
         <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     

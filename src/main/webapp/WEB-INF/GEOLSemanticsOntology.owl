@@ -1069,7 +1069,10 @@
     <!-- http://www.geolsemantics.com/onto#hasAgent -->
 
     <owl:ObjectProperty rdf:about="&gs;hasAgent">
+        <rdfs:label xml:lang="en">agent</rdfs:label>
+        <rdfs:label xml:lang="fr">agent</rdfs:label>
         <rdfs:domain rdf:resource="&gs;ReportedSpeech"/>
+        <owl:propertyDisjointWith rdf:resource="&gs;hasVictim"/>
         <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     
@@ -1304,7 +1307,6 @@
         <rdfs:label xml:lang="fr">a pour victime</rdfs:label>
         <rdfs:range rdf:resource="&gs;Victim"/>
         <rdfs:domain rdf:resource="&gs;ViolentAct"/>
-        <owl:propertyDisjointWith rdf:resource="&gs;hasAgent"/>
     </owl:ObjectProperty>
     
 
@@ -1383,16 +1385,6 @@
         <rdfs:label xml:lang="fr">seveur relié à l&apos;adresse IP</rdfs:label>
         <rdfs:domain rdf:resource="&gs;IP"/>
         <rdfs:range rdf:resource="&gs;Server"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.geolsemantics.com/onto#hasAgent -->
-
-    <owl:ObjectProperty rdf:about="&gs;hasAgent">
-        <rdfs:label xml:lang="en">agent</rdfs:label>
-        <rdfs:label xml:lang="fr">agent</rdfs:label>
-        <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     
 
@@ -3403,6 +3395,17 @@
     
 
 
+    <!-- http://www.geolsemantics.com/onto#loc-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;loc-type">
+        <rdfs:label xml:lang="en">type</rdfs:label>
+        <rdfs:label xml:lang="fr">type</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;Loc"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.geolsemantics.com/onto#location-name -->
 
     <owl:DatatypeProperty rdf:about="&gs;location-name">
@@ -3655,6 +3658,20 @@
         <rdfs:label xml:lang="en">order number</rdfs:label>
         <rdfs:label xml:lang="fr">numéro de commande</rdfs:label>
         <rdfs:domain rdf:resource="&gs;Order"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#org-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;org-type">
+        <rdfs:label xml:lang="en">type</rdfs:label>
+        <rdfs:label xml:lang="fr">type</rdfs:label>
+        <rdfs:comment>tribunal
+hopital
+Société</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
+        <rdfs:domain rdf:resource="&foaf;Organization"/>
     </owl:DatatypeProperty>
     
 
@@ -4010,15 +4027,7 @@
         <rdfs:domain rdf:resource="&gs;PriceChange"/>
     </owl:DatatypeProperty>
     
-    <!-- http://www.geolsemantics.com/onto#violentAct-type -->
 
-    <owl:DatatypeProperty rdf:about="&gs;violentAct-type">
-        <rdfs:label xml:lang="en">type</rdfs:label>
-        <rdfs:label xml:lang="en">shooting, murder</rdfs:label>
-        <rdfs:label xml:lang="fr">type </rdfs:label>
-        <rdfs:domain rdf:resource="&gs;ViolentAct"/>
-        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
-    </owl:DatatypeProperty>
 
     <!-- http://www.geolsemantics.com/onto#union-type -->
 
@@ -4051,7 +4060,20 @@
         <rdfs:label xml:lang="fr">valeur</rdfs:label>
         <rdfs:comment xml:lang="en">measure value</rdfs:comment>
         <rdfs:comment xml:lang="fr">Valeur d&apos;une mesure</rdfs:comment>
+        <rdfs:domain rdf:resource="&gs;Mes"/>
         <rdfs:range rdf:resource="&xsd;long"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#violentAct-type -->
+
+    <owl:DatatypeProperty rdf:about="&gs;violentAct-type">
+        <rdfs:label xml:lang="en">shooting, murder</rdfs:label>
+        <rdfs:label xml:lang="en">type</rdfs:label>
+        <rdfs:label xml:lang="fr">type </rdfs:label>
+        <rdfs:domain rdf:resource="&gs;ViolentAct"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;type"/>
     </owl:DatatypeProperty>
     
 

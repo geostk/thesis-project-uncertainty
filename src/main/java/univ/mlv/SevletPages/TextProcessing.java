@@ -128,14 +128,29 @@ public class TextProcessing extends HttpServlet {
                         + "<div class=\"cl\">&nbsp;</div>"
                         + "</div>"
                         + "<br>");
-                out.println("<div style=\"border: 1px solid gray; \">"
-                        + "&nbsp;&nbsp;<h2>The text :</h2><br><div class=\"inptu\"> " + t.content + "</div>");
-                out.println("&nbsp;&nbsp;<h2>The source :</h2>&nbsp " + t.source);
-                out.println("&nbsp;&nbsp;<h2>The author :</h2>&nbsp" + t.author);
-                out.println("<br>&nbsp;&nbsp;The trust granted : <input type=\"text\" name=\"trust\" value=\"" + trust + "\">");
-                out.println("<form action=\"OntoViz\"> Do you want to visualize the ontlogy? : <input type=\"submit\" name=\"ontoViz\" value=\"Display ontology \">"
-                        + "</form> </div>");
-                out.println("<form action=\"GraphDisplay?inputID=" + inputid + "\"> Do you want to visualize the graph? : <input type=\"submit\" name=\"graphViz\" value=\"Display graph\">"
+                out.println("<fieldset>"
+                        + "<legend>Text</legend> " + t.content + "</fieldset><br><br> ");
+                out.println("<table><tr> <th>Source</th><th>Trust</th></tr>"
+                        + "");
+                out.println("<tr>"
+                        + "<td><b>The journal :</b>" + t.source+"</td>"
+                        + "<td><input id=\"trsutJ\" type=\"text\" name=\"trust\" value=\"" + trust + "\"></td>"
+                        + "</tr>");
+                out.println("<tr>"
+                        + "<td><b>The author :</b>" + t.author+"</td>"
+                        + "<td><input id=\"trsutA\" type=\"text\" name=\"trust\" value=\"\"></td>"
+                        + "</tr>");
+                out.println("<tr>"
+//                        + "<td></td>"
+                        + "<td>The trust granted to the source: </td>"
+                        + "<td><input id=\"trsutT\" type=\"text\" name=\"trust\" value=\"\"></td>"
+                        + "</tr>"
+                        + "</table>");
+                out.println("<br><br>"
+                        + "<form action=\"OntoViz\"> Do you want to visualize the ontlogy? : <input type=\"submit\" name=\"ontoViz\" value=\"Display ontology \">"
+                        + "</form>");
+                out.println("<br>"
+                        + "<form action=\"GraphDisplay?inputID=" + inputid + "\"> Do you want to visualize the graph? : <input type=\"submit\" name=\"graphViz\" value=\"Display graph\">"
                         + "</form> </div>");
 //                if (null != rdf && !rdf.isEmpty()) {
 //                    GraphConstructor g = new GraphConstructor(rdf);
@@ -296,7 +311,8 @@ public class TextProcessing extends HttpServlet {
                         + "<div class=\"cl\">&nbsp;</div>"
                         + "</div>"
                             + "<br>");
-                    out.println("&nbsp;&nbsp;<h2>The text :</h2><br><div class=\"input\"> " + t.content + "</div>");
+                    out.println("<fieldset>"
+                        + "<legend>Text</legend> " + t.content + "</fieldset><br><br> ");
                     out.println("&nbsp;&nbsp;<h2>The source :</h2> " + t.source);
                     out.println("&nbsp;&nbsp;<h2>The author :</h2> " + t.author);
                     out.println("<br><b>The trust granted :</b> <input type=\"text\" name=\"trust\" value=\"" + trust + "\">");

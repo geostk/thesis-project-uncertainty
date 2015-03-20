@@ -40,6 +40,10 @@
         <servlet-name>About</servlet-name>
         <servlet-class>univ.mlv.SevletPages.About</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GraphDisplay</servlet-name>
+        <servlet-class>univ.mlv.SevletPages.GraphDisplay</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginCheck</servlet-name>
         <url-pattern>/LoginCheck</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>About</servlet-name>
         <url-pattern>/About</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GraphDisplay</servlet-name>
+        <url-pattern>/GraphDisplay</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

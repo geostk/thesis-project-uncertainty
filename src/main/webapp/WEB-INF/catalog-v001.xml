@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1421309775868" name="http://www.geolsemantics.com/onto" uri="GEOLSemanticsOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1425222583578" name="http://www.geolsemantics.com/onto" uri="GEOLSemanticsOntology.owl"/>
     </group>
 </catalog>

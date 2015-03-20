@@ -77,6 +77,7 @@
 
     <owl:ObjectProperty rdf:about="&gs;accordingTo">
         <rdfs:domain rdf:resource="&gs;Emission"/>
+        <rdfs:domain rdf:resource="&gs;ReportedSpeech"/>
         <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     
@@ -1071,7 +1072,6 @@
     <owl:ObjectProperty rdf:about="&gs;hasAgent">
         <rdfs:label xml:lang="en">agent</rdfs:label>
         <rdfs:label xml:lang="fr">agent</rdfs:label>
-        <rdfs:domain rdf:resource="&gs;ReportedSpeech"/>
         <owl:propertyDisjointWith rdf:resource="&gs;hasVictim"/>
         <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
@@ -1395,6 +1395,7 @@
         <rdfs:label xml:lang="en">is</rdfs:label>
         <rdfs:label xml:lang="fr">est</rdfs:label>
         <rdfs:domain rdf:resource="&gs;Buyer"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
         <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     
@@ -1418,6 +1419,7 @@
         <rdfs:label xml:lang="en">is</rdfs:label>
         <rdfs:label xml:lang="fr">est</rdfs:label>
         <rdfs:domain rdf:resource="&gs;Investor"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
         <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     
@@ -1428,6 +1430,7 @@
     <owl:ObjectProperty rdf:about="&gs;isPartOf">
         <rdfs:label xml:lang="en">is a sub organization of</rdfs:label>
         <rdfs:label xml:lang="fr">est une sous-organisation de </rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
         <rdfs:domain rdf:resource="&foaf;Organization"/>
         <rdfs:range rdf:resource="&foaf;Organization"/>
     </owl:ObjectProperty>
@@ -1440,6 +1443,7 @@
         <rdfs:label xml:lang="en">is</rdfs:label>
         <rdfs:label xml:lang="fr">est</rdfs:label>
         <rdfs:domain rdf:resource="&gs;Seller"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
         <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     
@@ -2220,6 +2224,28 @@
         <rdfs:label xml:lang="fr">fin</rdfs:label>
         <rdfs:range rdf:resource="&gs;Date"/>
         <rdfs:domain rdf:resource="&gs;OrgRelation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#reportedBy -->
+
+    <owl:ObjectProperty rdf:about="&gs;reportedBy">
+        <rdfs:domain rdf:resource="&gs;ReportedSpeech"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;hasAgent"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geolsemantics.com/onto#reportedTo -->
+
+    <owl:ObjectProperty rdf:about="&gs;reportedTo">
+        <rdfs:label xml:lang="en">reported to</rdfs:label>
+        <rdfs:label xml:lang="fr">rapporté à</rdfs:label>
+        <rdfs:domain rdf:resource="&gs;ReportedSpeech"/>
+        <rdfs:subPropertyOf rdf:resource="&gs;undergoerProp"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
     </owl:ObjectProperty>
     
 

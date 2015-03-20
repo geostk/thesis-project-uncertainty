@@ -6,8 +6,6 @@ package univ.mlv.Structures;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -18,10 +16,16 @@ public class QueryTriples {
     List<String> listTriples = new ArrayList<String>();
     String query = "";
 
+    /**
+     * récupérer les triplets contenus dans la requête, chaque triplet se termine par un .
+     * @param query 
+     */
     public QueryTriples(String query) {
         this.query = query;
-        query=query.toLowerCase().replaceFirst("where\\{", "where \\{");
-        String split_where = query.toLowerCase().split("where \\{")[1];//Prendre la partie après le where pour ne garder que les triplets concerné par la clause where
+        query=query.replaceFirst("where\\{", "where \\{");
+        query=query.replaceFirst("Where\\{", "where \\{");
+        query=query.replaceFirst("Where \\{", "where \\{");
+        String split_where = query.split("where \\{")[1];//Prendre la partie après le where pour ne garder que les triplets concerné par la clause where
 //        String[] split_dot = new String[split_where.split("\\.").length];
         String[] split_dot = split_where.split("\\.");
         //découpage en triplets
@@ -45,10 +49,15 @@ public class QueryTriples {
         String res = query;
         int i = 1;
 //        res=res.replaceAll("\\?", "\\\\\\\\?");
-        for (String s : listTriples) {
+        for (String s : listTriples) { 
         String rw = "";
             Triples t = new Triples(s, Integer.toString(i));
-            rw = rw + "\n" + t.caseO() + "\n" + t.case1() + "\n" + t.case2() + "\n" + t.case3();
+            if(!s.contains("rdf:type")){
+                rw = rw + "\n{" + t.caseO() + "} UNION {\n" + t.case1() + "}\nUNION{" + t.case2() + "} UNION {\n" + t.case3()+"}";
+            }
+            else{
+                rw=s+".";
+            }
 //            Pattern p = Pattern.compile(s.replaceAll("\\?", "\\\\\\\\?"));
             s=s.replaceAll("\\?", "\\\\\\?");
  

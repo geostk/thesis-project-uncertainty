@@ -22,12 +22,12 @@
     <body onload="initialise()">
         <div id="navigation">
                         <ul>
-                        <li><a href=\"index.jsp\">HOME</a></li>
-                        <li><a href=\"LoginCheck\">User information</a></li>
-                        <li><a href=\"ShowText\">Texts</a></li>
-                        <li><a href=\"OntoViz\">Ontology</a></li>
-                        <li><a href=\"About\">ABOUT</a></li>
-                        <li><a href=\"#\">CONTACT</a></li>
+                        <li><a href="index.jsp">HOME</a></li>
+                        <li><a href="LoginCheck">User information</a></li>
+                        <li><a href="ShowText">Texts</a></li>
+                        <li><a href="OntoViz">Ontology</a></li>
+                        <li><a href="About">ABOUT</a></li>
+                        <li><a href="#">CONTACT</a></li>
                         </ul>
                         <div class=\"cl\">&nbsp;</div>
                         </div>

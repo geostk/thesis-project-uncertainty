@@ -122,7 +122,7 @@ public class TextProcessing extends HttpServlet {
                         + "<li><a href=\"index.jsp\">HOME</a></li>"
                         + "<li><a href=\"LoginCheck\">User information</a></li>"
                         + "<li><a href=\"ShowText\">Texts</a></li>"
-                        + "<li><a href=\"OntoViz\">Ontology</a></li>"
+                        + "<li><a href=\"OntoDisplay\">Ontology</a></li>"
                         + "<li><a href=\"About\">ABOUT</a></li>"
                         + "<li><a href=\"#\">CONTACT</a></li>"
                         + "</ul>"
@@ -305,7 +305,7 @@ public class TextProcessing extends HttpServlet {
                             + "<li><a href=\"index.jsp\">HOME</a></li>"
                             + "<li><a href=\"LoginCheck\">User information</a></li>"
                             + "<li><a href=\"ShowText\">Texts</a></li>"
-                            + "<li><a href=\"OntoViz\">Ontology</a></li>"
+                            + "<li><a href=\"OntoDisplay\">Ontology</a></li>"
                             + "<li><a href=\"About\">ABOUT</a></li>"
                             + "<li><a href=\"#\">CONTACT</a></li>"
                             + "</ul>"
@@ -326,7 +326,7 @@ public class TextProcessing extends HttpServlet {
 
                         }
                         if (!query.isEmpty()) {
-                            out.println("<h2>The original query is:</h2><br> " + query.replaceAll("<", "").replaceAll(">", "").replaceAll("\n", "<br>"));
+                            out.println("<h2>The original query is:</h2><br> " + query.replaceAll("<", "").replaceAll(">", "").replaceAll("\n", "<br>").replaceAll("\\.\\?", "\\.<br>\\?"));
                             out.println("<h2>Result of the original query:</h2><br>" + sublimResult(executeQuery(query, trust2)));
                             String rewriteQuery = new QueryTriples(query).rewriteQuery();
                             out.println("<h2>The rewriting of the query is : </h2><br>" + rewriteQuery.replaceAll("<", "").replaceAll(">", "").replaceAll("\n", "<br>"));

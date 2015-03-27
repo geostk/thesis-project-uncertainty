@@ -48,7 +48,7 @@ public class ShowText extends HttpServlet {
                     + "<li><a href=\"index.jsp\">HOME</a></li>"
                     + "<li><a href=\"LoginCheck\">User information</a></li>"
                     + "<li><a href=\"ShowText\">Texts</a></li>"
-                    + "<li><a href=\"OntoViz\">Ontology</a></li>"
+                    + "<li><a href=\"OntoDisplay\">Ontology</a></li>"
                     + "<li><a href=\"About\">ABOUT</a></li>"
                     + "<li><a href=\"#\">CONTACT</a></li>"
                     + "</ul>"

@@ -1,0 +1,95 @@
+body {
+  background:white;
+  font:normal normal 13px/1.4 Segoe,"Segoe UI",Calibri,Helmet,FreeSans,Sans-Serif;
+  padding:50px;
+}
+
+
+/**
+ * Framework starts from here ...
+ * ------------------------------
+ */
+
+.treeView,
+.treeView ul {
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+.treeView ul {
+  margin-left:1em; /* indentation */
+  position:relative;
+}
+
+.treeView ul ul {margin-left:.5em} /* (indentation/2) */
+
+.treeView ul:before {
+  content:"";
+  display:block;
+  width:0;
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  border-left:1px solid;
+  color: #b4b4b4;
+}
+
+.treeView li {
+  margin:0;
+  padding:0 1.5em; /* indentation + .5em */
+  line-height:2em; /* default list item's `line-height` */
+  font-weight:bold;
+  position:relative;
+  
+}
+
+.treeView ul li:before {
+  content:"";
+  display:block;
+  width:13px; /* same with indentation */
+  height:0;
+  border-top:1px solid;
+  margin-top:-1px; /* border top width */
+  position:absolute;
+  top:1em; /* (line-height/2) */
+  left:0;
+  color: #b4b4b4;
+}
+
+.treeView ul li:last-child:before {
+  background:white; /* same with body background */
+  height:auto;
+  top:1em; /* (line-height/2) */
+  bottom:0;
+}
+
+.treeView li.collapsibleListOpen {
+  list-style-image: url('images/button-open.png');
+    list-style-position:inside;
+}
+.treeView li.collapsibleListClosed {
+  list-style-image: url('images/button-closed.png');
+  list-style-position:inside;
+}
+.treeView li {
+    padding: 0px 2em;
+    /* rest of the styles */
+}
+.tableProp th, tr{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.tableProp td, th {
+    border: 1px solid black;
+    text-align: justify;
+}
+th{
+    background-color: green;
+}
+.tableProp td {
+    height: 50px;
+    vertical-align: top;
+}

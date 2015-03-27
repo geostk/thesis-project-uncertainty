@@ -25,6 +25,7 @@ public class QueryTriples {
         query=query.replaceFirst("where\\{", "where \\{");
         query=query.replaceFirst("Where\\{", "where \\{");
         query=query.replaceFirst("Where \\{", "where \\{");
+        query=query.replaceFirst("WHERE \\{", "where \\{");
         String split_where = query.split("where \\{")[1];//Prendre la partie après le where pour ne garder que les triplets concerné par la clause where
 //        String[] split_dot = new String[split_where.split("\\.").length];
         String[] split_dot = split_where.split("\\.");
@@ -53,7 +54,7 @@ public class QueryTriples {
         String rw = "";
             Triples t = new Triples(s, Integer.toString(i));
             if(!s.contains("rdf:type")){
-                rw = rw + "\n{" + t.caseO() + "} UNION {\n" + t.case1() + "}\nUNION{" + t.case2() + "} UNION {\n" + t.case3()+"}";
+                rw = rw + "\n{" + t.caseO() + "} \tUNION {\n" + t.case1() + "}\n\tUNION{\t\t" + t.case2() + "\t\t} \tUNION {\n\t\t" + t.case3()+"\t\t}";
             }
             else{
                 rw=s+".";

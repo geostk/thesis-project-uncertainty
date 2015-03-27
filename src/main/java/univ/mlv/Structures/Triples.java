@@ -67,7 +67,7 @@ public class Triples {
      * @return 
      */
     public String caseO(){
-        return "Optional {"
+        return "Optional {\n"
                 + getSubject()+" "+getPredicate()+" "+getObject()+".\n"
                 + "}";
         

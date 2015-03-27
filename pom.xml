@@ -22,11 +22,17 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>apache-jena-libs</artifactId>
+            <type>pom</type>
+            <version>2.13.0</version>
+        </dependency>
+<!--        <dependency>
             <groupId>com.hp.hpl.jena</groupId>
             <artifactId>jena</artifactId>
             <version>2.6.2</version>
             <type>jar</type>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>jaxen</groupId>
             <artifactId>jaxen</artifactId>
@@ -52,15 +58,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-	<groupId>org.jdom</groupId>
-	<artifactId>jdom</artifactId>
-	<version>2.0.2</version>
-</dependency>
-<dependency>
-	<groupId>com.efsavage.jquery</groupId>
-	<artifactId>jquery-maven</artifactId>
-	<version>1.7.2</version>
-</dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.efsavage.jquery</groupId>
+            <artifactId>jquery-maven</artifactId>
+            <version>1.7.2</version>
+        </dependency>
 
 
     </dependencies>

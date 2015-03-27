@@ -148,7 +148,7 @@ public class TextProcessing extends HttpServlet {
                         + "</tr>"
                         + "</table>");
                 out.println("<br><br>"
-                        + "<form action=\"OntoViz\"> Do you want to visualize the ontlogy? : <input type=\"submit\" name=\"ontoViz\" value=\"Display ontology \">"
+                        + "<form action=\"OntoDisplay.jsp\"> Do you want to visualize the ontlogy? : <input type=\"submit\" name=\"ontoViz\" value=\"Display ontology \">"
                         + "</form>");
                 out.println("<br>"
                         + "<form action=\"GraphDisplay?inputID=" + inputid + "\"> Do you want to visualize the graph? : <input type=\"submit\" name=\"graphViz\" value=\"Display graph\">"

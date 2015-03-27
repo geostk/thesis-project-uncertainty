@@ -99,20 +99,6 @@ public class TextProcessing extends HttpServlet {
                 out.println("<html>");
                 out.println("<head>");
                 out.println("<title>Servlet TextProcessing</title>"
-                        //                    + "<script src=\"jquery-1.7.2.js\"></script>"
-                        + "<script>function test(){"
-                        //                    + "alert(document.getElementById(\"target1\").value);"
-                        + "alert(\"ça marcheeeee!!\");"
-                        + "}"
-                        //                    + "<script>"
-                        //                    + "$('#target1').change(function() {"
-                        //                    + "alert($(this).attr(\"name\"));"
-                        ////                    + "    $.ajax({"
-                        ////                    + "        url: 'http://localhost:8085/InterfaceTrust_Uncertainty/TextProcessing',"
-                        ////                    + "        data: {selectedValue: $(this).name()},"
-                        ////                    + "    });"
-                        //                    + "});"
-                        + "</script>"
                         + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />"
                         + "");
                 out.println("</head>");
@@ -153,26 +139,11 @@ public class TextProcessing extends HttpServlet {
                 out.println("<br>"
                         + "<form action=\"GraphDisplay?inputID=" + inputid + "\"> Do you want to visualize the graph? : <input type=\"submit\" name=\"graphViz\" value=\"Display graph\">"
                         + "</form> </div>");
-//                if (null != rdf && !rdf.isEmpty()) {
-//                    GraphConstructor g = new GraphConstructor(rdf);
-//                    if (null != g.getSvg()) {
-//                        out.println(g.getSvg());
-//                    } else {
-//                        out.println("Sorry, the graph can not be created ");
-//                    }
-//                    out.println("<br>");
-//                }
+
 
                 if (ontologie == null) {
                     out.println("Can not create the model");
                 } else {
-//                out.println("List of triples : ");
-//                StmtIterator listStatements = ontologie.listStatements();
-//                while(listStatements.hasNext()){
-//                    Statement next = listStatements.next();
-//                    out.println(next.asTriple());
-//                    
-//                }
                     out.println("<h2>Write your query</h2>");
                     out.println("<form method=\"post\" action=\"TextProcessing?inputID=" + inputid + "\">");
 
@@ -216,30 +187,6 @@ public class TextProcessing extends HttpServlet {
                 out.close();
             }
         } else if (select != null && (query != null && query.isEmpty())) {
-//                PrintWriter out = response.getWriter();
-//                try {
-//                    /* TODO output your page here. You may use following sample code. */
-//                    out.println("<html>");
-//                    out.println("<head>");
-//                    out.println("<title>Servlet TextProcessing</title>"
-//                            + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />");   
-//                    out.println("</head>");
-//                    out.println("<body>"
-//                           + "<div id=\"navigation\">"
-//                        + "<ul>"
-//                        + "<li><a href=\"index.jsp\">HOME</a></li>"
-//                        + "<li><a href=\"LoginCheck\">User information</a></li>"
-//                        + "<li><a href=\"ShowText\">Texts</a></li>"
-//                        + "<li><a href=\"OntoViz\">Ontology</a></li>"
-//                        + "<li><a href=\"About\">ABOUT</a></li>"
-//                        + "<li><a href=\"#\">CONTACT</a></li>"
-//                        + "</ul>"
-//                        + "<div class=\"cl\">&nbsp;</div>"
-//                        + "</div>"
-//                            + "<br>");
-//                    if (ontologie == null) {
-//                        out.println("Can not create the model");
-//                    } else 
             {
                 String selectedItem = select;
                 query = "";
@@ -257,7 +204,6 @@ public class TextProcessing extends HttpServlet {
 
                     } else if (selectedItem.equals("00")) {
                                 //qui est la source, quelle degré de confiance je lui accorde
-
                         query = "PREFIX prov: <http://www.w3.org/ns/prov#>"
                                 + "Select ?author ?journal Where {"
                                 + "?x prov:wasAttributedTo ?author."
@@ -273,19 +219,8 @@ public class TextProcessing extends HttpServlet {
                             }
                         }
                     }
-//                            if (!query.isEmpty()) {
-//                                String executeQuery = executeQuery(query, trust2);
-////                                        .replaceAll("<", "");
-////                                executeQuery = executeQuery.replaceAll(">", "");
-//                                out.println("<div>Query: " + query.replaceAll(">", "").replaceAll("<", "").replaceAll("\n" , "<br>") + "</div><div>Result : \n" + executeQuery+"</div>");
-//                            }
                 }
             }
-//                    out.println("</body>");
-//                    out.println("</html>");
-//                } finally {
-//                    out.close();
-//                }
         }
         //else 
         //Si la requete n'est pas vide alors l'executer
@@ -379,6 +314,16 @@ public class TextProcessing extends HttpServlet {
                         String next1 = varNames.next(); // nomde la variable dans le select
                         System.out.println("next1= " + next1);
                         String e = next.get(next1).toString(); // valeur que prend  la variable
+                        //ignorer les rdf:type de type resource, owl:prop....
+                        if(e.equals("http://www.w3.org/2000/01/rdf-schema#Class")
+                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#Property")
+                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#Datatype")
+                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#List")
+                                ||e.equals("http://www.w3.org/2004/03/trix/rdfg-1Graph")
+                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#Resource")
+                            ){
+                            continue;
+                        }
                         if (t != null && !t.isEmpty()) { // appliquer le trust
 //                            String[] split_res=next.get(next1).toString().split(" ");
 //                            for(String s:split_res){

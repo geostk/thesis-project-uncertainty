@@ -108,7 +108,7 @@ public class TextProcessing extends HttpServlet {
                         + "<li><a href=\"index.jsp\">HOME</a></li>"
                         + "<li><a href=\"LoginCheck\">User information</a></li>"
                         + "<li><a href=\"ShowText\">Texts</a></li>"
-                        + "<li><a href=\"OntoDisplay\">Ontology</a></li>"
+                        + "<li><a href=\"OntoDisplay.jsp\">Ontology</a></li>"
                         + "<li><a href=\"About\">ABOUT</a></li>"
                         + "<li><a href=\"#\">CONTACT</a></li>"
                         + "</ul>"
@@ -137,7 +137,7 @@ public class TextProcessing extends HttpServlet {
                         + "<form action=\"OntoDisplay.jsp\"> Do you want to visualize the ontlogy? : <input type=\"submit\" name=\"ontoViz\" value=\"Display ontology \">"
                         + "</form>");
                 out.println("<br>"
-                        + "<form action=\"GraphDisplay?inputID=" + inputid + "\"> Do you want to visualize the graph? : <input type=\"submit\" name=\"graphViz\" value=\"Display graph\">"
+                        + "<form method=\"post\" action=\"GraphDisplay?inputID=" + inputid + "\"> Do you want to visualize the graph? : <input type=\"submit\" name=\"graphViz\" value=\"Display graph\">"
                         + "</form> </div>");
 
 
@@ -240,7 +240,7 @@ public class TextProcessing extends HttpServlet {
                             + "<li><a href=\"index.jsp\">HOME</a></li>"
                             + "<li><a href=\"LoginCheck\">User information</a></li>"
                             + "<li><a href=\"ShowText\">Texts</a></li>"
-                            + "<li><a href=\"OntoDisplay\">Ontology</a></li>"
+                            + "<li><a href=\"OntoDisplay.jsp\">Ontology</a></li>"
                             + "<li><a href=\"About\">ABOUT</a></li>"
                             + "<li><a href=\"#\">CONTACT</a></li>"
                             + "</ul>"
@@ -266,6 +266,7 @@ public class TextProcessing extends HttpServlet {
                             String rewriteQuery = new QueryTriples(query).rewriteQuery();
                             out.println("<h2>The rewriting of the query is : </h2><br>" + rewriteQuery.replaceAll("<", "").replaceAll(">", "").replaceAll("\n", "<br>"));
                             out.println("<h2>Result of the rewrited query:</h2><br>" + sublimResult(executeQuery(rewriteQuery, trust2)));
+                            //si le résultat est vide essayer de chercher les sous propriétés ex: isAgent=> isA
                         }
                     }
                 } catch (Exception ex) {
@@ -320,7 +321,18 @@ public class TextProcessing extends HttpServlet {
                                 ||e.equals("http://www.w3.org/2000/01/rdf-schema#Datatype")
                                 ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#List")
                                 ||e.equals("http://www.w3.org/2004/03/trix/rdfg-1Graph")
+                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#subPropertyOf")
+                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#range")
                                 ||e.equals("http://www.w3.org/2000/01/rdf-schema#Resource")
+                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#Literal")
+                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#label")
+                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement")
+                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#subClassOf")
+                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#subject")
+                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#object")
+                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#nil")
+                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#range")
+                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#domain")
                             ){
                             continue;
                         }

@@ -33,12 +33,15 @@ public class GraphDisplay extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         String inputid = request.getParameter("inputID");
+        if(inputid==null || inputid.isEmpty()){
+            
+        }else{
         Map<String, Text> allTexts = LoginCheckDB.getAllTexts();
         Text t = allTexts.get(inputid);
         String rdf= t.getRdf();
         PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
         try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -61,6 +64,7 @@ public class GraphDisplay extends HttpServlet {
             out.println("</html>");
         } finally {
             out.close();
+        }
         }
     }
 

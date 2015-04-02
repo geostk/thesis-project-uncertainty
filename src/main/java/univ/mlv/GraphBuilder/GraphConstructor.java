@@ -20,6 +20,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
+import static univ.mlv.GraphBuilder.CompleteTheGraph.rdfNamespace;
 
 /**
  *
@@ -79,13 +80,20 @@ public class GraphConstructor {
         
     private static void process(Element rootElement) {
         Element root2=rootElement;
-        
-        if(null!=rootElement.getAttributeValue("nodeID", rdfNamespace)
+        //récupérer l'id
+        String nodeID_prop = rootElement.getAttributeValue("nodeID", rdfNamespace);
+        if (nodeID_prop == null) {
+            nodeID_prop = rootElement.getAttributeValue("about", rdfNamespace);
+        }
+        if (nodeID_prop == null) {
+            nodeID_prop = rootElement.getAttributeValue("resource", rdfNamespace);
+        }
+        if(null!=nodeID_prop
                 &&
                 !rootElement.getChildren().isEmpty()){
             //il s'agit d'un concept
             concept.add(rootElement);
-            property.put(rootElement.getAttributeValue("nodeID", rdfNamespace), rootElement.getChildren());
+            property.put(nodeID_prop, rootElement.getChildren());
             
         }
 //            if (null!=rootElement.getParentElement()) {

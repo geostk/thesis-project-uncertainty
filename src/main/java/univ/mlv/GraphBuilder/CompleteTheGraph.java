@@ -79,13 +79,12 @@ public class CompleteTheGraph {
     private static Map<String, ArrayList<String>> nodes_relatations = new TreeMap<String, ArrayList<String>>();
 
     public static Map<String, String> nodes_graph = new TreeMap<String, String>();
-    
-    private String actual_graph ="";
+
+    private String actual_graph = "";
 
     private static Map<String, String> allGraphs = new TreeMap<String, String>();
-    
 
-   private static String lang;
+    private static String lang;
     static String relativPath = getAppDirectory().replaceAll("\\\\", "/");//.split("build")[0];
 
     public CompleteTheGraph(String lang) {
@@ -125,7 +124,7 @@ public class CompleteTheGraph {
         String graph_root = "root=" + root_center + ";\n";
         Set<String> keySet = GraphConstructor.getProperty().keySet();
         Iterator<String> iterator = keySet.iterator();
-        Map<String, String> listeDatatype = new TreeMap<String,String>();
+        Map<String, String> listeDatatype = new TreeMap<String, String>();
 
         while (iterator.hasNext()) {
             String nodeID_concept = iterator.next();
@@ -268,7 +267,7 @@ public class CompleteTheGraph {
                 for (String s : get) {
                     if (nodeID_node.containsKey(s.split("\t")[1])) {
                         getNodes_relatations().get(root_center).add(s.split("\t")[1]);
-            
+
                         //add the node conerning by the range of the property
                         String node_range = nodeID_node.get(s.split("\t")[1]);
                         graph_root = graph_root + node_range + "\n";
@@ -282,7 +281,7 @@ public class CompleteTheGraph {
         return graph_root;
 
     }
-    
+
     public void completeHref() throws IOException {
         Set<String> keySet = nodes_graph.keySet();
 //        System.out.println("nodes = "+keySet.size());
@@ -337,11 +336,36 @@ public class CompleteTheGraph {
         }
     }
 
+    public String getNodeID_Range(Element e) {
+        String res = "";
+        String nodeID_prop = e.getAttributeValue("nodeID", rdfNamespace);
+        if (nodeID_prop == null) {
+            nodeID_prop = e.getAttributeValue("about", rdfNamespace);
+        }
+        if (nodeID_prop == null) {
+            nodeID_prop = e.getAttributeValue("resource", rdfNamespace);
+        }
+        if (nodeID_prop == null) {
+            if (!e.getChildren().isEmpty()) {
+                Element ee = e.getChildren().get(0);
+                nodeID_prop = ee.getAttributeValue("nodeID", rdfNamespace);
+                if (nodeID_prop == null) {
+                    nodeID_prop = ee.getAttributeValue("about", rdfNamespace);
+                }
+                if (nodeID_prop == null) {
+                    nodeID_prop = ee.getAttributeValue("resource", rdfNamespace);
+                }
+            }
+        }
+        if(nodeID_prop!=null) return nodeID_prop;
+        return res;
+    }
+
     /**
      * Construct a graph for all the text and generate all the nodes
      *
      *
-     * @return 
+     * @return
      */
     public String designFullGraph() {
 //        mapNode_url(lang);
@@ -351,7 +375,7 @@ public class CompleteTheGraph {
         String graphe = "";
         Set<String> keySet = GraphConstructor.getProperty().keySet();
         Iterator<String> iterator = keySet.iterator();
-        Map<String, String> listeDatatype = new TreeMap<String,String>();
+        Map<String, String> listeDatatype = new TreeMap<String, String>();
 
         while (iterator.hasNext()) {
             String nodeID_concept = iterator.next();
@@ -370,7 +394,7 @@ public class CompleteTheGraph {
                 }
                 if (e.getText().isEmpty()) {
                     //object prop, vérifier le concept pointé par le nodeID existe
-                    String nodeID_prop = e.getAttributeValue("nodeID", rdfNamespace);
+                    String nodeID_prop = getNodeID_Range(e);
 //                    if (!lang.isEmpty()) {
 //                        Map<String, String> recupObjectProLabel = o.recupObjectProLabel(getLang());
 //                        if (recupObjectProLabel != null && recupObjectProLabel.containsKey(name_prop) && recupObjectProLabel.get(name_prop) != null) {
@@ -436,6 +460,12 @@ public class CompleteTheGraph {
                 System.out.println(" attention l'image " + concept_type + " n'existe pas !!!!");
             }
             String nodeID_concept = e.getAttributeValue("nodeID", rdfNamespace);
+        if (nodeID_concept == null) {
+            nodeID_concept = e.getAttributeValue("about", rdfNamespace);
+        }
+        if (nodeID_concept == null) {
+            nodeID_concept = e.getAttributeValue("resource", rdfNamespace);
+        }
             list_nodeID.add(nodeID_concept);
             //récupérer le nom du concept suivant la langue
 //            if (!lang.isEmpty()) {
@@ -457,7 +487,7 @@ public class CompleteTheGraph {
                 node_head = node_head + ", tooltip=\"" + listeDatatype.get(nodeID_concept) + "\"";
             }
 //            if (nodes_url.containsKey(nodeID_concept)) {
-                node_head = node_head + ", href=\"ExitCloseGraphsFiles?root_center=" + nodeID_concept + "\"";
+            node_head = node_head + ", href=\"ExitCloseGraphsFiles?root_center=" + nodeID_concept + "\"";
 //            }
             node_head = node_head + "];";
             graphe = graphe + node_head + "\n";
@@ -481,16 +511,17 @@ public class CompleteTheGraph {
 
         while (iterator.hasNext()) {
             String nodeID_concept = iterator.next();
-            boolean exist=false;
-            for(String s:opt){
-                if(nodeID_concept.contains(s)) {
-                    exist=true; break;
+            boolean exist = false;
+            for (String s : opt) {
+                if (nodeID_concept.contains(s)) {
+                    exist = true;
+                    break;
                 }
             }
-            if(!exist) {
+            if (!exist) {
                 continue;
             }
-            List<String> nodeID_propList= new ArrayList<String>();
+            List<String> nodeID_propList = new ArrayList<String>();
             for (Element e : GraphConstructor.getProperty().get(nodeID_concept)) {
                 String name_prop = e.getName();
                 String rel_prop = "";
@@ -545,13 +576,16 @@ public class CompleteTheGraph {
         for (Element e : GraphConstructor.getConcept()) {
             //Déterminer le type du concept pour pouvoir lui associer l'icone correspondante
             String concept_type = e.getName();
-            boolean exist=false;
-            for(String s:opt){
-                if(concept_type.equals(s)) {
-                    exist=true; break;
+            boolean exist = false;
+            for (String s : opt) {
+                if (concept_type.equals(s)) {
+                    exist = true;
+                    break;
                 }
             }
-            if(!exist) continue;
+            if (!exist) {
+                continue;
+            }
             String label = " ";
 //          if(null!=e.getChild("label", rdfsNamespace))label= e.getChild("label", rdfsNamespace).getText();
             if (null != e.getChild("label", gsNamespace)) {
@@ -600,7 +634,7 @@ public class CompleteTheGraph {
                 node_head = node_head + ", tooltip=\"" + listeDatatype.get(nodeID_concept) + "\"";
             }
 //            if (nodes_url.containsKey(nodeID_concept)) {
-                node_head = node_head + ", href=\"ExitCloseGraphsFiles?root_center=" + nodeID_concept + "\"";
+            node_head = node_head + ", href=\"ExitCloseGraphsFiles?root_center=" + nodeID_concept + "\"";
 //            }
             node_head = node_head + "];";
             graphe = graphe + node_head + "\n";
@@ -610,7 +644,7 @@ public class CompleteTheGraph {
         return graphe;
 
     }
-    
+
     public static String getGraph(String G, String node) throws IOException {
         Test gv = new Test();
         String graphe = gv.start_graph("G") + "\n";
@@ -634,13 +668,12 @@ public class CompleteTheGraph {
 
         //Attention le path absolu ne fonctionne pas, graphViz modifier le href et il ne devient plus accessible
 //        System.out.println("svg= " + out.getPath());
-        
 //        SVGHandler svghand= new SVGHandler(out);
         String s = afficheUltraRapide(out);
-       
-        s=RenderModify(s);
+
+        s = RenderModify(s);
         getAllGraphs().put(out.getName(), s);
-        System.out.println("absolute path: "+out.getAbsolutePath());
+        System.out.println("absolute path: " + out.getAbsolutePath());
 //        out.delete();
         return s;
 
@@ -656,7 +689,7 @@ public class CompleteTheGraph {
         String type = "svg";
 
         String repesentationType = "twopi";
-        File out = new File(getAppDirectory() +node + "OutGraph." + type);
+        File out = new File(getAppDirectory() + node + "OutGraph." + type);
 
 //       gv.writeGraphToFile( gv.getGraph(gv.getDotSource(), type, repesentationType), out );
         byte[] graph = gv.getGraph(gv.getDotSource(), type, repesentationType); //gv.getDotSource(), type
@@ -666,11 +699,11 @@ public class CompleteTheGraph {
             gv.writeGraphToFile(graph, out);
         }
         String s = afficheUltraRapide(out);
-        s=RenderModify(s);
-         out=writeFile(out, s);
+        s = RenderModify(s);
+        out = writeFile(out, s);
         getAllGraphs().put(out.getName(), s);
-        
-        System.out.println("absolute path: "+out.getAbsolutePath());
+
+        System.out.println("absolute path: " + out.getAbsolutePath());
 //        out.delete();
         //Attention le path absolu ne fonctionne pas, graphViz modifier le href et il ne devient plus accessible
         return s;
@@ -680,14 +713,13 @@ public class CompleteTheGraph {
         try {
             PrintWriter writer = new PrintWriter(file);
             writer.print(texte);
-        }
-        catch(Exception ex){
-            System.out.println("Exception généré lors de l'écriture dans le fichier : "+ex);
+        } catch (Exception ex) {
+            System.out.println("Exception généré lors de l'écriture dans le fichier : " + ex);
         }
         return file;
     }
 
-    public static String AddScript(){
+    public static String AddScript() {
         return "<script type=\"text/ecmascript\">"
                 + "\n<![CDATA["
                 + "\nvar transMatrix = [1,0,0,1,4,290];"
@@ -699,13 +731,13 @@ public class CompleteTheGraph {
                 + "\n}"
                 + "\n	    mapMatrix = svgDoc.getElementById(\"graph1\");"
                 + "\n       width  = evt.target.getAttributeNS(null, \"width\");"
-                +"\n width=parseFloat(width);"
+                + "\n width=parseFloat(width);"
                 + "\n	    height = evt.target.getAttributeNS(null, \"height\");"
-//                +"\n height=height.substring(0,height.length-2);"
-                +"\n height=parseFloat(height);"
+                //                +"\n height=height.substring(0,height.length-2);"
+                + "\n height=parseFloat(height);"
                 + "\n       scale1  = evt.target.getAttributeNS(null, \"translate\");"
-//                + "\n       transMatrix[4]= parseFloat(scale1.split(\" \")[0].substring(1));"
-//                + "\n       transMatrix[5]= parseFloat(scale1.split(\" \")[1].substring(0, scale1.split(\" \")[1].length-1));"
+                //                + "\n       transMatrix[4]= parseFloat(scale1.split(\" \")[0].substring(1));"
+                //                + "\n       transMatrix[5]= parseFloat(scale1.split(\" \")[1].substring(0, scale1.split(\" \")[1].length-1));"
                 + "\n	  }"
                 + "\nfunction pan(dx, dy)"
                 + "\n{"
@@ -720,30 +752,30 @@ public class CompleteTheGraph {
                 + "\n{"
                 + "\ntransMatrix[i] *= scale;"
                 + "\n}"
-//                + "\ntransMatrix[4] =width;" 
-//               + "\ntransMatrix[5] = height;"
-                + "\ntransMatrix[4] += (1-scale)*width/2;" 
-               + "\ntransMatrix[5] += (1-scale)*height/2;"
+                //                + "\ntransMatrix[4] =width;" 
+                //               + "\ntransMatrix[5] = height;"
+                + "\ntransMatrix[4] += (1-scale)*width/2;"
+                + "\ntransMatrix[5] += (1-scale)*height/2;"
                 + "\nnewMatrix = \"matrix(\" +  transMatrix.join(' ') + \")\";"
                 + "\nmapMatrix.setAttributeNS(null, \"transform\", newMatrix);"
                 + "\n}"
                 + "\n	]]>"
                 + "\n	</script>";
     }
-    
-       public static String RenderModify(String s){
-        
+
+    public static String RenderModify(String s) {
+
         String replaceAll = s.replaceAll("\\\\", "/");
         String replaceAll1 = replaceAll.replaceAll(getAppDirectory().replaceAll("\\\\", "/"), "");
-        replaceAll1= replaceAll1.replaceAll("display: block", "margin: auto");
+        replaceAll1 = replaceAll1.replaceAll("display: block", "margin: auto");
         //        String regeex = "<svg width=\"[^\"]*\" height=\"[^\"]*\"\n" +
 //" viewBox=\"[^\"]*\"";
-        String addJSScript="onmouseup=\"handleMouseUp(evt)\" onmousedown=\"handleMouseDown(evt)\""
+        String addJSScript = "onmouseup=\"handleMouseUp(evt)\" onmousedown=\"handleMouseDown(evt)\""
                 + " onmousemove=\"handleMouseMove(evt)\"><script xlink:href=\"SVGPan.js\"></script>";
         String regeex1 = "<svg width=\"[^\"]*\"";
 //        String regeex2 = "height=\"[^\"]*\"";
         String regeex3 = "viewBox=\"[^\"]*\"";
-        String compas= "<circle cx=\"50\" cy=\"50\" r=\"42\" fill=\"white\" opacity=\"0.75\"></circle>"
+        String compas = "<circle cx=\"50\" cy=\"50\" r=\"42\" fill=\"white\" opacity=\"0.75\"></circle>"
                 + "<path class=\"button\" onclick=\"pan( 0, 50)\" d=\"M50 10 l12 20 a40, 70 0 0,0 -24, 0z\"></path>"
                 + "<path class=\"button\" onclick=\"pan( 50, 0)\" d=\"M10 50 l20 -12 a70, 40 0 0,0 0, 24z\"></path>"
                 + "<path class=\"button\" onclick=\"pan( 0,-50)\" d=\"M50 90 l12 -20 a40, 70 0 0,1 -24, 0z\"></path>"
@@ -758,11 +790,12 @@ public class CompleteTheGraph {
 //        replaceAll1= replaceAll1.replaceAll(regeex1, "<svg width=\"100%\"");
 //        replaceAll1= replaceAll1.replaceAll(regeex2, "height=\"100%\"");
         //Ajouter le js pour le zoom
-        replaceAll1=replaceAll1.replaceAll("<g id=\"graph1\"", AddScript()+"<g id=\"graph1\"");
-        replaceAll1= replaceAll1.replaceAll(regeex3, "onload=\"init(evt)\""); //viewBox=\"0 0 1500 1000\" preserveAspectRatio=\"none\"
-        replaceAll1= replaceAll1.replaceAll("</svg>", compas+"</svg>");
+        replaceAll1 = replaceAll1.replaceAll("<g id=\"graph1\"", AddScript() + "<g id=\"graph1\"");
+        replaceAll1 = replaceAll1.replaceAll(regeex3, "onload=\"init(evt)\""); //viewBox=\"0 0 1500 1000\" preserveAspectRatio=\"none\"
+        replaceAll1 = replaceAll1.replaceAll("</svg>", compas + "</svg>");
         return replaceAll1;
     }
+
     public static String afficheUltraRapide(File f) throws IOException {
         DataInputStream in = new DataInputStream(new FileInputStream(f));
         try {
@@ -820,5 +853,4 @@ public class CompleteTheGraph {
         this.actual_graph = actual_graph;
     }
 
-   
 }

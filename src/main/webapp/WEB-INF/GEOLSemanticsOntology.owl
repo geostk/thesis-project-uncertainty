@@ -1101,9 +1101,10 @@
     <!-- http://www.geolsemantics.com/onto#hasContent -->
 
     <owl:ObjectProperty rdf:about="&gs;hasContent">
-        <rdfs:range rdf:resource="&gs;Action"/>
-        <rdfs:range rdf:resource="&gs;Event"/>
-        <rdfs:domain rdf:resource="&gs;ReportedSpeech"/>
+        <rdfs:label xml:lang="en">content</rdfs:label>
+        <rdfs:label xml:lang="fr">contenu</rdfs:label>
+        <rdfs:range rdf:resource="&gs;ReportedSpeech"/>
+        <rdfs:domain rdf:resource="&gs;Emission"/>
     </owl:ObjectProperty>
     
 
@@ -3206,9 +3207,9 @@
     
 
 
-    <!-- http://www.geolsemantics.com/onto#event-cause -->
+    <!-- http://www.geolsemantics.com/onto#cause -->
 
-    <owl:DatatypeProperty rdf:about="&gs;event-cause">
+    <owl:DatatypeProperty rdf:about="&gs;cause">
         <rdfs:label xml:lang="en">cause of the event</rdfs:label>
         <rdfs:label xml:lang="fr">case de l&apos;événement</rdfs:label>
         <rdfs:comment xml:lang="en">what causes the event</rdfs:comment>
@@ -5412,7 +5413,7 @@ Ex: Matricule ou Pseudo</rdfs:comment>
     <!-- http://www.geolsemantics.com/onto#ReportedSpeech -->
 
     <owl:Class rdf:about="&gs;ReportedSpeech">
-        <rdfs:subClassOf rdf:resource="&gs;Emission"/>
+       <!--  <rdfs:subClassOf rdf:resource="&gs;Emission"/>-->
         <rdfs:subClassOf rdf:resource="&gs;Uncertainty"/>
     </owl:Class>
     

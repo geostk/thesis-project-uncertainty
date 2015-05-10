@@ -315,9 +315,9 @@ public class Test {
 			// patch by Mike Chenault
 			// representation type with -K argument by Olivier Duplouy
 			String[] args = {DOT, "-T"+type, "-K"+representationType, "-Gdpi="+dpiSizes[this.currentDpiPos], dot.getAbsolutePath(), "-o", img.getAbsolutePath()};
-			String d = Arrays.toString(args);
+//			String d = Arrays.toString(args);
                         Process p = rt.exec(args);
-                        p.exitValue();
+//                        p.exitValue();
 			p.waitFor();
 
 			FileInputStream in = new FileInputStream(img.getAbsolutePath());

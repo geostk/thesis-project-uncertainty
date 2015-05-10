@@ -20,7 +20,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
-import static univ.mlv.GraphBuilder.CompleteTheGraph.rdfNamespace;
+import univ.mlv.development.CreateJSFiles;
 
 /**
  *
@@ -35,7 +35,9 @@ public class GraphConstructor {
     public static final Namespace gsNamespace = Namespace.getNamespace("gs", ns_gs);
    
     private static List<Element> concept= new ArrayList<Element>();
-    private static Map<String,List<Element>> property= new TreeMap<String,List<Element>>();
+    private static Map<String, Element> conceptMap= new TreeMap<String, Element>();
+    private static Map<String,List<Element>> objProperty= new TreeMap<String,List<Element>>();
+    private static Map<String,List<Element>> dataProperty= new TreeMap<String,List<Element>>();
     static Map<String,List<String>> instances= new TreeMap<String,List<String>>();
     private static String svg;
     private static String input_text="";
@@ -78,50 +80,94 @@ public class GraphConstructor {
 
     }// fin de parserText
         
-    private static void process(Element rootElement) {
-        Element root2=rootElement;
+    public static String getId(Element e){
+        String id=
         //récupérer l'id
-        String nodeID_prop = rootElement.getAttributeValue("nodeID", rdfNamespace);
-        if (nodeID_prop == null) {
-            nodeID_prop = rootElement.getAttributeValue("about", rdfNamespace);
+        e.getAttributeValue("nodeID", rdfNamespace);
+        if (id == null) {
+            id = e.getAttributeValue("about", rdfNamespace);
         }
-        if (nodeID_prop == null) {
-            nodeID_prop = rootElement.getAttributeValue("resource", rdfNamespace);
+        if (id == null) {
+            id = e.getAttributeValue("resource", rdfNamespace);
         }
-        if(null!=nodeID_prop
-                &&
-                !rootElement.getChildren().isEmpty()){
-            //il s'agit d'un concept
-            concept.add(rootElement);
-            property.put(nodeID_prop, rootElement.getChildren());
-            
+        if(id != null && id.contains(".com/")){
+            id= id.split(".com/")[1].replaceAll("/", "_");
         }
-//            if (null!=rootElement.getParentElement()) {
-//            if(rootElement.getParentElement().getName().equals("hasTriple")||rootElement.getParentElement().getName().equals("n")) {
-////                System.out.println("root "+rootElement);
-//                if(rootElement.getParentElement().getName().equals("hasTriple") ) {
-//                    getConcept().add(rootElement);
-//                }
-//                if(rootElement.getParentElement().getName().equals("n")) {
-//                    root2=rootElement.getParentElement().getParentElement();
-//                }
-//                for(Element e:(List<Element>)rootElement.getChildren()){
-//                    if( getProperty().containsKey(root2.getAttributeValue("nodeID", rdfNamespace))){
-//                        getProperty().get(root2.getAttributeValue("nodeID", rdfNamespace)).add(e);
-//                    }
-//                    else{
-////                        if (rootElement.getParentElement().getName().equals("n")){
-////                            rootElement=rootElement.getParentElement().getParentElement();
-//////                            System.out.println("root "+rootElement);
-////                        }
-//                        List<Element> new_list= new ArrayList<Element>();
-//                        new_list.add(e);
-//                        getProperty().put(root2.getAttributeValue("nodeID", rdfNamespace),new_list);
-//                    }
-//                }
-//            }
+        return id;
+    }
+    private static void process(Element rootElement) {
+//        Element root2=rootElement;
+//        //récupérer l'id
+//        String nodeID_prop = rootElement.getAttributeValue("nodeID", rdfNamespace);
+//        if (nodeID_prop == null) {
+//            nodeID_prop = rootElement.getAttributeValue("about", rdfNamespace);
 //        }
-            
+//        if (nodeID_prop == null) {
+//            nodeID_prop = rootElement.getAttributeValue("resource", rdfNamespace);
+//        }
+//        if(nodeID_prop != null && nodeID_prop.contains(".com/")){
+//            nodeID_prop= nodeID_prop.split(".com/")[1].replaceAll("/", "_");
+//        }
+        if(!rootElement.getName().equals("RDF") 
+                && !rootElement.getName().equals("graph")
+                && !rootElement.getName().equals("Text")){
+          String name= rootElement.getName();
+          boolean isConcept = false, isProperty= false;
+          if(Character.isUpperCase(name.charAt(0))){
+              isConcept=true;
+          }else{
+              isProperty=true;
+          }
+        String id = getId(rootElement);
+        if(id==null){
+            //c'est une property, si il n'a pas d'enfant alors c'est une propriété object
+            //il faut récupérer son parent et sa valeur
+            if(isProperty && rootElement.getChildren().isEmpty()){
+                //c'est une datatype, l'ajouter à la liste des datatype
+                if(dataProperty.keySet().contains(getId(rootElement.getParentElement()))){
+                    dataProperty.get(getId(rootElement.getParentElement())).add(rootElement);
+                }else{
+                    List<Element> newList= new ArrayList<Element>();
+                    newList.add(rootElement);
+                    dataProperty.put(getId(rootElement.getParentElement()),newList);
+                }
+            }else if(isProperty ){
+                //Si il y a des enfants, c'est que c'est une propriété object, le range n'est pas en id mais est l'enfant qui suit
+                if(null!=rootElement.getParentElement() && null != getId(rootElement.getParentElement())
+                        && objProperty.keySet().contains(getId(rootElement.getParentElement()))){
+                    objProperty.get(getId(rootElement.getParentElement())).add(rootElement);
+                }else{
+                    List<Element> newList= new ArrayList<Element>();
+                    newList.add(rootElement);
+                    if(null==getId(rootElement.getParentElement())){
+                        objProperty.put(rootElement.getParentElement().getName(),newList);
+                    }
+                    else{
+                        objProperty.put(getId(rootElement.getParentElement()),newList);
+                    }
+                }
+            }
+        }else{
+            //Si l'id est présent mais qu'il n'y a pas d'enfent, alors c'est une propriété objet avec un rdf about décrit
+            if(rootElement.getChildren().isEmpty() && isProperty){
+                if(objProperty.keySet().contains(getId(rootElement.getParentElement()))){
+                    objProperty.get(getId(rootElement.getParentElement())).add(rootElement);
+                }else if(isProperty ){
+                    List<Element> newList= new ArrayList<Element>();
+                    newList.add(rootElement);
+                    objProperty.put(getId(rootElement.getParentElement()),newList);
+                }
+            }else if(isConcept){
+                if(conceptMap.keySet().contains(id)){
+//                    conceptMap.get(id).add(rootElement);
+                }else{
+                    conceptMap.put(id,rootElement);
+                    concept.add(rootElement);
+                }
+            }
+        }
+             
+        } 
         List content = rootElement.getContent();
         Iterator iterator = content.iterator();
         while (iterator.hasNext()) {
@@ -165,27 +211,64 @@ public class GraphConstructor {
      * @return the property
      */
     public static Map<String,List<Element>> getProperty() {
-        return property;
+        return objProperty;
     }
 
     /**
      * @param aProperty the property to set
      */
     public static void setProperty(Map<String,List<Element>> aProperty) {
-        property = aProperty;
+        objProperty = aProperty;
     }
+
+    /**
+     * @return the conceptMap
+     */
+    public static Map<String, Element> getConceptMap() {
+        return conceptMap;
+    }
+
+    /**
+     * @param aConceptMap the conceptMap to set
+     */
+    public static void setConceptMap(Map<String, Element> aConceptMap) {
+        conceptMap = aConceptMap;
+    }
+    
+    private static String jsPath ="";
+
+    /**
+     * @return the jsPath
+     */
+    public static String getJsPath() {
+        return jsPath;
+    }
+
+    /**
+     * @param aJsPath the jsPath to set
+     */
+    public static void setJsPath(String aJsPath) {
+        jsPath = aJsPath;
+    }
+    
     public GraphConstructor(String rdf_input) throws IOException{
         concept= new ArrayList<Element>();
-        property= new TreeMap<String,List<Element>>();
+        conceptMap= new TreeMap<String, Element>();
+        objProperty= new TreeMap<String,List<Element>>();
         ParserString(rdf_input);
-        
-        CompleteTheGraph p = new CompleteTheGraph("en");
-        String g=p.designFullGraph();
-        setSvg(p.buildTheGraph(g, ""));
+        CreateJSFiles c= new CreateJSFiles(conceptMap, objProperty, dataProperty);
+            CreateJSFiles.createJSGraph();
+    
+        setJsPath(CreateJSFiles.getJsPath());
+//        CompleteTheGraph p = new CompleteTheGraph("en");
+//        String g=p.designFullGraph(); 
+//        String buildTheGraph = p.buildTheGraph(g, "");
+//        setSvg(buildTheGraph);
+//        svg=buildTheGraph;
     }
     public GraphConstructor(String rdf_input, String lang, String input) throws JDOMException, IOException{
         concept= new ArrayList<Element>();
-        property= new TreeMap<String,List<Element>>();
+        objProperty= new TreeMap<String,List<Element>>();
         input_text=input;
         ParserString(rdf_input);
         CompleteTheGraph p = new CompleteTheGraph(lang);
@@ -199,7 +282,7 @@ public class GraphConstructor {
     }
     public GraphConstructor(String rdf_input, String lang, String input, String[] opt) throws JDOMException, IOException{
         concept= new ArrayList<Element>();
-        property= new TreeMap<String,List<Element>>();
+        objProperty= new TreeMap<String,List<Element>>();
         input_text=input;
         ParserString(rdf_input);
         CompleteTheGraph p = new CompleteTheGraph(lang);

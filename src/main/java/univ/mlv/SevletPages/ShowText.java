@@ -48,14 +48,14 @@ public class ShowText extends HttpServlet {
                     + "<li><a href=\"index.jsp\">HOME</a></li>"
                     + "<li><a href=\"LoginCheck\">User information</a></li>"
                     + "<li><a href=\"ShowText\">Texts</a></li>"
-                    + "<li><a href=\"OntoDisplay\">Ontology</a></li>"
+                    + "<li><a href=\"OntoDisplay.jsp\">Ontology</a></li>"
                     + "<li><a href=\"About\">ABOUT</a></li>"
                     + "<li><a href=\"#\">CONTACT</a></li>"
                     + "</ul>"
                     + "<div class=\"cl\">&nbsp;</div>"
                     + "</div>"
-
                     + "<br>");
+            out.println("<div id=\"wrapper\">");
             out.println("<h1>Please select a text : </h1>");
             out.println("<form name=\"inputId\" method=\"POST\" "
                     + "action=\"TextProcessing\""
@@ -85,7 +85,8 @@ public class ShowText extends HttpServlet {
                     + "            <INPUT TYPE=\"submit\" VALUE=\"Submit\" >"
                     + "</form>\n");
 
-            out.println("</body>");
+            out.println("</div> " //wrapper
+                    + "</body>");
             out.println("</html>");
         } finally {
             out.close();

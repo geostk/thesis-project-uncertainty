@@ -79,14 +79,14 @@ public class LoginCheck extends HttpServlet {
                         + "<li><a href=\"index.jsp\">HOME</a></li>"
                         + "<li><a href=\"LoginCheck\">User information</a></li>"
                         + "<li><a href=\"ShowText\">Texts</a></li>"
-                        + "<li><a href=\"OntoDisplay\">Ontology</a></li>"
+                        + "<li><a href=\"OntoDisplay.jsp\">Ontology</a></li>"
                         + "<li><a href=\"About\">ABOUT</a></li>"
                         + "<li><a href=\"#\">CONTACT</a></li>"
                         + "</ul>"
                         + "<div class=\"cl\">&nbsp;</div>"
                         + "</div>"
                         + "");
-
+                out.println("<div id=\"wrapper\">");
                 if (check.isEmpty()) {
                     out.println("<h1>Sorry your login and password doesn't extist</h1>");
                 } else {
@@ -148,10 +148,11 @@ public class LoginCheck extends HttpServlet {
 
                     }
                 }
-
+                
+            } finally {
+                out.println("</div>"); //div wrapper
                 out.println("</body>");
                 out.println("</html>");
-            } finally {
                 out.close();
             }
         } else {
@@ -171,14 +172,15 @@ public class LoginCheck extends HttpServlet {
                         + "<li><a href=\"index.jsp\">HOME</a></li>"
                         + "<li><a href=\"LoginCheck\">User information</a></li>"
                         + "<li><a href=\"ShowText\">Texts</a></li>"
-                        + "<li><a href=\"OntoDisplay\">Ontology</a></li>"
+                        + "<li><a href=\"OntoDisplay.jsp\">Ontology</a></li>"
                         + "<li><a href=\"About\">ABOUT</a></li>"
                         + "<li><a href=\"#\">CONTACT</a></li>"
                         + "</ul>"
                         + "<div class=\"cl\">&nbsp;</div>"
                         + "</div>"
                         + "");
-
+                
+                out.println("<div id=\"wrapper\">");
                 if (check.isEmpty()) {
                     out.println("<h1>Sorry your login and password doesn't extist</h1>");
                 } else {
@@ -234,9 +236,10 @@ public class LoginCheck extends HttpServlet {
                                 + "</form>");
                     }
                 }
+            } finally {
+                out.println("</div>");
                 out.println("</body>");
                 out.println("</html>");
-            } finally {
                 out.close();
             }
 

@@ -41,6 +41,7 @@ import univ.mlv.Structures.QueryTriples;
 public class TextProcessing extends HttpServlet {
 
     private static OntModel ontologie;
+    static String trustT = "";
     String prefixes = "PREFIX owl: <http://www.w3.org/2002/07/owl#>"
             + "\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
             + "\nPREFIX gs: <http://www.geolsemantics.com/onto#>"
@@ -61,6 +62,41 @@ public class TextProcessing extends HttpServlet {
         return appDirectory;
     }
 
+    public static String getHead(String text) {
+        return ("<html>\n"
+                + "	<head>\n"
+                + "		<meta charset=\"UTF-8\">\n"
+                + "		<title>Servlet TextProcessing</title>"
+                + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />\n"
+                + "		<script>\n"
+                + "			function myFunction() {\n"
+                + "				var j = document.getElementById(\"trustJ\").value;\n"
+                + "				var a = document.getElementById(\"trustA\").value;\n"
+                + "				document.getElementById(\"trustT\").value = (parseFloat(a)+parseFloat(j))/2;\n"
+                + "				document.getElementById(\"trustT2\").value =document.getElementById(\"trustT\").value ;\n"
+                + "			}\n"
+                + "		</script>\n"
+                + "		\n"
+                + "	</head>\n"
+                + "	<body>\n"
+                + "		<div id=\"navigation\">\n"
+                + "			<ul>\n"
+                + "				<li><a href=\"index.jsp\">Home</a></li>\n"
+                + "				<li><a href=\"LoginCheck\">User information</a></li>\n"
+                + "				<li><a href=\"ShowText\">Texts</a></li>\n"
+                + "				<li><a href=\"OntoDisplay.jsp\">Ontology</a></li>\n"
+                + "				<li><a href=\"About\">About</a></li>\n"
+                + "				<li><a href=\"#\">Contact</a></li>\n"
+                + "			</ul>\n"
+                + "			<div class=\"cl\">&nbsp;</div>\n"
+                + "		</div>\n"
+                + "		<div id=\"wrapper\">\n"
+                + "			<fieldset><legend>Text</legend>"
+                + text 
+                +"</fieldset><br>\n"
+                + "			");
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -77,77 +113,115 @@ public class TextProcessing extends HttpServlet {
         String query = request.getParameter("query");
         String queryText = "";
         String select = request.getParameter("target1");
-        String trust2 = request.getParameter("trust2");
+//        String trust2 = request.getParameter("trustT");
+        String[] check = request.getParameterValues("trust_check");
+
+        if (check == null) {
+            trustT = null;
+        } else {
+            trustT = request.getParameter("trustT");
+        }
+
         Map<String, Map<String, String>> queries = LoginCheckDB.getQueries(inputid);
         Map<String, String> trusts = LoginCheckDB.getTrusts();
         Map<String, Text> allTexts = LoginCheckDB.getAllTexts();
         Text t = allTexts.get(inputid);
         String user = Data.getUser();
-        String trust = trusts.get(user + "_" + t.source);
+        String trustJ = trusts.get(user + "_" + t.source);
+        String trustA = trusts.get(user + "_" + t.author);
         String rdf = t.getRdf();
         ontologie = ModelFactory.createOntologyModel();
         InputStream stream = new ByteArrayInputStream(rdf.getBytes(StandardCharsets.UTF_8));
         ontologie.read(stream, null, null);
-//        ontologie.write(System.out);
-        if (query != null && !query.isEmpty()) {
+//        ontologie.write(System.out); 
+        if (query != null && !query.isEmpty() && !query.equals(" ")) {
             query = prefixes + query;
         }
         if (query == null && select == null) {
             PrintWriter out = response.getWriter();
             try {
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet TextProcessing</title>"
-                        + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />"
-                        + "");
-                out.println("</head>");
-                out.println("<body>"
-                        + "<div id=\"navigation\">"
-                        + "<ul>"
-                        + "<li><a href=\"index.jsp\">HOME</a></li>"
-                        + "<li><a href=\"LoginCheck\">User information</a></li>"
-                        + "<li><a href=\"ShowText\">Texts</a></li>"
-                        + "<li><a href=\"OntoDisplay.jsp\">Ontology</a></li>"
-                        + "<li><a href=\"About\">ABOUT</a></li>"
-                        + "<li><a href=\"#\">CONTACT</a></li>"
-                        + "</ul>"
-                        + "<div class=\"cl\">&nbsp;</div>"
-                        + "</div>"
-                        + "<br>");
-                out.println("<fieldset>"
-                        + "<legend>Text</legend> " + t.content + "</fieldset><br><br> ");
-                out.println("<table><tr> <th>Source</th><th>Trust</th></tr>"
-                        + "");
+//                /* TODO output your page here. You may use following sample code. */
+//                out.println("<html>");
+//                out.println("<head>");
+//                out.println("<title>Servlet TextProcessing</title>"
+//                        + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />"
+//                        + "");
+//                out.println("<script>\n"
+//                        + "function myFunction() {\n"
+//                        + "    var j = document.getElementById(\"trustJ\").value;\n"
+//                        + "var a = document.getElementById(\"trustA\").value;\n"
+//                        + "document.getElementById(\"trustT\").value = (parseFloat(a)+parseFloat(j))/2;\n"
+//                        + "document.getElementById(\"trustT2\").value =document.getElementById(\"trustT\").value ;\n"
+//                        //                        + "document.getElementById(\"trust_check\").value = (parseFloat(a)+parseFloat(j))/2;\n"
+//                        + ""
+//                        + "}\n"
+//                        + "</script>");
+//                out.println("</head>");
+//                out.println("<body>"
+//                        + "<div id=\"navigation\">"
+//                        + "<ul>"
+//                        + "<li><a href=\"index.jsp\">HOME</a></li>"
+//                        + "<li><a href=\"LoginCheck\">User information</a></li>"
+//                        + "<li><a href=\"ShowText\">Texts</a></li>"
+//                        + "<li><a href=\"OntoDisplay.jsp\">Ontology</a></li>"
+//                        + "<li><a href=\"About\">ABOUT</a></li>"
+//                        + "<li><a href=\"#\">CONTACT</a></li>"
+//                        + "</ul>"
+//                        + "<div class=\"cl\">&nbsp;</div>"
+//                        + "</div>"
+//                        + "<br>");
+//                out.println("<div id=\"wrapper\">");
+//                out.println("<fieldset>"
+//                        + "<legend>Text</legend> " + t.content + "</fieldset><br><br> ");
+                out.println(getHead(t.content));
+                out.println("<table><tr> <th colspan=\"2\">Source</th><th>Trust</th></tr>");
                 out.println("<tr>"
-                        + "<td><b>The journal :</b>" + t.source + "</td>"
-                        + "<td><input id=\"trsutJ\" type=\"text\" name=\"trust\" value=\"" + trust + "\"></td>"
+                        + "<td class=\"titleCell\">The journal :</td> <td>" + t.source + "</td>"
+                        + "<td><input title=\"If you modify this value, modify the author and total trust value please.\" "
+                        + "id=\"trustJ\" type=\"text\" name=\"trustJ\" value=\"" + trustJ + "\" onchange=\"myFunction()\"></td>"
                         + "</tr>");
                 out.println("<tr>"
-                        + "<td><b>The author :</b>" + t.author + "</td>"
-                        + "<td><input id=\"trsutA\" type=\"text\" name=\"trust\" value=\"\"></td>"
+                        + "<td class=\"titleCell\">The author :" + t.author + "</td><td></td>"
+                        + "<td><input title=\"If you modify this value, modify the journal and total trust value please.\" "
+                        + "id=\"trustA\" type=\"text\" name=\"trustA\" value=\"" + trustA + " \" onchange=\"myFunction()\"></td>"
                         + "</tr>");
+
                 out.println("<tr>"
                         //                        + "<td></td>"
-                        + "<td>The trust granted to the source: </td>"
-                        + "<td><input id=\"trsutT\" type=\"text\" name=\"trust\" value=\"\"></td>"
-                        + "</tr>"
-                        + "</table>");
-                out.println("<br><br>"
-                        + "<form action=\"OntoDisplay.jsp\"> Do you want to visualize the ontlogy? : <input type=\"submit\" name=\"ontoViz\" value=\"Display ontology \">"
-                        + "</form>");
-                out.println("<br>"
-                        + "<form method=\"post\" action=\"GraphDisplay?inputID=" + inputid + "\"> Do you want to visualize the graph? : <input type=\"submit\" name=\"graphViz\" value=\"Display graph\">"
-                        + "</form> </div>");
-
-
+                        + "<td colspan=\"2\">The trust granted to the source: </td>"
+                        + "<td><input id=\"trustT2\" type=\"text\" name=\"trustT2\" \"></td>"
+                        + "</tr>");
+//                out.println("<br><br>"
+//                        + "<form action=\"OntoDisplay.jsp\"> Do you want to visualize the ontlogy? : <input type=\"submit\" name=\"ontoViz\" value=\"Display ontology \">"
+//                        + "</form>");
+//                out.println("<br>"
+//                        + "<form method=\"post\" action=\"GraphDisplay?inputID=" + inputid + "\"> Do you want to visualize the graph? : <input type=\"submit\" name=\"graphViz\" value=\"Display graph\">"
+//                        + "</form> "
+//                        + ""
+//                        + "\n"
+//                        + "</table></div>");
+                out.println("<tr>"
+                        + "	<td class=\"customizedSubmit\" align=\"center\" colspan=\"3\">"
+                        + "		<form action=\"OntoDisplay.jsp\">"
+                        + "                 <input type=\"submit\" name=\"ontoViz\" value=\"Visualize Ontology\"/>"
+                        + "             </form>"
+                        + "		<form method=\"post\" action=\"GraphDisplay?inputID="+inputid+"&graph=graphViz\">"
+                        + "                 <input type=\"submit\" name=\"graphViz\" value=\"Visualize Graph GraphViz\"/>"
+                        + "             </form>"
+                        + "		<form method=\"post\" action=\"GraphDisplay?inputID="+inputid+"&graph=js\">"
+                        + "                 <input type=\"submit\" name=\"graphViz\" value=\"Visualize Graph Dracula\"/>"
+                        + "             </form>"
+                        + "	</td>"
+                        + "</tr>");
+                out.println("</table>");
                 if (ontologie == null) {
                     out.println("Can not create the model");
                 } else {
-                    out.println("<h2>Write your query</h2>");
                     out.println("<form method=\"post\" action=\"TextProcessing?inputID=" + inputid + "\">");
-
-                    out.println("PREFIX owl: http://www.w3.org/2002/07/owl#"
+                    out.println("<div class=\"customizedForm\">");
+                    out.println("<h2>Write your query</h2>");
+                    out.println("<div class=\"left\">"
+                            + "PREFIX owl: http://www.w3.org/2002/07/owl#"
                             + "<br>PREFIX rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                             + "<br>PREFIX gs: http://www.geolsemantics.com/onto#"
                             + "<br>PREFIX ical: http://www.w3.org/2002/12/cal/icaltzd#"
@@ -158,14 +232,18 @@ public class TextProcessing extends HttpServlet {
                             + "<br>PREFIX v: http://www.w3.org/2006/vcard/ns#"
                             + "<br>PREFIX doac: http://ramonantonio.net/doac/0.1/"
                             + "<br>PREFIX prov: http://www.w3.org/ns/prov#"
-                            + "<br>");
-                    out.println("<textarea rows=\"13\" cols=\"60\" name=\"query\"\">"
-                            + "</textarea>"
                             + "<br>"
-                            + "<input type=\"checkbox\" name=\"trust2\" value=\"" + trust + "\">Apply confidence degree<br>"
-                            + "<input type=\"submit\" value=\"Submit\">" //                        + "</form>"
+                            + "</div>");
+                    out.println("<div class=\"right\">"
+                            + "<textarea rows=\"13\" cols=\"60\" name=\"query\"\"> </textarea> <br>"
+                            + "<input type=\"checkbox\" id=\"trust_check\" name=\"trust_check\" >Apply confidence degree  "
+                            + "<input id=\"trustT\" type=\"text\" name=\"trustT\" \">"
+                            + "<br>"
+                            + "<input type=\"submit\" value=\"Submit\">"
+                            + "</div></div>" //                        + "</form>"
                     );
-                    out.println("<br>"
+                    out.println("<div class=\"customizedForm\">");
+                    out.println(""
                             + "<h2> Or, select a query </h2>"
                             + "<br>");
                     out.println(
@@ -179,47 +257,50 @@ public class TextProcessing extends HttpServlet {
                     }
                     out.println("</Select>"
                             + "<input type=\"submit\" value=\"Run query\">"
-                            + "</Form>");
+                            + "</Form>"
+                            + "</div>");
                 }
                 out.println("</body>");
                 out.println("</html>");
             } finally {
                 out.close();
             }
-        } else if (select != null && (query != null && query.isEmpty())) {
+        } else if (select != null 
+                && (query == null || query.isEmpty() || query.equals(" "))
+                ) {
             {
                 String selectedItem = select;
                 query = "";
-                if (null != selectedItem) {
-                    if (selectedItem.equals("0")) {
-                        //savoir si l'auteur est sûr de ce qu'il sait
-                        query = "PREFIX gs: <http://www.geolsemantics.com/onto#>"
-                                + "PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
-                                + "PREFIX  v: <http://www.w3.org/2006/vcard/ns#>"
-                                + "Select ?predicatePred ?subject ?pred2 ?object Where {"
-                                + "?x rdf:type gs:AuthorUncertainty."
-                                + "?x ?predicatePred ?subject."
-                                + "?subject ?pred2 ?object."
-                                + "}";
+//                if (null != selectedItem) {
+                if (selectedItem.equals("0")) {
+                    //savoir si l'auteur est sÃ»r de ce qu'il sait
+                    query = "PREFIX gs: <http://www.geolsemantics.com/onto#>"
+                            + "PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+                            + "PREFIX  v: <http://www.w3.org/2006/vcard/ns#>"
+                            + "Select ?predicatePred ?subject ?pred2 ?object Where {"
+                            + "?x rdf:type gs:AuthorUncertainty."
+                            + "?x ?predicatePred ?subject."
+                            + "?subject ?pred2 ?object."
+                            + "}";
 
-                    } else if (selectedItem.equals("00")) {
-                                //qui est la source, quelle degré de confiance je lui accorde
-                        query = "PREFIX prov: <http://www.w3.org/ns/prov#>"
-                                + "Select ?author ?journal Where {"
-                                + "?x prov:wasAttributedTo ?author."
-                                + "?author prov:OnBehalfOf ?journal."
-                                + "}";
-                    } else {
-                        for (String key : queries.keySet()) {
-                            Map<String, String> get = queries.get(key);
-                            if (get.get("query_id").equals(selectedItem)) {
-                                query = prefixes + get.get("query_sparql");
-                                queryText = get.get("query_text");
-                                break;
-                            }
+                } else if (selectedItem.equals("00")) {
+                    //qui est la source, quelle degrÃ© de confiance je lui accorde
+                    query = "PREFIX prov: <http://www.w3.org/ns/prov#>"
+                            + "Select ?author ?journal Where {"
+                            + "?x prov:wasAttributedTo ?author."
+                            + "?author prov:OnBehalfOf ?journal."
+                            + "}";
+                } else {
+                    for (String key : queries.keySet()) {
+                        Map<String, String> get = queries.get(key);
+                        if (get.get("query_id").equals(selectedItem)) {
+                            query = prefixes + get.get("query_sparql");
+                            queryText = get.get("query_text");
+                            break;
                         }
                     }
                 }
+//                }
             }
         }
         //else 
@@ -228,30 +309,31 @@ public class TextProcessing extends HttpServlet {
             if (query != null && !query.isEmpty()) {
                 PrintWriter out = response.getWriter();
                 try {
-                    /* TODO output your page here. You may use following sample code. */
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet TextProcessing</title>"
-                            + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />");
-                    out.println("</head>");
-                    out.println("<body>"
-                            + "<div id=\"navigation\">"
-                            + "<ul>"
-                            + "<li><a href=\"index.jsp\">HOME</a></li>"
-                            + "<li><a href=\"LoginCheck\">User information</a></li>"
-                            + "<li><a href=\"ShowText\">Texts</a></li>"
-                            + "<li><a href=\"OntoDisplay.jsp\">Ontology</a></li>"
-                            + "<li><a href=\"About\">ABOUT</a></li>"
-                            + "<li><a href=\"#\">CONTACT</a></li>"
-                            + "</ul>"
-                            + "<div class=\"cl\">&nbsp;</div>"
-                            + "</div>"
-                            + "<br>");
-                    out.println("<fieldset>"
-                            + "<legend>Text</legend> " + t.content + "</fieldset><br><br> ");
+//                    /* TODO output your page here. You may use following sample code. */
+//                    out.println("<html>");
+//                    out.println("<head>");
+//                    out.println("<title>Servlet TextProcessing</title>"
+//                            + "<link rel=\"stylesheet\" href=\"Style.css\" type=\"text/css\" media=\"all\" />");
+//                    out.println("</head>");
+//                    out.println("<body>"
+//                            + "<div id=\"navigation\">"
+//                            + "<ul>"
+//                            + "<li><a href=\"index.jsp\">HOME</a></li>"
+//                            + "<li><a href=\"LoginCheck\">User information</a></li>"
+//                            + "<li><a href=\"ShowText\">Texts</a></li>"
+//                            + "<li><a href=\"OntoDisplay.jsp\">Ontology</a></li>"
+//                            + "<li><a href=\"About\">ABOUT</a></li>"
+//                            + "<li><a href=\"#\">CONTACT</a></li>"
+//                            + "</ul>"
+//                            + "<div class=\"cl\">&nbsp;</div>"
+//                            + "</div>"
+//                            + "<br>");
+                    out.println(getHead(t.content));
+                    
+                    
                     out.println("&nbsp;&nbsp;<h2>The source :</h2> " + t.source);
                     out.println("&nbsp;&nbsp;<h2>The author :</h2> " + t.author);
-                    out.println("<br><b>The trust granted :</b> <input type=\"text\" name=\"trust\" value=\"" + trust + "\">");
+                    out.println("<br><b>The trust granted :</b> <input type=\"text\" name=\"trust\" value=\"" + trustT + "\">");
                     if (ontologie == null) {
                         out.println("Can not create the model, there is a problem with the RDF");
                     } else {
@@ -261,12 +343,16 @@ public class TextProcessing extends HttpServlet {
 
                         }
                         if (!query.isEmpty()) {
-                            out.println("<h2>The original query is:</h2><br> " + query.replaceAll("<", "").replaceAll(">", "").replaceAll("\n", "<br>").replaceAll("\\.\\?", "\\.<br>\\?"));
-                            out.println("<h2>Result of the original query:</h2><br>" + sublimResult(executeQuery(query, trust2)));
+                            out.println("<h2>The original query is:</h2><br> " + 
+                                    query.replaceAll("<", "")
+                                            .replaceAll(">", "")
+                                            .replaceAll("\n", "<br>")
+                                            .replaceAll("\\.\\?", "\\.<br>\\?"));
+                            out.println("<h2>Result of the original query:</h2><br>" + sublimResult(executeQuery(query, trustT)));
                             String rewriteQuery = new QueryTriples(query).rewriteQuery();
                             out.println("<h2>The rewriting of the query is : </h2><br>" + rewriteQuery.replaceAll("<", "").replaceAll(">", "").replaceAll("\n", "<br>"));
-                            out.println("<h2>Result of the rewrited query:</h2><br>" + sublimResult(executeQuery(rewriteQuery, trust2)));
-                            //si le résultat est vide essayer de chercher les sous propriétés ex: isAgent=> isA
+                            out.println("<h2>Result of the rewrited query:</h2><br>" + sublimResult(executeQuery(rewriteQuery, trustT)));
+                            //si le rÃ©sultat est vide essayer de chercher les sous propriÃ©tÃ©s ex: isAgent=> isA
                         }
                     }
                 } catch (Exception ex) {
@@ -274,6 +360,7 @@ public class TextProcessing extends HttpServlet {
                             + "<b><font color=\"red\">Sorry a problem accored during the execution of the query :</font></b> <br>" + sublimResult(query));
                     out.println("<h2>The exception: </h2>" + ex);
                 } finally {
+                     out.println("</div>"); //wrapper
                     out.println("</body>");
                     out.println("</html>");
                     out.close();
@@ -316,24 +403,34 @@ public class TextProcessing extends HttpServlet {
                         System.out.println("next1= " + next1);
                         String e = next.get(next1).toString(); // valeur que prend  la variable
                         //ignorer les rdf:type de type resource, owl:prop....
-                        if(e.equals("http://www.w3.org/2000/01/rdf-schema#Class")
-                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#Property")
-                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#Datatype")
-                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#List")
-                                ||e.equals("http://www.w3.org/2004/03/trix/rdfg-1Graph")
-                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#subPropertyOf")
-                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#range")
-                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#Resource")
-                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#Literal")
-                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#label")
-                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement")
-                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#subClassOf")
-                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#subject")
-                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#object")
-                                ||e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#nil")
-                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#range")
-                                ||e.equals("http://www.w3.org/2000/01/rdf-schema#domain")
-                            ){
+                        if (e.equals("http://www.w3.org/2000/01/rdf-schema#Class")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#Property")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#Datatype")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#List")
+                                || e.equals("http://www.w3.org/2004/03/trix/rdfg-1Graph")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#subPropertyOf")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#range")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#Resource")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#Literal")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#label")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#subClassOf")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#subject")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#object")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#nil")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#range")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#rest")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#first")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#comment")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#ContainerMembershipProperty")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#seeAlso")
+                                || e.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#seeAlso")
+                                || e.equals("http://www.w3.org/2000/01/rdf-schema#domain")) {
                             continue;
                         }
                         if (t != null && !t.isEmpty()) { // appliquer le trust
@@ -351,8 +448,8 @@ public class TextProcessing extends HttpServlet {
                         {
                             res = res = res + " <tr> <td><b>" + next1 + ": </b></td><td>" + e + "</td></tr>";
                         }
-
                     }
+                    res = res = res + " <tr> <td>New line</td></tr>";
                 }
 
                 res = res + "</table>";

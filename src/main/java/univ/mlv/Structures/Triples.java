@@ -68,7 +68,7 @@ public class Triples {
      * @param o : possible rdf:type of the object
      * @return 
      */
-    public String caseO(String s, String o){
+    public String caseO(String s, String o,String findS, String findO){
        String res= "Optional {\n";
        if(null!=s && !s.isEmpty()){
            res=res+s+"\n";
@@ -76,6 +76,13 @@ public class Triples {
        res = res+getSubject()+" "+getPredicate()+" "+getObject()+".\n";
        if(null!=o && !o.isEmpty()){
            res=res+o+"\n";
+       } 
+       if(!findS.equals("")){
+           res=res+findS+".\n";
+       }
+       
+       if(!findO.equals("")){
+           res=res+findO+".\n";
        }
        return res+"}";
 //       return "Optional {\n"
@@ -89,7 +96,7 @@ public class Triples {
      * @param o
      * @return 
      */
-    public String case1(String s, String o){
+    public String case1(String s, String o,String findS, String findO){
        String res= "Optional {\n";
        if(null!=s && !s.isEmpty()){
            res=res+s+"\n";
@@ -100,6 +107,13 @@ public class Triples {
        
        if(null!=o && !o.isEmpty()){
            res=res+o+"\n";
+       } 
+       if(!findS.equals("")){
+           res=res+findS+".\n";
+       }
+       
+       if(!findO.equals("")){
+           res=res+findO+".\n";
        }
         res=res+"}";
 //        return "Optional {"
@@ -115,7 +129,7 @@ public class Triples {
      * @param o
      * @return 
      */
-    public String case2(String s, String o){
+    public String case2(String s, String o,String findS, String findO){
         String res= "Optional {\n";
        if(null!=s && !s.isEmpty()){
            res=res+s+"\n";
@@ -126,6 +140,13 @@ public class Triples {
                 
        if(null!=o && !o.isEmpty()){
            res=res+o+"\n";
+       } 
+       if(!findS.equals("")){
+           res=res+findS+".\n";
+       }
+       
+       if(!findO.equals("")){
+           res=res+findO+".\n";
        }
         res=res+"}";
 //        return"Optional {"
@@ -136,7 +157,7 @@ public class Triples {
         return res;
     }
     
-    public String case3(String s, String o){
+    public String case3(String s, String o,String findS, String findO){
         String res= "Optional {\n";
        if(null!=s && !s.isEmpty()){
            res=res+s+"\n";
@@ -146,6 +167,13 @@ public class Triples {
                 + "?u gs:weight ?weightO"+num+".\n";
        if(null!=o && !o.isEmpty()){
            res=res+o+"\n";
+       } 
+       if(!findS.equals("")){
+           res=res+findS+".\n";
+       }
+       
+       if(!findO.equals("")){
+           res=res+findO+".\n";
        }
         res=res+"}";
         return res;

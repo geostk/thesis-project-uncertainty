@@ -17,6 +17,17 @@ public class QueryTriples {
 
     List<String> listTriples = new ArrayList<String>();
     String query = "";
+    String prefixes = "PREFIX owl: <http://www.w3.org/2002/07/owl#>"
+            + "\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+            + "\nPREFIX gs: <http://www.geolsemantics.com/onto#>"
+            + "\nPREFIX ical: <http://www.w3.org/2002/12/cal/icaltzd#>"
+            + "\nPREFIX wn: <http://www.w3.org/2006/03/wn/wn20/>"
+            + "\nPREFIX foaf: <http://xmlns.com/foaf/0.1/>"
+            + "\nPREFIX rdfg: <http://www.w3.org/2004/03/trix/rdfg-1>"
+            + "\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
+            + "\nPREFIX v: <http://www.w3.org/2006/vcard/ns#>"
+            + "\nPREFIX doac: <http://ramonantonio.net/doac/0.1/>"
+            + "\nPREFIX prov: <http://www.w3.org/ns/prov#>\n";
 
     /**
      * récupérer les triplets contenus dans la requête, chaque triplet se
@@ -44,12 +55,41 @@ public class QueryTriples {
         }
     }
 
+    /**
+     * Keep all the rdf:type if the query
+     *
+     * @return
+     */
     public Map<String, String> keepRdfType() {
         Map<String, String> res = new TreeMap<String, String>();
         for (String s : listTriples) {
-            s=s.replaceAll("\r|\t|\n", "");
+            s = s.replaceAll("\r|\t|\n", "");
             if (s.contains("rdf:type")) {
                 res.put(s.split(" ")[0], s);
+            }
+        }
+        return res;
+    }
+
+    /**
+     * keep all the triples of the form ?s ?p ?o
+     *
+     * @return
+     */
+    public Map<String, String> keepUnknownTriples() {
+        Map<String, String> res = new TreeMap<String, String>();
+        for (String s : listTriples) {
+            s = s.replaceAll("\r|\t|\n", "");
+            boolean find = true;
+            String[] split_espace = s.split(" ");
+            for (String ss : split_espace) {
+                if (!ss.startsWith("?")) {
+                    find = false;
+                    break;
+                }
+            }
+            if (find) {
+                res.put(s, s);
             }
         }
         return res;
@@ -62,50 +102,83 @@ public class QueryTriples {
      * @return
      */
     public String rewriteQuery() {
-        String res = query;
+        String res = "";
         int i = 1;
         Map<String, String> m = keepRdfType();
+        Map<String, String> d = keepUnknownTriples();
 //        res=res.replaceAll("\\?", "\\\\\\\\?");
         for (String s : listTriples) {
-            s=s.replaceAll("\r|\t|\n", "");
+            s = s.replaceAll("\r|\t|\n", "");
             String rw = "";
             Triples t = new Triples(s, Integer.toString(i));
 //            if(!s.contains("rdf:type"))
             String s_type = "";
             String o_type = "";
-            if (!s.contains("rdf:type")) {
-                
+            if (!s.contains("rdf:type") && !d.keySet().contains(s)) {
+                String findS = "";
+                String findO = "";
+                //Vérifier si on veut détailler le sujet et/ou l'objet ==> ?s ?p ?o
+                for (String dd : d.keySet()) {
+                    for (String d1 : dd.split(" ")) {
+                        if (d1.contains(s.split(" ")[0])) {
+                            findS = dd;
+                        }
+                        if (d1.contains(s.split(" ")[2])) {
+                            findO = dd;
+                        }
+                    }
+                }
                 if (m.containsKey(s.split(" ")[0])) {
                     s_type = m.get(s.split(" ")[0]) + ".";
                 }
                 if (m.containsKey(s.split(" ")[2])) {
                     o_type = m.get(s.split(" ")[2]) + ".";
                 }
-                rw = rw + "\n{" + t.caseO(s_type, o_type) + "} \tUNION {\n" + t.case1(s_type, o_type) + "}\n\tUNION{\t\t" + t.case2(s_type, o_type) + "\t\t} \tUNION {\n\t\t" + t.case3(s_type, o_type) + "\t\t}";
-            }
-            else{
-                res=res.replaceFirst(s.replaceAll("\\?", "\\\\\\?")+"\\.", "");
+                rw = rw + "\n{" + t.caseO(s_type, o_type, findS, findO) + "} "
+                        + "\tUNION {\n" + t.case1(s_type, o_type, findS, findO) + "}\n\t"
+                        + "UNION{\n\t\t" + t.case2(s_type, o_type, findS, findO) + "\t\t} \n\t"
+                        + "UNION {\n\t\t" + t.case3(s_type, o_type, findS, findO) + "\t\t}";
+            } else {
+//                res=res.replaceFirst(s.replaceAll("\\?", "\\\\\\?")+"\\.", "");
                 continue;
             }
+            res = res + rw;
 //            Pattern p = Pattern.compile(s.replaceAll("\\?", "\\\\\\\\?"));
-            s = s.replaceAll("\\?", "\\\\\\?");
-
-            res = res.replaceFirst(s + ".", rw);
+//            s = s.replaceAll("\\?", "\\\\\\?");
+//
+//            res = res.replaceFirst(s + ".", rw);
         }
-        
+
         //récupérer les weight 
-        String weights="";
-        for(String s:res.split(" ")){
-            if(s.contains("weight") && !s.contains(":")){
-                if(s.contains(".")){
-                    s=s.split("\\.")[0];
+        String weights = "";
+        for (String s : res.split(" ")) {
+            if (s.contains("weight") && !s.contains(":")) {
+                if (s.contains(".")) {
+                    s = s.split("\\.")[0];
                 }
-                weights=weights+" "+s;
+                if (!weights.contains(s)) {
+                    weights = weights + " " + s;
+                }
             }
         }
-        String select = res.substring(res.toLowerCase().indexOf("select distinct ")+"select distinct ".length(), res.toLowerCase().indexOf("where"));
-        res=res.replaceFirst(select.replaceAll("\\?", "\\\\\\?"), weights.substring(1)+" "+select);
-        
+        String select = "";
+        if (query.toLowerCase().contains("select distinct ")) {
+            select = query.substring(query.toLowerCase().indexOf("select distinct ")
+                    + "select distinct ".length(), query.toLowerCase().indexOf("where"));
+        } else {
+            if (query.toLowerCase().contains("select")) {
+                select = query.substring(query.toLowerCase().indexOf("select ")
+                        + "select ".length(), query.toLowerCase().indexOf("where"));
+            }
+        }
+
+        if (!select.contains("*")) {
+            select = select.replaceFirst(select.replaceAll("\\?", "\\\\\\?"), weights.substring(1) + " " + select);
+        }
+
+        //Construct new query
+        res = prefixes + "\nSelect distinct " + select + " Where{\n" + res + "\n}";
+
 //        res.replaceAll("", res);
         return res;
     }

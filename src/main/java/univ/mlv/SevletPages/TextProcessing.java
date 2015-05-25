@@ -28,11 +28,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import univ.mlv.GraphBuilder.GraphConstructor;
 import univ.mlv.Structures.Data;
 import univ.mlv.development.LoginCheckDB;
 import univ.mlv.development.Text;
 import univ.mlv.Structures.QueryTriples;
+import univ.mlv.development.Queries;
 
 /**
  *
@@ -349,6 +349,8 @@ public class TextProcessing extends HttpServlet {
                                             .replaceAll("\n", "<br>")
                                             .replaceAll("\\.\\?", "\\.<br>\\?"));
                             out.println("<h2>Result of the original query:</h2><br>" + sublimResult(executeQuery(query, trustT)));
+                            Queries q=new Queries(rdf, query);
+                            out.println("new uncertainty : "+q.RunQueryWithUncertainty());
                             String rewriteQuery = new QueryTriples(query).rewriteQuery();
                             out.println("<h2>The rewriting of the query is : </h2><br>" + rewriteQuery.replaceAll("<", "").replaceAll(">", "").replaceAll("\n", "<br>"));
                             out.println("<h2>Result of the rewrited query:</h2><br>" + sublimResult(executeQuery(rewriteQuery, trustT)));

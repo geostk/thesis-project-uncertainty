@@ -15,7 +15,7 @@ import java.util.TreeMap;
  */
 public class QueryTriples {
 
-    List<String> listTriples = new ArrayList<String>();
+    private List<String> listTriples = new ArrayList<String>();
     String query = "";
     String prefixes = "PREFIX owl: <http://www.w3.org/2002/07/owl#>"
             + "\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
@@ -62,7 +62,7 @@ public class QueryTriples {
      */
     public Map<String, String> keepRdfType() {
         Map<String, String> res = new TreeMap<String, String>();
-        for (String s : listTriples) {
+        for (String s : getListTriples()) {
             s = s.replaceAll("\r|\t|\n", "");
             if (s.contains("rdf:type")) {
                 res.put(s.split(" ")[0], s);
@@ -78,7 +78,7 @@ public class QueryTriples {
      */
     public Map<String, String> keepUnknownTriples() {
         Map<String, String> res = new TreeMap<String, String>();
-        for (String s : listTriples) {
+        for (String s : getListTriples()) {
             s = s.replaceAll("\r|\t|\n", "");
             boolean find = true;
             String[] split_espace = s.split(" ");
@@ -94,7 +94,7 @@ public class QueryTriples {
         }
         return res;
     }
-
+    
     /**
      * réecriture des triplets pour la prise en compte des uncertitudes en
      * ajoutant des optionnels
@@ -107,7 +107,7 @@ public class QueryTriples {
         Map<String, String> m = keepRdfType();
         Map<String, String> d = keepUnknownTriples();
 //        res=res.replaceAll("\\?", "\\\\\\\\?");
-        for (String s : listTriples) {
+        for (String s : getListTriples()) {
             s = s.replaceAll("\r|\t|\n", "");
             String rw = "";
             Triples t = new Triples(s, Integer.toString(i));
@@ -195,5 +195,19 @@ public class QueryTriples {
 
         QueryTriples q = new QueryTriples(query);
         System.out.println("The rewriting of the query : \n" + q.rewriteQuery());
+    }
+
+    /**
+     * @return the listTriples
+     */
+    public List<String> getListTriples() {
+        return listTriples;
+    }
+
+    /**
+     * @param listTriples the listTriples to set
+     */
+    public void setListTriples(List<String> listTriples) {
+        this.listTriples = listTriples;
     }
 }

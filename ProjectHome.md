@@ -1,0 +1,2 @@
+- Schema de la base de données : Contient les textes et le rdf, la liste des utilisateurs et les sources ainsi que la confiance accordée à chacune
+- Interface pour la visualisation des textes et l'interrogation avec réécriture pour la prise en compte de l'incertitude. avoir l'option pour appliquer ou pas la confiance accordée à la source

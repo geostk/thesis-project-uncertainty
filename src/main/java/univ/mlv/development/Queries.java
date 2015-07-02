@@ -48,7 +48,7 @@ public class Queries {
     private String query;
 
     /**
-     * crÃ©er le model RDF pour pouvoir exÃ©cuter les requÃªtes
+     * crÃƒÂ©er le model RDF pour pouvoir exÃƒÂ©cuter les requÃƒÂªtes
      *
      * @param rdf
      * @param query
@@ -72,41 +72,48 @@ public class Queries {
      * @return
      */
     public String addHasUncertainProp(String t) {
-
-        String s = t.split("\t")[0];
-        String p = t.split("\t")[1];
-        String o = t.split("\t")[2];
-        return s + " gs:hasUncertainProp ?u."
-                + "?u " + p + " " + o + "."
-                + "?u gs:weight ?weight" + p + ".";
+        t = t.replaceAll("\r|\t|\n", "");
+        String s = t.split(" ")[0];
+        String p = t.split(" ")[1];
+        String o = t.split(" ")[2];
+        return s + " gs:hasUncertainProp ?u. "
+                + "?u " + p + " " + o + ". "
+                + "?u gs:weight ?weight" + p.split(":")[1] + ". ";
 
     }
 
     public String RunQueryWithUncertainty() {
-        String result = "<table>";
+        String result = "<table border=\"1\">";
         List<String> allUncertainProp = getAllUncertainPred();
         List<String> triples = triples();
         List<String> optToAdd = new ArrayList<String>();
         for (String t : triples) {
-            if(t.contains("rdf:type")){
+            if (t.contains("rdf:type")) {
                 continue;
             }
             String s = t.split(" ")[0];
             String p = t.split(" ")[1];
             String o = t.split(" ")[2];
-            for (String ups : allUncertainProp) { //attention d'un coté on a http://www.geolsemantics.com/onto#event-cause et de l'autre gs:event-cause faut trouver un moeyn de gérer ça
-                if (ups.split("\t")[1].equals(p)) {
+            for (String ups : allUncertainProp) { //attention d'un cotÃ© on a http://www.geolsemantics.com/onto#event-cause et de l'autre gs:event-cause faut trouver un moeyn de gÃ©rer Ã§a
+                String var = ups.split("\n")[0];
+                String upsRes = ups.split("\n")[1];
+                if (p.contains(":") && upsRes.split("\t")[1].contains(p.split(":")[1])
+                        || upsRes.split("\t")[1].equals(p)) //                if (ups.split("\t")[1].equals(p)) 
+                {
                     optToAdd.add(t);
                 }
             }
         }
         //ajouter les optionnels
         String res = "";
+        String content = query.split("\\{")[1].split("\\}")[0];
         for (String s : optToAdd) {
+//            String newContent=content;
+//            newContent="{"+content+"} UNION {"+content.replace(s, addHasUncertainProp(s))+"}";
             if (res.equals("")) {
-                res = "UNION {" + addHasUncertainProp(s) + " } ";
+                res = "UNION {" + content.replace(s + ".", addHasUncertainProp(s)) + "}";
             } else {
-                res = res + " UNION { " + addHasUncertainProp(s) + " } ";
+                res = res + " UNION {" + content.replace(s + ".", addHasUncertainProp(s)) + "}";
             }
 
         }
@@ -121,7 +128,8 @@ public class Queries {
                 }
             }
         }
-        query = query.replace("}", res + "}");
+        query = query.replace(content, "{" + content + "}" + res);
+//        query = query.replace("}", res + "}");
         String select = "";
 
         String querySelectAll = "";
@@ -135,20 +143,34 @@ public class Queries {
             }
         }
 
-        if (!select.contains("*") && !weights.equals("")) {
-            select = select.replaceFirst(select.replaceAll("\\?", "\\\\\\?"), weights.substring(1) + " " + select);
-
-        }
         querySelectAll = query.replace(select, "* ");
+        String newSelect = "";
+        if (!select.contains("*") && !weights.equals("")) {
+            newSelect = select.replaceFirst(select.replaceAll("\\?", "\\\\\\?"), weights.substring(1) + " " + select);
+        }
+        if (!newSelect.equals("")) {
+            query = query.replace(select, newSelect);
+        }
         List<String> uncertainties = new ArrayList<String>();
-        List<String> executeSelectQuery = executeSelectQuery(querySelectAll);
+        List<String> finalRes = executeSelectFinalQuery(querySelectAll);
         List<String> allUncertainResSub = getAllUncertainResSub();
-        for (String s : executeSelectQuery) {
+        for (String ss : finalRes) {
+            String variables = ss.split("\n")[0];
+            String[] varStrings = variables.split("\t");
+            String results = ss.split("\n")[1];
+            String[] resStrings = results.split("\t");
+            String s = ss.split("\n")[1];
             if (s.split("\t").length > 1) {
-                for (String UncSub : allUncertainResSub) {
-                    if (UncSub.split("\t").length > 1) {
-                        if (s.split("\t")[0].equals(UncSub.split("\t")[0])) {
-                            uncertainties.add(s + "\t" + UncSub.split("\t")[3]);
+                for (String us : s.split("\t")) {
+                    for (String UncSub : allUncertainResSub) {
+                        String var = UncSub.split("\n")[0];
+                        String uncRes = UncSub.split("\n")[1];
+                        if (uncRes.split("\t").length > 1) {
+                            if (us.equals(uncRes.split("\t")[0])) {
+//                            uncertainties.add(ss.split("\n")[1]+"==>"+s + "\t" + UncSub.split("\t")[1]);
+                                uncertainties.add(variables + "\n" + results
+                                        + "\n" + uncRes.split("\t")[0] + "=" + uncRes.split("\t")[1]);
+                            }
                         }
                     }
                 }
@@ -157,14 +179,48 @@ public class Queries {
         }
         //Construct new query
 //        res = prefixes + "\nSelect distinct " + select + " Where{\n" + res + "\n}";
-        List<String> executeSelectQuery1 = executeSelectQuery(query);
+        query = query.replace("\\*", select);
+        List<String> executeSelectQuery1 = executeSelectFinalQuery(query);
         executeSelectQuery1.addAll(uncertainties);
         for (String s : executeSelectQuery1) {
-            result = result + "<tr><td>" + s + "</td>"
-                    //                    + "<td>"++"</td>"
-                    + "</tr>";
+            boolean weight = false;
+            if (s.split("\n").length >= 2) {
+//                weight = true;
+//            }
+                String uncer="";
+                String weightUncert="";
+                if(s.split("\n").length==3){
+                    uncer=s.split("\n")[2].split("=")[0]; 
+                    weightUncert=s.split("\n")[2].split("=")[1];  
+                }
+                String variables = s.split("\n")[0];
+                String results = s.split("\n")[1];
+                String data = "<tr>";
+                for (String split : variables.split("\t")) {
+                    data = data + "<th>" + split + "</th>";
+                }
+                data=data+"</tr><tr>";
+                for (String split : results.split("\t")) {
+                    if(split.equals(uncer)){
+                        split=split+" <font color=\"red\"> "+weightUncert+"</font>";
+                    }
+                    data = data + "<td>" + split + "</td>";
+                }
+                data=data+"</tr>";
+//                for (int i = 0; i < variables.split("\t").length; i++) {
+//                    data = data + "<th>" + variables.split("\t")[i] + "</th><td>" + results.split("\t")[i] + "</td>";
+//
+//                }
+////            if (weight) {
+//                data = data + "<td "
+//                        //                            + "rowspan=\""+variables.split("\t").length+"\""
+//                        + ">" + s.split("\n")[2] + "</td>";
+////            }
+                result = result + "<tr>" + data
+                        + "</tr>";
+            }
         }
-        return result + "</table>";
+        return result + "</table> <br> Query:<br> " + query;
     }
 
     /**
@@ -174,12 +230,13 @@ public class Queries {
      */
     public List<String> getAllUncertainResSub() {
 //        String query="Select * Where {?s gs:isUncertain ?u. Optional {?s ?p ?o.} Optional {?s1 ?p1 ?s.}}";
-        String query = "Select ?s ?p ?o ?w \n"
+        String querySub = "Select distinct ?s ?w \n"
+                //                "Select ?s ?p ?o ?w \n"
                 + "Where {\n"
                 + "?u gs:isUncertain ?s. \n"
                 + "?s ?p ?o.\n"
                 + "?u gs:weight ?w.}";
-        return executeSelectQuery(prefixes + query);
+        return executeSelectQuery(prefixes + querySub);
     }
 
     /**
@@ -189,11 +246,11 @@ public class Queries {
      */
     public List<String> getAllUncertainResObj() {
 //        String query="Select * Where {?s gs:isUncertain ?u. Optional {?s ?p ?o.} Optional {?s1 ?p1 ?s.}}";
-        String query = "Select ?s ?p ?o ?w Where {"
+        String queryObj = "Select ?s ?p ?o ?w Where {"
                 + "?s gs:isUncertain ?u. "
                 + "?s1 ?p1 ?s."
                 + "?u gs:weight ?w}";
-        return executeSelectQuery(query);
+        return executeSelectQuery(queryObj);
     }
 
     /**
@@ -202,13 +259,13 @@ public class Queries {
      * @return
      */
     public List<String> getAllUncertainPred() {
-        String query = "Select ?s ?p ?o ?w "
+        String queryPred = "Select ?s ?p ?o ?w "
                 + "Where {\n"
                 + "?s gs:hasUncertainProp ?u. \n"
                 + "?u ?p ?o. \n"
                 + "?u gs:weight ?w.\n"
                 + "}";
-        return executeSelectQuery(prefixes + query);
+        return executeSelectQuery(prefixes + queryPred);
     }
 
     /**
@@ -253,7 +310,7 @@ public class Queries {
                     String values = "";
                     while (varNames.hasNext()) {
                         String next1 = varNames.next(); // nom de la variable dans le select
-                        if (next.get(next1).equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#")) {
+                        if (next.get(next1).toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#")) {
                             continue;
                         }
                         if (var.equals("")) {
@@ -267,7 +324,50 @@ public class Queries {
                             values = values + "\t" + next.get(next1).toString();
                         }
                     }
-                    res.add(values);
+                    res.add(var + "\n" + values);
+                }
+            }
+        } finally {
+            qexec.close();
+        }
+        return res;
+    }
+
+    public List<String> executeSelectFinalQuery(String query) {
+        List<String> res = new ArrayList<String>();
+        Query query1 = QueryFactory.create(query);
+        QueryExecution qexec = QueryExecutionFactory.create(query1, ontologie);
+        try {
+            if (query.toLowerCase().contains("select")) {
+                ResultSet results = qexec.execSelect();
+//                List<String> resultVars = results.getResultVars();
+//                 ResultSetFormatter.out(System.out, results, query1);
+//                res = "<table border=\"1\"><tr><th>Variable</th><th>Value</th></tr>";
+                while (results.hasNext()) {
+                    QuerySolution next = results.next();
+                    Iterator<String> varNames = next.varNames();
+                    String var = "";
+                    String values = "";
+                    while (varNames.hasNext()) {
+                        String next1 = varNames.next(); // nom de la variable dans le select
+                        if (next.get(next1).toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#")) {
+                            continue;
+                        }
+                        if (var.equals("")) {
+                            var = next1;
+                        } else {
+                            var = var + "\t" + next1;
+                        }
+                        if (values.equals("")) {
+                            values = next.get(next1).toString();
+                        } else {
+                            values = values + "\t" + next.get(next1).toString();
+                        }
+                    }
+                    if (!var.isEmpty() && !values.isEmpty()) {
+                        res.add(var + "\n" + values);
+
+                    }
                 }
             }
         } finally {
@@ -388,8 +488,9 @@ public class Queries {
     }
 
     /**
-     * Proposer des sous propriÃ©tÃ©s du prÃ©dicat de triplet, si le rÃ©sultat
-     * du ASK=true c'est Ã  dire que le triplet existe dans le graphe
+     * Proposer des sous propriÃƒÂ©tÃƒÂ©s du prÃƒÂ©dicat de triplet, si le
+     * rÃƒÂ©sultat du ASK=true c'est ÃƒÂ  dire que le triplet existe dans le
+     * graphe
      *
      * @param triple
      * @return
